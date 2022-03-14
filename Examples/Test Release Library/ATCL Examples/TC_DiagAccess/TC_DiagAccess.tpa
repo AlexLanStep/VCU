@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tpa" TDC="Test Parameter File for ATCL test cases" TDL="Python" Type="Test Parameter File" Version="1.0">
+  <ParamSets Name="TC_DiagAccess">
+    <ParamSet Name="TC_DiagAccess" OID="TC_DiagAccess">
+      <Parameter Name="Validation" InstanceName="Validation" Comment="" DataType="boolean" IsLblChangeable="false" Lbl="" MaxValue="True" MinValue="False" ObjectType="Scalar">
+        <Scalar Value="True" />
+        <DefScalar Value="True" />
+      </Parameter>
+    </ParamSet>
+  </ParamSets>
+</File>

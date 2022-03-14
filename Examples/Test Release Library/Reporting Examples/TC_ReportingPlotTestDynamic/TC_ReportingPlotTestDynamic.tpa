@@ -1,0 +1,1153 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tpa" TDC="Test Parameter File for ATCL test cases" TDL="ATCL" Type="Test Parameter File" Version="1.0">
+  <ParamSets Name="TC_ReportingPlotTestDynamic">
+    <ParamSet Name="TC_ReportingPlotTestDynamic" OID="TC_ReportingPlotTestDynamic">
+      <DynamicArray Name="Plots" InstanceName="Plots" Comment="Keeps all plots" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+        <Arr Size="1">
+          <ArrEl I="0">
+            <UserRecord Name="Plot" InstanceName="Plots/Plot" Comment="Represents one plot" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+              <UserRecord Name="Properties" InstanceName="Plots/Plot/Properties" Comment="" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                <Parameter Name="Name" InstanceName="Plots/Plot/Properties/Name" Comment="The file name of the generated plot" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                  <Scalar Value="HUGO" />
+                  <DefScalar Value="HUGO" />
+                </Parameter>
+                <Parameter Name="Title" InstanceName="Plots/Plot/Properties/Title" Comment="The title of the generated plot" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                  <Scalar Value="BERTA" />
+                  <DefScalar Value="BERTA" />
+                </Parameter>
+                <Parameter Name="Scale" InstanceName="Plots/Plot/Properties/Scale" Comment="The scale of the plot" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="0.1" ObjectType="Scalar" Unit="">
+                  <Scalar Value="1" />
+                  <DefScalar Value="1" />
+                </Parameter>
+                <UserRecord Name="XAxis" InstanceName="Plots/Plot/Properties/XAxis" Comment="The x-axis of the plot." Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                  <Parameter Name="Label" InstanceName="Plots/Plot/Properties/XAxis/Label" Comment="The label of the x-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                    <Scalar Value="engine speed" />
+                    <DefScalar Value="engine speed" />
+                  </Parameter>
+                  <Parameter Name="XMin" InstanceName="Plots/Plot/Properties/XAxis/XMin" Comment="The minimum value of the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                    <Scalar Value="0" />
+                    <DefScalar Value="0" />
+                  </Parameter>
+                  <Parameter Name="XMax" InstanceName="Plots/Plot/Properties/XAxis/XMax" Comment="The maximum value of the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                    <Scalar Value="7000" />
+                    <DefScalar Value="7000" />
+                  </Parameter>
+                  <Parameter Name="XTickSpan" InstanceName="Plots/Plot/Properties/XAxis/XTickSpan" Comment="The span of the ticks of the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                    <Scalar Value="100" />
+                    <DefScalar Value="100" />
+                  </Parameter>
+                  <Parameter Name="XUnit" InstanceName="Plots/Plot/Properties/XAxis/XUnit" Comment="The unit of the x-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                    <Scalar Value="rpm" />
+                    <DefScalar Value="rpm" />
+                  </Parameter>
+                </UserRecord>
+                <DynamicArray Name="YAxisCollection" InstanceName="Plots/Plot/Properties/YAxisCollection" Comment="" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                  <Arr Size="1">
+                    <ArrEl I="0">
+                      <UserRecord Name="YAxis" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis" Comment="Represents one y-axis of the plot" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                        <Parameter Name="ID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/ID" Comment="The ID of the axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="Heat" />
+                          <DefScalar Value="Heat" />
+                        </Parameter>
+                        <Parameter Name="YMin" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMin" Comment="The minimum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="30" />
+                          <DefScalar Value="30" />
+                        </Parameter>
+                        <Parameter Name="YMax" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMax" Comment="The maximum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="120" />
+                          <DefScalar Value="120" />
+                        </Parameter>
+                        <Parameter Name="YTickSpan" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YTickSpan" Comment="The span of the ticks of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="10" />
+                          <DefScalar Value="10" />
+                        </Parameter>
+                        <Parameter Name="YUnit" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YUnit" Comment="The unit of the y-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="°C" />
+                          <DefScalar Value="°C" />
+                        </Parameter>
+                        <DynamicArray Name="Lines" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines" Comment="The lines of the axis" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                          <Arr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </Arr>
+                          <DefArr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </DefArr>
+                        </DynamicArray>
+                      </UserRecord>
+                    </ArrEl>
+                  </Arr>
+                  <DefArr Size="1">
+                    <ArrEl I="0">
+                      <UserRecord Name="YAxis" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis" Comment="Represents one y-axis of the plot" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                        <Parameter Name="ID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/ID" Comment="The ID of the axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="Heat" />
+                          <DefScalar Value="Heat" />
+                        </Parameter>
+                        <Parameter Name="YMin" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMin" Comment="The minimum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="30" />
+                          <DefScalar Value="30" />
+                        </Parameter>
+                        <Parameter Name="YMax" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMax" Comment="The maximum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="120" />
+                          <DefScalar Value="120" />
+                        </Parameter>
+                        <Parameter Name="YTickSpan" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YTickSpan" Comment="The span of the ticks of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="10" />
+                          <DefScalar Value="10" />
+                        </Parameter>
+                        <Parameter Name="YUnit" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YUnit" Comment="The unit of the y-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="°C" />
+                          <DefScalar Value="°C" />
+                        </Parameter>
+                        <DynamicArray Name="Lines" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines" Comment="The lines of the axis" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                          <Arr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </Arr>
+                          <DefArr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </DefArr>
+                        </DynamicArray>
+                      </UserRecord>
+                    </ArrEl>
+                  </DefArr>
+                </DynamicArray>
+              </UserRecord>
+            </UserRecord>
+          </ArrEl>
+        </Arr>
+        <DefArr Size="1">
+          <ArrEl I="0">
+            <UserRecord Name="Plot" InstanceName="Plots/Plot" Comment="Represents one plot" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+              <UserRecord Name="Properties" InstanceName="Plots/Plot/Properties" Comment="" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                <Parameter Name="Name" InstanceName="Plots/Plot/Properties/Name" Comment="The file name of the generated plot" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                  <Scalar Value="HUGO" />
+                  <DefScalar Value="HUGO" />
+                </Parameter>
+                <Parameter Name="Title" InstanceName="Plots/Plot/Properties/Title" Comment="The title of the generated plot" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                  <Scalar Value="BERTA" />
+                  <DefScalar Value="BERTA" />
+                </Parameter>
+                <Parameter Name="Scale" InstanceName="Plots/Plot/Properties/Scale" Comment="The scale of the plot" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="0.1" ObjectType="Scalar" Unit="">
+                  <Scalar Value="1" />
+                  <DefScalar Value="1" />
+                </Parameter>
+                <UserRecord Name="XAxis" InstanceName="Plots/Plot/Properties/XAxis" Comment="The x-axis of the plot." Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                  <Parameter Name="Label" InstanceName="Plots/Plot/Properties/XAxis/Label" Comment="The label of the x-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                    <Scalar Value="engine speed" />
+                    <DefScalar Value="engine speed" />
+                  </Parameter>
+                  <Parameter Name="XMin" InstanceName="Plots/Plot/Properties/XAxis/XMin" Comment="The minimum value of the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                    <Scalar Value="0" />
+                    <DefScalar Value="0" />
+                  </Parameter>
+                  <Parameter Name="XMax" InstanceName="Plots/Plot/Properties/XAxis/XMax" Comment="The maximum value of the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                    <Scalar Value="7000" />
+                    <DefScalar Value="7000" />
+                  </Parameter>
+                  <Parameter Name="XTickSpan" InstanceName="Plots/Plot/Properties/XAxis/XTickSpan" Comment="The span of the ticks of the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                    <Scalar Value="100" />
+                    <DefScalar Value="100" />
+                  </Parameter>
+                  <Parameter Name="XUnit" InstanceName="Plots/Plot/Properties/XAxis/XUnit" Comment="The unit of the x-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                    <Scalar Value="rpm" />
+                    <DefScalar Value="rpm" />
+                  </Parameter>
+                </UserRecord>
+                <DynamicArray Name="YAxisCollection" InstanceName="Plots/Plot/Properties/YAxisCollection" Comment="" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                  <Arr Size="1">
+                    <ArrEl I="0">
+                      <UserRecord Name="YAxis" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis" Comment="Represents one y-axis of the plot" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                        <Parameter Name="ID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/ID" Comment="The ID of the axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="Heat" />
+                          <DefScalar Value="Heat" />
+                        </Parameter>
+                        <Parameter Name="YMin" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMin" Comment="The minimum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="30" />
+                          <DefScalar Value="30" />
+                        </Parameter>
+                        <Parameter Name="YMax" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMax" Comment="The maximum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="120" />
+                          <DefScalar Value="120" />
+                        </Parameter>
+                        <Parameter Name="YTickSpan" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YTickSpan" Comment="The span of the ticks of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="10" />
+                          <DefScalar Value="10" />
+                        </Parameter>
+                        <Parameter Name="YUnit" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YUnit" Comment="The unit of the y-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="°C" />
+                          <DefScalar Value="°C" />
+                        </Parameter>
+                        <DynamicArray Name="Lines" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines" Comment="The lines of the axis" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                          <Arr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </Arr>
+                          <DefArr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </DefArr>
+                        </DynamicArray>
+                      </UserRecord>
+                    </ArrEl>
+                  </Arr>
+                  <DefArr Size="1">
+                    <ArrEl I="0">
+                      <UserRecord Name="YAxis" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis" Comment="Represents one y-axis of the plot" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                        <Parameter Name="ID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/ID" Comment="The ID of the axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="Heat" />
+                          <DefScalar Value="Heat" />
+                        </Parameter>
+                        <Parameter Name="YMin" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMin" Comment="The minimum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="30" />
+                          <DefScalar Value="30" />
+                        </Parameter>
+                        <Parameter Name="YMax" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YMax" Comment="The maximum value of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="120" />
+                          <DefScalar Value="120" />
+                        </Parameter>
+                        <Parameter Name="YTickSpan" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YTickSpan" Comment="The span of the ticks of the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                          <Scalar Value="10" />
+                          <DefScalar Value="10" />
+                        </Parameter>
+                        <Parameter Name="YUnit" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/YUnit" Comment="The unit of the y-axis" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                          <Scalar Value="°C" />
+                          <DefScalar Value="°C" />
+                        </Parameter>
+                        <DynamicArray Name="Lines" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines" Comment="The lines of the axis" Type="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                          <Arr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </Arr>
+                          <DefArr Size="1">
+                            <ArrEl I="0">
+                              <UserRecord Name="Line" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line" Comment="Represents a line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                <Parameter Name="LineID" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineID" Comment="The ID of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                  <Scalar Value="UpperBound" />
+                                  <DefScalar Value="UpperBound" />
+                                </Parameter>
+                                <Parameter Name="XShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/XShift" Comment="Shift the values on the x-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <Parameter Name="YShift" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/YShift" Comment="Shift the values on the y-axis" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="3.40282346638529E+38" MinValue="-3.40282346638529E+38" ObjectType="Scalar" Unit="">
+                                  <Scalar Value="0" />
+                                  <DefScalar Value="0" />
+                                </Parameter>
+                                <UserRecord Name="LineFormat" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat" Comment="Format of the line" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Color" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/Color" Comment="The color of the line" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                    <Scalar Value="red" />
+                                    <DefScalar Value="red" />
+                                  </Parameter>
+                                  <UserRecord Name="LineWeight" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineWeight" Comment="The weight of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineWeightCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Thin" />
+                                          <Sc I="1" Val="Normal" />
+                                          <Sc I="2" Val="Bold" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineWeight" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Normal" />
+                                      <DefScalar Value="Normal" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="LineStyle" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/LineFormat/LineStyle" Comment="The style of the line" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="LineStyleCollection" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="3">
+                                        <V>
+                                          <Sc I="0" Val="Stroke" />
+                                          <Sc I="1" Val="Dashed" />
+                                          <Sc I="2" Val="Dotted" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedLineStyle" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Stroke" />
+                                      <DefScalar Value="Stroke" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                                <UserRecord Name="Values" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values" Comment="The values of the line to be generated" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                  <Parameter Name="Scores" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Scores" Comment="The amount of values that shall be created" DataType="integer" IsLblChangeable="false" Lbl="" MaxValue="2147483647" MinValue="-2147483648" ObjectType="Scalar" Unit="">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="Algorithm" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Algorithm" Comment="The algorithm to generate the values" Functionality="Collection" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutCollectionUserRecord">
+                                    <Parameter Name="AlgorithmChoice" InstanceName="selection_Rarrcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Array">
+                                      <Array Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </Array>
+                                      <DefArray Size="2">
+                                        <V>
+                                          <Sc I="0" Val="Linear" />
+                                          <Sc I="1" Val="Random" />
+                                        </V>
+                                      </DefArray>
+                                    </Parameter>
+                                    <Parameter Name="SelectedAlgorithm" InstanceName="selected_Rcstr" Comment="" DataType="charstring" IsLblChangeable="false" Lbl="" MaxValue="" MinValue="" ObjectType="Scalar">
+                                      <Scalar Value="Linear" />
+                                      <DefScalar Value="Linear" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <Parameter Name="Frequency" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/Frequency" Comment="The value repetition frequency in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                    <Scalar Value="100" />
+                                    <DefScalar Value="100" />
+                                  </Parameter>
+                                  <UserRecord Name="XAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange" Comment="The x-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/StartX" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="XStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndX" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/XAxisRange/EndX" Comment="XEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                  <UserRecord Name="YAxisRange" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange" Comment="The y-values range" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+                                    <Parameter Name="StartY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/StartY" Comment="Start in %" DataType="float" IsLblChangeable="false" Lbl="YStart" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="0" />
+                                      <DefScalar Value="0" />
+                                    </Parameter>
+                                    <Parameter Name="EndY" InstanceName="Plots/Plot/Properties/YAxisCollection/YAxis/Lines/Line/Values/YAxisRange/EndY" Comment="YEnd in %" DataType="float" IsLblChangeable="false" Lbl="" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="%">
+                                      <Scalar Value="100" />
+                                      <DefScalar Value="100" />
+                                    </Parameter>
+                                  </UserRecord>
+                                </UserRecord>
+                              </UserRecord>
+                            </ArrEl>
+                          </DefArr>
+                        </DynamicArray>
+                      </UserRecord>
+                    </ArrEl>
+                  </DefArr>
+                </DynamicArray>
+              </UserRecord>
+            </UserRecord>
+          </ArrEl>
+        </DefArr>
+      </DynamicArray>
+    </ParamSet>
+  </ParamSets>
+</File>

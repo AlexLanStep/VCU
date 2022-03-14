@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_SyncDL">
+    <EntryPoint>TC_SyncDL.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_SyncDL.tpa</TPA>
+    <TAD>TC_SyncDL.tad</TAD>
+    <THD>TC_SyncDL.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_SyncDL.exe</File>
+      <CRC>BAE4B952B3233E3486631E71C65A9F175A0A654</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_SyncDL.tpa</File>
+      <CRC>8AA722CEF3AAAABCF57EDE19FE847D473195C48</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_SyncDL.tad</File>
+      <CRC>057D2605C54276D9657C548BC85A2DFCB4811CE</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_SyncDL.thd</File>
+      <CRC>B3F02B6EDE4246822DEF6456A9BFBD1FC5CA28B</CRC>
+    </Checksum>
+  </Checksums>
+</file>

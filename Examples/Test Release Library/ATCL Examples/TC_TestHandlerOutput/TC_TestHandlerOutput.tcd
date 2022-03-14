@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_TestHandlerOutput">
+    <EntryPoint>TC_TestHandlerOutput.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_TestHandlerOutput.tpa</TPA>
+    <TAD>TC_TestHandlerOutput.tad</TAD>
+    <THD>TC_TestHandlerOutput.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_TestHandlerOutput.exe</File>
+      <CRC>B085493C403A6E1ADDF9FB0C5B7ED70BDB1EC84</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_TestHandlerOutput.tpa</File>
+      <CRC>8AA722CEF3AAAABCF57EDE19FE847D473195C48</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_TestHandlerOutput.tad</File>
+      <CRC>3C20305239B9EA61483216ACD3CFF931A687D3</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_TestHandlerOutput.thd</File>
+      <CRC>C870446B9FE03575827951CE6AA2335FE3AC558</CRC>
+    </Checksum>
+  </Checksums>
+</file>

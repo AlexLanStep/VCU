@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_ReportTable">
+    <EntryPoint>TC_ReportTable.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_ReportTable.tpa</TPA>
+    <TAD>TC_ReportTable.tad</TAD>
+    <THD>TC_ReportTable.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_ReportTable.exe</File>
+      <CRC>A44A9514FE5E716A495327A8AF99211EC7454B2</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_ReportTable.tpa</File>
+      <CRC>8AA722CEF3AAAABCF57EDE19FE847D473195C48</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_ReportTable.tad</File>
+      <CRC>A27AECCEFEB75B1DEB737BBB0687FDA8C61A65F</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_ReportTable.thd</File>
+      <CRC>42AB80F8CC2FCC23794694D9C1510FE39E0E20</CRC>
+    </Checksum>
+  </Checksums>
+</file>

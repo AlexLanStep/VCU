@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tpa" TDC="Test Parameter File for ATCL test cases" TDL="Python" Type="Test Parameter File" Version="1.0">
+  <ParamSets Name="TC_Parameter">
+    <ParamSet Name="TC_Parameter" OID="TC_Parameter">
+      <UserRecord Name="User Record 1" InstanceName="User Record 1" Comment="Fails when FLT is greater than 10.0" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+        <Parameter Name="Float" InstanceName="User Record 1/Float" Comment="A float value" DataType="float" IsLblChangeable="false" Lbl="FLT" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="s">
+          <Scalar Value="1" />
+          <DefScalar Value="1" />
+        </Parameter>
+      </UserRecord>
+      <UserRecord Name="User Record 2" InstanceName="User Record 2" Comment="Fails when FLT is less than 10.0" Functionality="AtclUserRecord" URType="Etas.Eas.Atcl.Interfaces.Types.TypeSutUserRecord">
+        <Parameter Name="Float" InstanceName="User Record 2/Float" Comment="A float value" DataType="float" IsLblChangeable="false" Lbl="FLT" MaxValue="100" MinValue="0" ObjectType="Scalar" Unit="s">
+          <Scalar Value="1" />
+          <DefScalar Value="1" />
+        </Parameter>
+      </UserRecord>
+    </ParamSet>
+  </ParamSets>
+</File>

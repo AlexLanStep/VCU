@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDC="TC_TS_IdleController" TDL="TestStand" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_PY_IdleController">
+    <EntryPoint>TC_TS_IdleController.seq</EntryPoint>
+  </TestCase>
+  <MetaData>
+    <TPA>TC_TS_IdleController.tpa</TPA>
+    <TAD>TC_TS_IdleController.tad</TAD>
+    <THD>TC_TS_IdleController.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_TS_IdleController.seq</File>
+      <CRC>B939ACEFB101986ED4E91192D31806348DBDD88</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_TS_IdleController.tpa</File>
+      <CRC>6733E95BBEDA5EB265EE6BAD9A284BDF616B8491</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_TS_IdleController.tad</File>
+      <CRC>4C1E53B178A54EEC37AF3E8045E7AD173C12D434</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_TS_IdleController.thd</File>
+      <CRC>ADCA8228186AA2468095B9D454E49CCF23C2FD61</CRC>
+    </Checksum>
+  </Checksums>
+</file>

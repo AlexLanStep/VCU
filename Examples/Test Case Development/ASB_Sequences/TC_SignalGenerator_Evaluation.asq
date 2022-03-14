@@ -1,0 +1,514 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root version="3.0" templateID="F424DA8F-606A-4098-BFF5-00BE37F60D69">
+	<info>
+		<MetaData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<Properties />
+			<Creator>dummy</Creator>
+			<CreationDate>2010-08-12T10:15:19.720872+02:00</CreationDate>
+			<LastEditor>Rrr9fe</LastEditor>
+			<LastModificationDate>2017-02-06T11:02:47.938081+01:00</LastModificationDate>
+			<Comment>Comment</Comment>
+			<DebugConfigFileSource>Local</DebugConfigFileSource>
+			<DebugConfigFile>C:\Users\Public\Documents\ETAS\LABCAR-AUTOMATION 4.2\Examples\Test Bench Configurations\ATCL Example NEW Test Bench for LCO53\Test Bench Configuration for ATCL Examples LCO5.3.tbc</DebugConfigFile>
+		</MetaData>
+	</info>
+	<content>
+		<RootStencil xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<StencilLocation>Sequence</StencilLocation>
+			<DebuggerBreak>false</DebuggerBreak>
+			<IsCollapsed>false</IsCollapsed>
+			<IsCommented>false</IsCommented>
+			<Name>Root</Name>
+			<RootElements>
+				<StencilBase xsi:type="CommentStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>false</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Prerequisites</Name>
+					<Value>To debug this sequence on a real TestBench/RT-PC
+1. choose "Local" from the ComboBox in the ToolBar
+2. with
+- LCO 5.3 use C:\Users\Public\Documents\ETAS\LABCAR-AUTOMATION 4.2\Examples\Test Bench Configurations\ATCL Example NEW Test Bench for LCO53\Test Bench Configuration for ATCL Examples LCO5.3.tbc
+- LCO 5.X use C:\Users\Public\Documents\ETAS\LABCAR-AUTOMATION 4.2\Examples\Test Bench Configurations\ATCL Example NEW Test Bench for LCO5X\Test Bench Configuration for ATCL Examples LCO5.X.tbc
+
+To debug offline
+choose "Offline" from the ComboBox in the ToolBar (a resp. TBC will be generated automatically when the debugger is started).</Value>
+				</StencilBase>
+				<StencilBase xsi:type="ConfigureSignalGeneratorStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>ACTorqueSignal</Name>
+					<SGName>ACTorqueSignal</SGName>
+					<SGFileId>pulse</SGFileId>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseSetModelValueStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>ACTorqueSignal</Name>
+					<ParameterElements>
+						<Parameter>
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>ACTorqueSignal.Label</Name>
+							<LabelInfoViewModel>
+								<ObjectType>Scalar</ObjectType>
+								<DataType>String</DataType>
+								<PhysicalType>Empty</PhysicalType>
+							</LabelInfoViewModel>
+							<Unit />
+							<UnitVisibility>Collapsed</UnitVisibility>
+							<IndexViewModel>
+								<IndexXViewModel>
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name />
+									<IsExpanded>true</IsExpanded>
+									<StencilLeft />
+								</IndexXViewModel>
+							</IndexViewModel>
+						</Parameter>
+					</ParameterElements>
+					<StencilLeft>
+						<StencilBase xsi:type="ConstantStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Constant</Name>
+							<LabelInfoViewModel>
+								<ObjectType>Scalar</ObjectType>
+								<DataType>String</DataType>
+								<PhysicalType>Empty</PhysicalType>
+							</LabelInfoViewModel>
+							<ValueViewModel xsi:type="StringValueViewModel">
+								<StringValue>ACTorqueSignal</StringValue>
+							</ValueViewModel>
+						</StencilBase>
+					</StencilLeft>
+					<Label>sc.sg</Label>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseSetModelValueStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Torque</Name>
+					<ParameterElements>
+						<Parameter>
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Torque.Label</Name>
+							<LabelInfoViewModel>
+								<ObjectType>Scalar</ObjectType>
+								<DataType>String</DataType>
+								<PhysicalType>Empty</PhysicalType>
+							</LabelInfoViewModel>
+							<Unit />
+							<UnitVisibility>Collapsed</UnitVisibility>
+							<IndexViewModel>
+								<IndexXViewModel>
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name />
+									<IsExpanded>true</IsExpanded>
+									<StencilLeft />
+								</IndexXViewModel>
+							</IndexViewModel>
+						</Parameter>
+					</ParameterElements>
+					<StencilLeft>
+						<StencilBase xsi:type="ConstantStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Constant</Name>
+							<LabelInfoViewModel>
+								<ObjectType>Scalar</ObjectType>
+								<DataType>String</DataType>
+								<PhysicalType>Empty</PhysicalType>
+							</LabelInfoViewModel>
+							<ValueViewModel xsi:type="StringValueViewModel">
+								<StringValue>Torque</StringValue>
+							</ValueViewModel>
+						</StencilBase>
+					</StencilLeft>
+					<Label>sc.sgchannel</Label>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseSetModelValueStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Value_0</Name>
+					<ParameterElements>
+						<Parameter>
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Value_0.Label</Name>
+							<LabelInfoViewModel>
+								<ObjectType>Scalar</ObjectType>
+								<DataType>Float</DataType>
+								<PhysicalType>Empty</PhysicalType>
+							</LabelInfoViewModel>
+							<Unit />
+							<UnitVisibility>Collapsed</UnitVisibility>
+							<IndexViewModel>
+								<IndexXViewModel>
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name />
+									<IsExpanded>true</IsExpanded>
+									<StencilLeft />
+								</IndexXViewModel>
+							</IndexViewModel>
+						</Parameter>
+					</ParameterElements>
+					<StencilLeft>
+						<StencilBase xsi:type="ConstantStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Constant_0</Name>
+							<LabelInfoViewModel>
+								<ObjectType>Scalar</ObjectType>
+								<DataType>Float</DataType>
+								<PhysicalType>Empty</PhysicalType>
+							</LabelInfoViewModel>
+							<ValueViewModel xsi:type="FloatValueViewModel">
+								<Unit />
+								<FloatValue>3</FloatValue>
+							</ValueViewModel>
+						</StencilBase>
+					</StencilLeft>
+					<Label>ac.mode</Label>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseCurveVariableSetDefinitionStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Variable_1</Name>
+					<StencilLeft>
+						<StencilBase xsi:type="TestCaseDataloggerStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Model Datalogger_0</Name>
+							<Signals>
+								<Signal>
+									<Port>Model</Port>
+									<Name>Engine</Name>
+									<Unit />
+									<AquisitionTask>AcquisitionTask</AquisitionTask>
+									<PhysicalType>Empty</PhysicalType>
+								</Signal>
+							</Signals>
+							<ChildStencils>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>StartEngine</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>StartEngine.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>starter</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>1</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartEngine</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSleepStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Sleep_0</Name>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Constant</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>time</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit>ms</Unit>
+												<FloatValue>2000</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>StartAirCondition</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>StartAirCondition.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>starterAC</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>1</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartAirCondition</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSleepStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Sleep_1</Name>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Constant</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>time</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit>ms</Unit>
+												<FloatValue>2000</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+								</StencilBase>
+								<StencilBase xsi:type="ActionSGStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>StartSG</Name>
+									<SGName>ACTorqueSignal</SGName>
+									<SGAction>0</SGAction>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSleepStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Sleep_2</Name>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Constant</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>time</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit>ms</Unit>
+												<FloatValue>15000</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+								</StencilBase>
+								<StencilBase xsi:type="ActionSGStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>StopSG</Name>
+									<SGName>ACTorqueSignal</SGName>
+									<SGAction>2</SGAction>
+								</StencilBase>
+							</ChildStencils>
+						</StencilBase>
+					</StencilLeft>
+					<VariableName>Variable_1</VariableName>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseGeneratePlotStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Generate Plot_0</Name>
+					<StencilLeft>
+						<StencilBase xsi:type="TestCaseCurveVariableSetUsageStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Variable</Name>
+							<RepresentedDefinitionStencilName>Variable_1</RepresentedDefinitionStencilName>
+						</StencilBase>
+					</StencilLeft>
+					<ChildSignals>
+						<PlotSignal>
+							<Port>Model</Port>
+							<Name>Engine</Name>
+							<IsSelected>true</IsSelected>
+						</PlotSignal>
+					</ChildSignals>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseCurveValueComparisonStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>CurveValueComparison_1</Name>
+					<EvaluationRecords>
+						<EvaluationRecord>
+							<SelectedSignal xsi:type="Signal">
+								<Port>Model</Port>
+								<Name>Engine</Name>
+								<Unit />
+								<AquisitionTask>AcquisitionTask</AquisitionTask>
+								<PhysicalType>Empty</PhysicalType>
+							</SelectedSignal>
+							<SelectedEvaluationCriterium>y &gt; value</SelectedEvaluationCriterium>
+							<ComparisonValue>790</ComparisonValue>
+							<Duration>0</Duration>
+							<IsLinearBand>false</IsLinearBand>
+							<IsTubular>false</IsTubular>
+							<LinearBand>0</LinearBand>
+							<PosDelta>0</PosDelta>
+							<NegDelta>0</NegDelta>
+							<EvaluationOffset>0</EvaluationOffset>
+							<OffsetIsToPrevious>false</OffsetIsToPrevious>
+							<OffsetIsToMeasurement>true</OffsetIsToMeasurement>
+							<DoPlot>true</DoPlot>
+							<ValuePanelVisibility>Visible</ValuePanelVisibility>
+							<BandCheckBoxesPanelVisibility>Collapsed</BandCheckBoxesPanelVisibility>
+							<ReferenceSignalPanelVisibility>Collapsed</ReferenceSignalPanelVisibility>
+							<DurationPanelVisibility>Collapsed</DurationPanelVisibility>
+							<LinearBandPanelVisibility>Collapsed</LinearBandPanelVisibility>
+							<DeltaPanelVisibility>Collapsed</DeltaPanelVisibility>
+							<FilePanelVisibility>Collapsed</FilePanelVisibility>
+						</EvaluationRecord>
+					</EvaluationRecords>
+					<StencilLeft>
+						<StencilBase xsi:type="TestCaseCurveVariableSetUsageStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>false</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Variable</Name>
+							<RepresentedDefinitionStencilName>Variable_1</RepresentedDefinitionStencilName>
+						</StencilBase>
+					</StencilLeft>
+					<Left />
+					<Right />
+				</StencilBase>
+				<StencilBase xsi:type="TestCasePassStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>false</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Pass_0</Name>
+				</StencilBase>
+			</RootElements>
+		</RootStencil>
+	</content>
+</root>

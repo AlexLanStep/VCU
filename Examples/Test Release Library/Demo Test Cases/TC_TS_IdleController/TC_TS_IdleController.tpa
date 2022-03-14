@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<File xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Extension=".tpa" TDC="Test Parameter File for ATCL test cases" TDL="Python" Type="Test Parameter File" Version="1.0">
+  <ParamSets Name="TC_TS_IdleController">
+    <ParamSet Name="TC_TS_IdleController" OID="TC_TS_IdleController">
+      <Parameter Name="Torque" InstanceName="AirConditionTorque" Comment="Comment" DataType="float" IsLblChangeable="false" Lbl="AirConditionTorque" MaxValue="0" MinValue="-100" ObjectType="Scalar" Unit="">
+        <Scalar Value="-10" />
+        <DefScalar Value="-10" />
+      </Parameter>
+    </ParamSet>
+  </ParamSets>
+</File>

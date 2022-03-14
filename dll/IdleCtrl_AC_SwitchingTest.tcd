@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="IdleCtrl_AC_SwitchingTest">
+    <EntryPoint>IdleCtrl_AC_SwitchingTest.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>IdleCtrl_AC_SwitchingTest.tpa</TPA>
+    <TAD>IdleCtrl_AC_SwitchingTest.tad</TAD>
+    <THD>IdleCtrl_AC_SwitchingTest.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>IdleCtrl_AC_SwitchingTest.exe</File>
+      <CRC>8B9B34BD247F71E829149599E0C2948AA1594549</CRC>
+    </Checksum>
+    <Checksum>
+      <File>IdleCtrl_AC_SwitchingTest.tpa</File>
+      <CRC>532CAB98AA7115D990C9A6A08EDAE812494B77E1</CRC>
+    </Checksum>
+    <Checksum>
+      <File>IdleCtrl_AC_SwitchingTest.tad</File>
+      <CRC>34F2E3E97D61A4436445E2260826AEF9321AC4</CRC>
+    </Checksum>
+    <Checksum>
+      <File>IdleCtrl_AC_SwitchingTest.thd</File>
+      <CRC>F52EE0E92275436F357D21E1BAFF881D4893D7</CRC>
+    </Checksum>
+  </Checksums>
+</file>

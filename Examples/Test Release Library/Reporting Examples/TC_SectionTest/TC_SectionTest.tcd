@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_SectionTest">
+    <EntryPoint>TC_SectionTest.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_SectionTest.tpa</TPA>
+    <TAD>TC_SectionTest.tad</TAD>
+    <THD>TC_SectionTest.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_SectionTest.exe</File>
+      <CRC>76858490C41D636062BCC1E1484D7EFD2F94473</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_SectionTest.tpa</File>
+      <CRC>4BAC49C680F8E1440AD532E554D3BA5F58DB2F</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_SectionTest.tad</File>
+      <CRC>7B58EAD964465DA7A7CA6CC2D3A89CAF45E85F</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_SectionTest.thd</File>
+      <CRC>62EAC36852B2426F7C5459543031E433B1B54123</CRC>
+    </Checksum>
+  </Checksums>
+</file>

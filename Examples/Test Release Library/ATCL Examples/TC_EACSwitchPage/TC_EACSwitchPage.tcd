@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_EACSwitchPage">
+    <EntryPoint>TC_EACSwitchPage.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_EACSwitchPage.tpa</TPA>
+    <TAD>TC_EACSwitchPage.tad</TAD>
+    <THD>TC_EACSwitchPage.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_EACSwitchPage.exe</File>
+      <CRC>2D5468C899489C4796AA275F0DCD849272DD84E</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_EACSwitchPage.tpa</File>
+      <CRC>8AA722CEF3AAAABCF57EDE19FE847D473195C48</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_EACSwitchPage.tad</File>
+      <CRC>881CD086941545449E017665DED8803E967644</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_EACSwitchPage.thd</File>
+      <CRC>ED1F252B1AD8C5A312B716394CFF23570FF47</CRC>
+    </Checksum>
+  </Checksums>
+</file>

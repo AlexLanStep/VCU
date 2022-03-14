@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".thd" TDC="ATCL hierarchy file" TDL="ATCL" Type="Test Hierarchy Description" Version="1.0">
+  <Test Control="" InstanceID="IdleCtrl_AC_SwitchingTest" Name="IdleCtrl_AC_SwitchingTest" OrdNum="0" ParamSetOID="" Type="Test Case">
+    <MetaData>
+      <MetaDataEntry Field="Version">1.1</MetaDataEntry>
+      <MetaDataEntry Field="Comment">A C# Test Case with UserRecords and DynamicArrays</MetaDataEntry>
+      <MetaDataEntry Field="Purpose">A Test Case Example with HiL Access and Evaluation</MetaDataEntry>
+      <MetaDataEntry Field="TCD">Unknown</MetaDataEntry>
+      <MetaDataEntry Field="Test Case Developer">ETAS Product Team</MetaDataEntry>
+      <MetaDataEntry Field="ChangeLog">Created</MetaDataEntry>
+    </MetaData>
+  </Test>
+</File>

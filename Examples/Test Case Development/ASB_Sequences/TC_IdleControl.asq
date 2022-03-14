@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root version="3.0" templateID="F424DA8F-606A-4098-BFF5-00BE37F60D69">
+	<info>
+		<MetaData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<Properties />
+			<Creator>dummy</Creator>
+			<CreationDate>2010-08-20T11:42:10.37336+02:00</CreationDate>
+			<LastEditor>Rrr9fe</LastEditor>
+			<LastModificationDate>2017-02-06T10:59:41.7221896+01:00</LastModificationDate>
+			<Comment>Comment</Comment>
+			<DebugConfigFileSource>Local</DebugConfigFileSource>
+			<DebugConfigFile>C:\Users\Public\Documents\ETAS\LABCAR-AUTOMATION 4.2\Examples\Test Bench Configurations\ATCL Example NEW Test Bench for LCO53\Test Bench Configuration for ATCL Examples LCO5.3.tbc</DebugConfigFile>
+		</MetaData>
+	</info>
+	<content>
+		<RootStencil xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<StencilLocation>Sequence</StencilLocation>
+			<DebuggerBreak>false</DebuggerBreak>
+			<IsCollapsed>false</IsCollapsed>
+			<IsCommented>false</IsCommented>
+			<Name>Root</Name>
+			<RootElements>
+				<StencilBase xsi:type="CommentStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>false</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Prerequisites</Name>
+					<Value>To debug this sequence on a real TestBench/RT-PC
+1. choose "Local" from the ComboBox in the ToolBar
+2. with
+- LCO 5.X use C:\Users\Public\Documents\ETAS\LABCAR-AUTOMATION 4.2\Examples\Test Bench Configurations\ATCL Example NEW Test Bench for LCO5X\Test Bench Configuration for ATCL Examples LCO5.X.tbc
+
+To debug offline
+choose "Offline" from the ComboBox in the ToolBar (a resp. TBC will be generated automatically when the debugger is started).</Value>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseGroupStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>true</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Model Initialization</Name>
+					<GroupElements>
+						<StencilBase xsi:type="TestCaseSetModelValueStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Value_0</Name>
+							<ParameterElements>
+								<Parameter>
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_0.Label</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>Empty</PhysicalType>
+									</LabelInfoViewModel>
+									<Unit />
+									<UnitVisibility>Collapsed</UnitVisibility>
+									<IndexViewModel>
+										<IndexXViewModel>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name />
+											<IsExpanded>true</IsExpanded>
+											<StencilLeft />
+										</IndexXViewModel>
+									</IndexViewModel>
+								</Parameter>
+							</ParameterElements>
+							<StencilLeft>
+								<StencilBase xsi:type="ConstantStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Constant_0</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>Empty</PhysicalType>
+									</LabelInfoViewModel>
+									<ValueViewModel xsi:type="FloatValueViewModel">
+										<Unit />
+										<FloatValue>0.0005</FloatValue>
+									</ValueViewModel>
+								</StencilBase>
+							</StencilLeft>
+							<Label>IIdle</Label>
+						</StencilBase>
+						<StencilBase xsi:type="TestCaseSetModelValueStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Value_1</Name>
+							<ParameterElements>
+								<Parameter>
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_1.Label</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>Empty</PhysicalType>
+									</LabelInfoViewModel>
+									<Unit />
+									<UnitVisibility>Collapsed</UnitVisibility>
+									<IndexViewModel>
+										<IndexXViewModel>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name />
+											<IsExpanded>true</IsExpanded>
+											<StencilLeft />
+										</IndexXViewModel>
+									</IndexViewModel>
+								</Parameter>
+							</ParameterElements>
+							<StencilLeft>
+								<StencilBase xsi:type="ConstantStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Constant_1</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>Empty</PhysicalType>
+									</LabelInfoViewModel>
+									<ValueViewModel xsi:type="FloatValueViewModel">
+										<Unit />
+										<FloatValue>0.02</FloatValue>
+									</ValueViewModel>
+								</StencilBase>
+							</StencilLeft>
+							<Label>PIdle</Label>
+						</StencilBase>
+					</GroupElements>
+					<CreateReportSection>true</CreateReportSection>
+				</StencilBase>
+				<StencilBase xsi:type="TestCaseGroupStencil">
+					<StencilLocation>Sequence</StencilLocation>
+					<DebuggerBreak>false</DebuggerBreak>
+					<IsCollapsed>false</IsCollapsed>
+					<IsCommented>false</IsCommented>
+					<Name>Test Execution and Evaluation</Name>
+					<GroupElements>
+						<StencilBase xsi:type="TestCaseGroupStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Prepare</Name>
+							<GroupElements>
+								<StencilBase xsi:type="WriteLogStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Report Text_0</Name>
+									<Value>Switch off all aggregates to have a specific start point
+(Engine, Ingition and Air Conditioning using an ON/OFF Switch)</Value>
+									<ReportLevel>info</ReportLevel>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_2</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_2.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Constant_2</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>-10</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>AirConditionTorque</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_3</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_3.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>off</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>0</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartEngine</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_4</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_4.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>off</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>0</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartIgnition</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_5</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_5.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>off</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>0</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartAirCondition</Label>
+								</StencilBase>
+							</GroupElements>
+							<CreateReportSection>true</CreateReportSection>
+						</StencilBase>
+						<StencilBase xsi:type="TestCaseGroupStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Start Ignition and engine</Name>
+							<GroupElements>
+								<StencilBase xsi:type="WriteLogStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Report Text_1</Name>
+									<Value>Start Ignition and engine</Value>
+									<ReportLevel>info</ReportLevel>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_6</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_6.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>on</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>1</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartIgnition</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_7</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_7.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>on</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>1</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartEngine</Label>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSleepStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Sleep_0</Name>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Constant</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>time</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit>ms</Unit>
+												<FloatValue>5000</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+								</StencilBase>
+								<StencilBase xsi:type="WriteLogStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Report Text_2</Name>
+									<Value>Switch off starter again</Value>
+									<ReportLevel>info</ReportLevel>
+								</StencilBase>
+								<StencilBase xsi:type="TestCaseSetModelValueStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_8</Name>
+									<ParameterElements>
+										<Parameter>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_8.Label</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<Unit />
+											<UnitVisibility>Collapsed</UnitVisibility>
+											<IndexViewModel>
+												<IndexXViewModel>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name />
+													<IsExpanded>true</IsExpanded>
+													<StencilLeft />
+												</IndexXViewModel>
+											</IndexViewModel>
+										</Parameter>
+									</ParameterElements>
+									<StencilLeft>
+										<StencilBase xsi:type="ConstantStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>off</Name>
+											<LabelInfoViewModel>
+												<ObjectType>Scalar</ObjectType>
+												<DataType>Float</DataType>
+												<PhysicalType>Empty</PhysicalType>
+											</LabelInfoViewModel>
+											<ValueViewModel xsi:type="FloatValueViewModel">
+												<Unit />
+												<FloatValue>0</FloatValue>
+											</ValueViewModel>
+										</StencilBase>
+									</StencilLeft>
+									<Label>StartEngine</Label>
+								</StencilBase>
+							</GroupElements>
+							<CreateReportSection>true</CreateReportSection>
+						</StencilBase>
+						<StencilBase xsi:type="TestCaseCurveVariableSetDefinitionStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Variable_0</Name>
+							<StencilLeft>
+								<StencilBase xsi:type="TestCaseDataloggerStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Model Datalogger_0</Name>
+									<Signals>
+										<Signal>
+											<Port>Model</Port>
+											<Name>Engine</Name>
+											<Unit />
+											<AquisitionTask>AcquisitionTask</AquisitionTask>
+											<PhysicalType>Empty</PhysicalType>
+										</Signal>
+									</Signals>
+									<ChildStencils>
+										<StencilBase xsi:type="WriteLogStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Report Text_3</Name>
+											<Value>Wait for the IdleController to be relaxing according to parameterization</Value>
+											<ReportLevel>info</ReportLevel>
+										</StencilBase>
+										<StencilBase xsi:type="TestCaseSleepStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Sleep_1</Name>
+											<StencilLeft>
+												<StencilBase xsi:type="ConstantStencil">
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name>Constant</Name>
+													<LabelInfoViewModel>
+														<ObjectType>Scalar</ObjectType>
+														<DataType>Float</DataType>
+														<PhysicalType>time</PhysicalType>
+													</LabelInfoViewModel>
+													<ValueViewModel xsi:type="FloatValueViewModel">
+														<Unit>ms</Unit>
+														<FloatValue>5000</FloatValue>
+													</ValueViewModel>
+												</StencilBase>
+											</StencilLeft>
+										</StencilBase>
+										<StencilBase xsi:type="WriteLogStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Report Text_4</Name>
+											<Value>Switch on The Air Conditioning</Value>
+											<ReportLevel>info</ReportLevel>
+										</StencilBase>
+										<StencilBase xsi:type="TestCaseSetModelValueStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Value_9</Name>
+											<ParameterElements>
+												<Parameter>
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name>Value_9.Label</Name>
+													<LabelInfoViewModel>
+														<ObjectType>Scalar</ObjectType>
+														<DataType>Float</DataType>
+														<PhysicalType>Empty</PhysicalType>
+													</LabelInfoViewModel>
+													<Unit />
+													<UnitVisibility>Collapsed</UnitVisibility>
+													<IndexViewModel>
+														<IndexXViewModel>
+															<StencilLocation>Sequence</StencilLocation>
+															<DebuggerBreak>false</DebuggerBreak>
+															<IsCollapsed>false</IsCollapsed>
+															<IsCommented>false</IsCommented>
+															<Name />
+															<IsExpanded>true</IsExpanded>
+															<StencilLeft />
+														</IndexXViewModel>
+													</IndexViewModel>
+												</Parameter>
+											</ParameterElements>
+											<StencilLeft>
+												<StencilBase xsi:type="ConstantStencil">
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name>on</Name>
+													<LabelInfoViewModel>
+														<ObjectType>Scalar</ObjectType>
+														<DataType>Float</DataType>
+														<PhysicalType>Empty</PhysicalType>
+													</LabelInfoViewModel>
+													<ValueViewModel xsi:type="FloatValueViewModel">
+														<Unit />
+														<FloatValue>1</FloatValue>
+													</ValueViewModel>
+												</StencilBase>
+											</StencilLeft>
+											<Label>StartAirCondition</Label>
+										</StencilBase>
+										<StencilBase xsi:type="TestCaseSleepStencil">
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name>Sleep_2</Name>
+											<StencilLeft>
+												<StencilBase xsi:type="ConstantStencil">
+													<StencilLocation>Sequence</StencilLocation>
+													<DebuggerBreak>false</DebuggerBreak>
+													<IsCollapsed>false</IsCollapsed>
+													<IsCommented>false</IsCommented>
+													<Name>Constant</Name>
+													<LabelInfoViewModel>
+														<ObjectType>Scalar</ObjectType>
+														<DataType>Float</DataType>
+														<PhysicalType>time</PhysicalType>
+													</LabelInfoViewModel>
+													<ValueViewModel xsi:type="FloatValueViewModel">
+														<Unit>ms</Unit>
+														<FloatValue>5000</FloatValue>
+													</ValueViewModel>
+												</StencilBase>
+											</StencilLeft>
+										</StencilBase>
+									</ChildStencils>
+								</StencilBase>
+							</StencilLeft>
+							<VariableName>Variable_0</VariableName>
+						</StencilBase>
+						<StencilBase xsi:type="WriteLogStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Report Text_5</Name>
+							<Value>Switch Off AirCondition again...</Value>
+							<ReportLevel>info</ReportLevel>
+						</StencilBase>
+						<StencilBase xsi:type="TestCaseSetModelValueStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Value_10</Name>
+							<ParameterElements>
+								<Parameter>
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Value_10.Label</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>Empty</PhysicalType>
+									</LabelInfoViewModel>
+									<Unit />
+									<UnitVisibility>Collapsed</UnitVisibility>
+									<IndexViewModel>
+										<IndexXViewModel>
+											<StencilLocation>Sequence</StencilLocation>
+											<DebuggerBreak>false</DebuggerBreak>
+											<IsCollapsed>false</IsCollapsed>
+											<IsCommented>false</IsCommented>
+											<Name />
+											<IsExpanded>true</IsExpanded>
+											<StencilLeft />
+										</IndexXViewModel>
+									</IndexViewModel>
+								</Parameter>
+							</ParameterElements>
+							<StencilLeft>
+								<StencilBase xsi:type="ConstantStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>off</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>Empty</PhysicalType>
+									</LabelInfoViewModel>
+									<ValueViewModel xsi:type="FloatValueViewModel">
+										<Unit />
+										<FloatValue>0</FloatValue>
+									</ValueViewModel>
+								</StencilBase>
+							</StencilLeft>
+							<Label>StartAirCondition</Label>
+						</StencilBase>
+						<StencilBase xsi:type="TestCaseSleepStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>Sleep_3</Name>
+							<StencilLeft>
+								<StencilBase xsi:type="ConstantStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Constant</Name>
+									<LabelInfoViewModel>
+										<ObjectType>Scalar</ObjectType>
+										<DataType>Float</DataType>
+										<PhysicalType>time</PhysicalType>
+									</LabelInfoViewModel>
+									<ValueViewModel xsi:type="FloatValueViewModel">
+										<Unit>ms</Unit>
+										<FloatValue>1000</FloatValue>
+									</ValueViewModel>
+								</StencilBase>
+							</StencilLeft>
+						</StencilBase>
+						<StencilBase xsi:type="TestCaseCurveValueComparisonStencil">
+							<StencilLocation>Sequence</StencilLocation>
+							<DebuggerBreak>false</DebuggerBreak>
+							<IsCollapsed>true</IsCollapsed>
+							<IsCommented>false</IsCommented>
+							<Name>CurveValueComparison_0</Name>
+							<EvaluationRecords>
+								<EvaluationRecord>
+									<SelectedSignal xsi:type="Signal">
+										<Port>Model</Port>
+										<Name>Engine</Name>
+										<Unit />
+										<AquisitionTask>AcquisitionTask</AquisitionTask>
+										<PhysicalType>Empty</PhysicalType>
+									</SelectedSignal>
+									<SelectedEvaluationCriterium>y permanent inside band</SelectedEvaluationCriterium>
+									<ComparisonValue>0</ComparisonValue>
+									<Duration>0</Duration>
+									<IsLinearBand>true</IsLinearBand>
+									<IsTubular>false</IsTubular>
+									<LinearBand>700</LinearBand>
+									<PosDelta>100</PosDelta>
+									<NegDelta>100</NegDelta>
+									<EvaluationOffset>0</EvaluationOffset>
+									<OffsetIsToPrevious>true</OffsetIsToPrevious>
+									<OffsetIsToMeasurement>false</OffsetIsToMeasurement>
+									<DoPlot>true</DoPlot>
+									<ValuePanelVisibility>Collapsed</ValuePanelVisibility>
+									<BandCheckBoxesPanelVisibility>Visible</BandCheckBoxesPanelVisibility>
+									<ReferenceSignalPanelVisibility>Collapsed</ReferenceSignalPanelVisibility>
+									<DurationPanelVisibility>Collapsed</DurationPanelVisibility>
+									<LinearBandPanelVisibility>Visible</LinearBandPanelVisibility>
+									<DeltaPanelVisibility>Visible</DeltaPanelVisibility>
+									<FilePanelVisibility>Collapsed</FilePanelVisibility>
+								</EvaluationRecord>
+							</EvaluationRecords>
+							<StencilLeft>
+								<StencilBase xsi:type="TestCaseCurveVariableSetUsageStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Variable</Name>
+									<RepresentedDefinitionStencilName>Variable_0</RepresentedDefinitionStencilName>
+								</StencilBase>
+							</StencilLeft>
+							<Left>
+								<StencilBase xsi:type="TestCaseFailStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Fail_0</Name>
+								</StencilBase>
+							</Left>
+							<Right>
+								<StencilBase xsi:type="TestCasePassStencil">
+									<StencilLocation>Sequence</StencilLocation>
+									<DebuggerBreak>false</DebuggerBreak>
+									<IsCollapsed>false</IsCollapsed>
+									<IsCommented>false</IsCommented>
+									<Name>Pass_0</Name>
+								</StencilBase>
+							</Right>
+						</StencilBase>
+					</GroupElements>
+					<CreateReportSection>true</CreateReportSection>
+				</StencilBase>
+			</RootElements>
+		</RootStencil>
+	</content>
+</root>

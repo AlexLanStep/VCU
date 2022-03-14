@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_FuelPump">
+    <EntryPoint>TC_FuelPump.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_FuelPump.tpa</TPA>
+    <TAD>TC_FuelPump.tad</TAD>
+    <THD>TC_FuelPump.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_FuelPump.exe</File>
+      <CRC>755F34D153318C18D62A9EBAFFC8F7FEF43FD</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_FuelPump.tpa</File>
+      <CRC>E2A7375FD15796D4A7FE67A84E23CA0EEC9CE5C</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_FuelPump.tad</File>
+      <CRC>A6DE65403FEB633A18D452E64F518A25B4294B2</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_FuelPump.thd</File>
+      <CRC>E55F2162F060F31A96A1121B1241616DF8291D33</CRC>
+    </Checksum>
+  </Checksums>
+</file>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tpa" TDC="Test Parameter File for ATCL test cases" TDL="Python" Type="Test Parameter File" Version="1.0">
+  <ParamSets Name="RealTimeScriptingTestCase">
+    <ParamSet Name="RealTimeScriptingTestCase" OID="RealTimeScriptingTestCase">
+      <Parameter Name="PluginFiles" InstanceName="PluginFiles" Comment="The set of plugin files to Activate" DataType="charstring" IsLblChangeable="false" Lbl="PluginFiles" MaxValue="" MinValue="" ObjectType="Array">
+        <Array Size="1">
+          <V>
+            <Sc I="0" Val="" />
+          </V>
+        </Array>
+        <DefArray Size="1">
+          <V>
+            <Sc I="0" Val="" />
+          </V>
+        </DefArray>
+      </Parameter>
+    </ParamSet>
+  </ParamSets>
+</File>

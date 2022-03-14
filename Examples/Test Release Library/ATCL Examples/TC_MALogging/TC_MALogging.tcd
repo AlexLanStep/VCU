@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_MALogging">
+    <EntryPoint>TC_MALogging.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_MALogging.tpa</TPA>
+    <TAD>TC_MALogging.tad</TAD>
+    <THD>TC_MALogging.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_MALogging.exe</File>
+      <CRC>34E49386BDDAD5F47F82ADDF1B9AC76F305F90</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_MALogging.tpa</File>
+      <CRC>8AA722CEF3AAAABCF57EDE19FE847D473195C48</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_MALogging.tad</File>
+      <CRC>D55BD2291422F3CDF2BA992698F81DBCAE712</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_MALogging.thd</File>
+      <CRC>D11052CC7F4D8F28280C5C2DBCE944A1E231D43</CRC>
+    </Checksum>
+  </Checksums>
+</file>

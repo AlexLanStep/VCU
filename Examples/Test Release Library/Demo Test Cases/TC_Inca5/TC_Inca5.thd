@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<File Extension="thd" TDC="Telelogic TAU/Tester V2.4" TDL="TTCN-3" Type="Test Hierarchy Description"
+         Version="1.0">
+    <Test Control="" InstanceID="TC_Inca5" Name="TC_Inca5" OrdNum="0" ParamSetOID="TC_Inca5"
+             Type="Test Group">
+        <MetaData>
+            <MetaDataEntry Field="TCD">Enter your name</MetaDataEntry>
+            <MetaDataEntry Field="Version">1.0</MetaDataEntry>
+            <MetaDataEntry Field="Purpose">Describe the test purpose here. &#10;You can use multiple lines, if needed.</MetaDataEntry>
+            <MetaDataEntry Field="Comment">Add your comments here. &#10;Use Multiple lines, if needed.</MetaDataEntry>
+        </MetaData>
+        <ContainsTests>
+            <Test Control="TC_Inca5/TE_Datalogger_1" InstanceID="TE_Datalogger_1"
+                     Name="TE_Datalogger" OrdNum="0" ParamSetOID="" Type="Test Case">
+                <MetaData>
+                    <MetaDataEntry Field="TCD">Enter your name</MetaDataEntry>
+                    <MetaDataEntry Field="Version">1.0</MetaDataEntry>
+                    <MetaDataEntry Field="Purpose">Describe the test purpose here. &#10;You can use multiple lines, if needed.</MetaDataEntry>
+                    <MetaDataEntry Field="Comment">Add your comments here. &#10;Use Multiple lines, if needed.</MetaDataEntry>
+                </MetaData>
+                <ContainsTests />
+            </Test>
+        </ContainsTests>
+    </Test>
+</File>
+

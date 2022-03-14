@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".thd" TDC="ATCL hierarchy file" TDL="ATCL" Type="Test Hierarchy Description" Version="1.0">
+  <Test Control="" InstanceID="TC_SectionTest" Name="TC_SectionTest" OrdNum="0" ParamSetOID="" Type="Test Case">
+    <MetaData>
+      <MetaDataEntry Field="Version">Undefined</MetaDataEntry>
+      <MetaDataEntry Field="Comment">No set by tc developer</MetaDataEntry>
+      <MetaDataEntry Field="Purpose">No purpose set for this tc</MetaDataEntry>
+      <MetaDataEntry Field="TCD">Unknown</MetaDataEntry>
+    </MetaData>
+  </Test>
+</File>

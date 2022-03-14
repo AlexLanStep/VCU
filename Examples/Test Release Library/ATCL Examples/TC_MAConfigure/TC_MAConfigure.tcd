@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDL="StdExe" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_MAConfigure">
+    <EntryPoint>TC_MAConfigure.exe</EntryPoint>
+    <Dependencies />
+  </TestCase>
+  <MetaData>
+    <TPA>TC_MAConfigure.tpa</TPA>
+    <TAD>TC_MAConfigure.tad</TAD>
+    <THD>TC_MAConfigure.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_MAConfigure.exe</File>
+      <CRC>B7BE91A8A8284289AF5FDB86D8B322A329E063</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_MAConfigure.tpa</File>
+      <CRC>8AA722CEF3AAAABCF57EDE19FE847D473195C48</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_MAConfigure.tad</File>
+      <CRC>8C635605B6ACD9E5ADF3CFCFCF9E7C705AC858</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_MAConfigure.thd</File>
+      <CRC>ECB43545848DFA7D9DC6CB67D0368059C13351</CRC>
+    </Checksum>
+  </Checksums>
+</file>

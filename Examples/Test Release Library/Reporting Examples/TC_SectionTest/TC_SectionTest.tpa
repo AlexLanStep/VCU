@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tpa" TDC="Test Parameter File for ATCL test cases" TDL="ATCL" Type="Test Parameter File" Version="1.0">
+  <ParamSets Name="TC_SectionTest">
+    <ParamSet Name="TC_SectionTest" OID="TC_SectionTest">
+      <Parameter Name="float" InstanceName="float" Comment="comment" DataType="float" IsLblChangeable="false" Lbl="label" MaxValue="2" MinValue="1" ObjectType="Scalar" Unit="km">
+        <Scalar Value="1.2" />
+        <DefScalar Value="1.2" />
+      </Parameter>
+    </ParamSet>
+  </ParamSets>
+</File>

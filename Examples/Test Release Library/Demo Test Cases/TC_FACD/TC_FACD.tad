@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<File Extension="tad" TDC="Telelogic TAU/Tester V2.3" TDL="TTCN-3" Type="Test Architecture Description"
+         Version="1.0">
+    <TestComponent Name="TC_FACD">
+        <Ports>
+            <Port Name="P_FACD" Type="Type_FileAccessCompositeData_port">
+                <Signature Name="SC_FACD_Create_SD" ReturnType="" />
+                <Signature Name="SC_FACD_UuTDescriptionValueGet_SD" ReturnType="">
+                    <Attribute DataType="charstring" I="0" Mode="in" />
+                </Signature>
+                <Signature Name="SC_FACD_Close_SD" ReturnType="" />
+            </Port>
+        </Ports>
+        <External>
+            <Function Name="getFTEControlParameter" ReturnType="integer" />
+        </External>
+    </TestComponent>
+</File>
+

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tad" TDC="ATCL Architecture File for Port usage" TDL="ATCL" Type="Test Architecture Description" Version="1.0">
+  <TestComponent Name="TC_Report">
+    <Ports />
+  </TestComponent>
+</File>

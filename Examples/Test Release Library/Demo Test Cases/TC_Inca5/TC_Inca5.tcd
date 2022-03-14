@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Extension=".tcd" TDC="TTCN-3 Test Case" TDL="TTCN" Type="Test Case Definition" Version="3.0">
+  <TestCase Name="TC_Inca5">
+    <EntryPoint>TC_Inca5.exe</EntryPoint>
+    <Dependencies>
+      <Dependency>TC_Inca5.cpa</Dependency>
+    </Dependencies>
+  </TestCase>
+  <MetaData>
+    <TPA>TC_Inca5.tpa</TPA>
+    <TAD>TC_Inca5.tad</TAD>
+    <THD>TC_Inca5.thd</THD>
+  </MetaData>
+  <Checksums>
+    <Checksum>
+      <File>TC_Inca5.exe</File>
+      <CRC>5AC0ADD5A2CC32BEC02DF4FE5EC28FD35C2BE3DE</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_Inca5.tpa</File>
+      <CRC>536238C9DBAE74F95EDE27DA67D1D8FBEF10A0</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_Inca5.tad</File>
+      <CRC>D1E53EDC68F71B7EFC7F97B6B638B5B64AD</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_Inca5.thd</File>
+      <CRC>CE3B336CD934A4DEAEC795ADEEBD113E867793</CRC>
+    </Checksum>
+    <Checksum>
+      <File>TC_Inca5.cpa</File>
+      <CRC>BFD095374CBF4A5C9832FD7C8161AB498C221D1</CRC>
+    </Checksum>
+  </Checksums>
+</file>
