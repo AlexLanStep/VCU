@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: E:\LabCar\BasaDll\ETAS.LCA.Logging.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6FE557B4-AF4C-4EE1-8111-AB92BD51BA17}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>ETAS.LCA.Logging</AssemblyName>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <RootNamespace>ETAS.LCA.Logging</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>lib\log4net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ILog.cs" />
+    <Compile Include="LogImpl.cs" />
+    <Compile Include="FinestAutoMethodLogger.cs" />
+    <Compile Include="AutoMethodLogger.cs" />
+    <Compile Include="LogManager.cs" />
+    <Compile Include="FinerAutoMethodLogger.cs" />
+    <Compile Include="Aspect\Sinks\LoggingServerSink.cs" />
+    <Compile Include="Aspect\Attributes\LogMethodVisibility.cs" />
+    <Compile Include="Aspect\Attributes\LogClassAttribute.cs" />
+    <Compile Include="Aspect\Attributes\LogMethodAttribute.cs" />
+    <Compile Include="Aspect\Properties\LoggingProperty.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

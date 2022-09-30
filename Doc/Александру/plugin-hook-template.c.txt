@@ -1,0 +1,45 @@
+/* 
+ * This is an minimum template for a realtime plugin for ETAS LABCAR-RTPC
+ *
+ * Author: Mathias Koehrer, ETAS GmbH. All rights reserved.
+ * 
+ * */
+
+#include <stdio.h>
+#include <math.h>
+#include "rtos_hook.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * Function to be called from the hook.
+ * @param  arg   Datapointer as passed to rtos_hook_attach
+ * @param  t_ns  The current time in nanoseconds
+ * */
+static void hook_function(void *arg, rtos_time_t t_ns)
+{
+}
+
+
+static rtos_handle_t tobj;
+
+int on_load(void)
+{
+    return 0;
+}
+
+int on_initialize(void)
+{
+    tobj = rtos_hook_attach("myhook", hook_function, NULL);
+    return 0;
+}
+
+void on_terminate(void)
+{
+    rtos_hook_detach(tobj);
+}
+
+void on_unload(void)
+{
+}

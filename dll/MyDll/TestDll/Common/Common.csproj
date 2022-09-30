@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration.ConfigurationManager">
+      <HintPath>C:\Program Files (x86)\dotnet\shared\Microsoft.WindowsDesktop.App\3.1.8\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

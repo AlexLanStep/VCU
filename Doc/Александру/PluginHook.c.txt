@@ -1,0 +1,81 @@
+/* --------------------------------------------------------------------------
+ * This is an template for a C code module that implements plugin hooks
+ * to call plugins.
+ * --------------------------------------------------------------------------
+ */
+
+/* ------------------------------------------------ --------------------------
+ * Это шаблон для модуля кода C, который реализует хуки плагинов.
+ * для вызова плагинов.
+ * -------------------------------------------------- -------------------------
+ */
+
+// Add application-specific include statements here:
+// Добавьте операторы include для конкретного приложения здесь:
+#include "rtos_realtime_test.h"
+
+#include "connect.h"
+#include "PluginHook.h"
+
+
+static rtos_handle_t rttest_hook;
+
+
+// Init-triggered function "Init":
+// Инициируемая инициализацией функция "Init":
+void cmod_Init_PluginHook() {
+    // Get Inputs:  // Получить входные данные:
+    #include "PluginHookCopyInports.h"
+
+    // Enter your code here:
+    /* This hook is referenced by the string "SGPlugin" */
+    // Введите здесь свой код:
+    /* На этот хук ссылается строка "SGPlugin" */
+    rttest_hook = realtime_test_hook_create("SGPlugin"); 
+
+
+    // Set Outputs:
+    // Установить выходы:
+    #include "PluginHookCopyOutports.h"
+
+}
+
+// Exit-triggered function "Exit":
+// Выходная функция "Выход":
+void cmod_Exit_PluginHook() {
+    // Get Inputs:
+    #include "PluginHookCopyInports.h"
+
+    // Enter your code here:
+    realtime_test_hook_delete(rttest_hook);
+
+
+    // Set Outputs:
+    #include "PluginHookCopyOutports.h"
+
+}
+
+// Event-triggered function "Timer":
+// Событийная функция "Таймер":
+void cmod_Timer_PluginHook() {
+    // Get Inputs:
+    #include "PluginHookCopyInports.h"
+
+    // Enter your code here:
+    // Call the hook that is defined in the init function
+    // Введите здесь свой код:
+    // Вызываем хук, определенный в функции инициализации
+    realtime_test_hook_execute(rttest_hook);
+    // Call the hook that is defined in the init function
+    // Вызываем хук, определенный в функции инициализации
+
+    // Set Outputs:
+    /* The following line is commented to
+     * avoid to overwrite the module outports */
+    // Установить выходы:
+    /* Следующая строка комментируется
+     * избегайте перезаписи выходных портов модуля */
+    //#include "PluginHookCopyOutports.h"
+
+}
+

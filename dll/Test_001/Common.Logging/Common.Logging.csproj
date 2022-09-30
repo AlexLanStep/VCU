@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+  <!--Project was exported from assembly: E:\LabCar\BasaDll\Common.Logging.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BA35FB3A-AB45-4459-9836-BE02B66D2B1E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Common.Logging</AssemblyName>
+    <ApplicationVersion>1.1.0.1</ApplicationVersion>
+    <RootNamespace>Common.Logging</RootNamespace>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ILog.cs" />
+    <Compile Include="ILoggerFactoryAdapter.cs" />
+    <Compile Include="ConfigurationSectionHandler.cs" />
+    <Compile Include="LogLevel.cs" />
+    <Compile Include="LoggingException.cs" />
+    <Compile Include="LogManager.cs" />
+    <Compile Include="LogSetting.cs" />
+    <Compile Include="Simple\ConsoleOutLogger.cs" />
+    <Compile Include="Simple\ConsoleOutLoggerFactoryAdapter.cs" />
+    <Compile Include="Simple\NoOpLogger.cs" />
+    <Compile Include="Simple\NoOpLoggerFactoryAdapter.cs" />
+    <Compile Include="Simple\TraceLogger.cs" />
+    <Compile Include="Simple\TraceLoggerFactoryAdapter.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

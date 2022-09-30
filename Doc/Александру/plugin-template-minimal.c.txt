@@ -1,0 +1,142 @@
+/* 
+ * This is an minimum template for a realtime plugin for ETAS LABCAR-RTPC
+ *
+ * Author: Mathias Koehrer, ETAS GmbH. All rights reserved.
+ * 
+ * */
+
+#include <stdio.h>
+#include <math.h>
+#include "rtos_realtime_test.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+/* ---------------------------------------------------------------------------
+ * Define the name of the hook to attach to:
+ * ---------------------------------------------------------------------------
+ */
+#define HOOK "PluginHook"
+
+
+/* ---------------------------------------------------------------------------
+ * Mapping to model objects:
+ * The right column is the model path as seen in the Experiment Enviroment.
+ *
+ * The objects are accessible here via there short names 
+ * "mylabel"...
+ *
+ * For convenience, the #label directives can be placed in a separate header 
+ * file.
+ * ---------------------------------------------------------------------------
+ */
+
+// #label mylabel  PluginModule/Outports/out
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+/* ---------------------------------------------------------------------------
+ * The main real time test functions!
+ *
+ * Typically there are three functions: init, exit, execute
+ *
+ * They are called whenever the realtime test is initialized, terminated
+ * or executed (called) via the caller-hook.
+ * ---------------------------------------------------------------------------
+ */
+
+
+
+/* ---------------------------------------------------------------------------
+ * This is the test_init function.
+ * It will be called once at loading time
+ * ---------------------------------------------------------------------------
+ */
+static int test_init(realtime_test_obj * obj)
+{
+    return 0; // Init passed 
+}
+
+/* ---------------------------------------------------------------------------
+ * The test_exit function will be called to cleanup everything
+ * before unloading the plugin
+ * ---------------------------------------------------------------------------
+ */
+static void test_exit(realtime_test_obj * obj)
+{
+}
+
+/* ---------------------------------------------------------------------------
+ * This function will be called in real time via the hook in the simulation
+ * model.
+ *
+ * It has two arguments: 
+ *   - the test object 
+ *   - the current simulation time (in nanoseconds)
+ * ---------------------------------------------------------------------------
+ */
+static void test_execute(realtime_test_obj * obj, rtos_time_t t_ns)
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+/* ---------------------------------------------------------------------------
+ * This is the interface of the realtime test: 
+ * Pointers to all test functions (init, exit, execute) have to be passed
+ * to the structure "functions" which is then passed to realtime_test_create()
+ * ---------------------------------------------------------------------------
+ */
+static const I_realtime_test test_functions = {
+    .init = &test_init,
+    .exit = &test_exit,
+    .execute = &test_execute
+};
+
+/* The real time test object: */
+static realtime_test_obj *rttest;
+
+//////////////////////////////////////////////////////////////////////////////
+/* ---------------------------------------------------------------------------
+ * General plugin functions - Required to load and unload the plugin.
+ *
+ * These function are general and not restricted to the realtime test usage.
+ * ---------------------------------------------------------------------------
+ */
+
+int on_load(void)
+{
+    return 0;
+}
+
+int on_initialize(void)
+{
+    int rc;
+    /* Create a new realtime test.
+     * The following parameters are used
+     *  - Name of test: Here, no name is required, use NULL pointer
+     *  - Pointers to the test functions in the I_realtime_test Interface object.
+     *  - test local data is passed with a pointer to test_data
+     *  - The maximum size of the result string is 1000 in this case.
+     * */
+    rttest = realtime_test_create(NULL, &test_functions, NULL, 1000);
+    if (!rttest)
+        return -1;
+
+    /* Add realtime test to test hook.
+     * It is possible to add a single test to multiple hooks.
+     * The name is a define (see above). */
+    rc = realtime_test_hook_add(HOOK, rttest);
+    return rc;
+}
+void on_terminate(void)
+{
+    realtime_test_hook_remove(HOOK, rttest);
+    realtime_test_delete(rttest);
+}
+
+void on_unload(void)
+{
+}

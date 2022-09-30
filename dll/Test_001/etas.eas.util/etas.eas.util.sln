@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32912.340
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "etas.eas.util", "etas.eas.util.csproj", "{3400EBE3-D4BB-4E3F-8AE1-1E45D09C93F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3400EBE3-D4BB-4E3F-8AE1-1E45D09C93F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3400EBE3-D4BB-4E3F-8AE1-1E45D09C93F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3400EBE3-D4BB-4E3F-8AE1-1E45D09C93F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3400EBE3-D4BB-4E3F-8AE1-1E45D09C93F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FDA8B540-A80D-4D0A-9194-5DAB76C6E312}
+	EndGlobalSection
+EndGlobal

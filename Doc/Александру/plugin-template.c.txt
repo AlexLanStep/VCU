@@ -1,0 +1,236 @@
+/* 
+ * This is an example for a variable signal generator test realized
+ * as realtime plugin for ETAS LABCAR-RTPC
+ *
+ * Author: Mathias Koehrer, ETAS GmbH. All rights reserved.
+ * Date:   14-Nov-2008
+ * 
+ * */
+
+#include <stdio.h>
+#include <math.h>
+#include "rtos_realtime_test.h"
+
+////////////////////////////////////////////////////////////////////////////////
+/* ---------------------------------------------------------------------------
+ * Mappings and Defines:
+ * These entries can be placed in a separate header file (e.g. "mapping.h").
+ * For simplicity, they are placed in the main C file
+ * ---------------------------------------------------------------------------
+ */
+
+
+/* ---------------------------------------------------------------------------
+ * Define the name of the hook to attach to:
+ * ---------------------------------------------------------------------------
+ */
+#define HOOK "SGPlugin"
+
+
+/* ---------------------------------------------------------------------------
+ * Mapping to model objects:
+ * The right column is the model path as seen in the Experiment Enviroment.
+ *
+ * The objects are accessible here via there short names 
+ * "out", "p1", "p2", "p3".
+ * ---------------------------------------------------------------------------
+ */
+#label out      SGPlugin/Outports/out
+#label p1       SGPlugin/CalibrationVariables/p1
+#label p2       SGPlugin/CalibrationVariables/p2
+#label p3       SGPlugin/CalibrationVariables/p3
+
+//////////////////////////////////////////////////////////////////////////////
+/* ---------------------------------------------------------------------------
+ * Local Signal Generator specific functions that will be called from the 
+ * functions below...
+ *
+ * This is done to show that within the plugin all standard C functionality
+ * like function calls etc. are possible.
+ *
+ * Here the functions use the shortcuts as defined with the #label directive
+ * from above.
+ * ---------------------------------------------------------------------------
+ */
+static void sginit(void)
+{
+    out = 0.0;
+    p1  = 1.0;
+    p2  = 555.5;
+}
+
+static void sgexit(void)
+{
+    out = 0.0;
+    p1  = 0.0;
+    p2  = 0.0;
+}
+
+static void sgfunction(double t)
+{
+    out = p1 * (sin(20*t) + cos(2.0*t));
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+/* ---------------------------------------------------------------------------
+ * Test specific data organized within a structure.
+ * As an alternative, the test specific data can be hold with a 
+ * number of static scalars...
+ * ---------------------------------------------------------------------------
+ */
+typedef struct
+{
+    int state;
+    double save_delta;
+    rtos_time_t t_start;
+} t_test_data;
+
+static t_test_data test_data;
+
+////////////////////////////////////////////////////////////////////////////////
+/* ---------------------------------------------------------------------------
+ * The main real time test functions!
+ *
+ * Typically there are three functions: init, exit, execute
+ *
+ * They are called whenever the realtime test is initialized, terminated
+ * or executed (called) via the caller-hook.
+ * ---------------------------------------------------------------------------
+ */
+
+
+
+/* ---------------------------------------------------------------------------
+ * This is the test_init function.
+ * It will be called once at loading time
+ * ---------------------------------------------------------------------------
+ */
+static int test_init(realtime_test_obj * obj)
+{
+    test_data.state = 0;
+    sginit();
+    return 0; // Init passed 
+}
+
+/* ---------------------------------------------------------------------------
+ * The test_exit function will be called to cleanup everything
+ * before unloading the plugin
+ * ---------------------------------------------------------------------------
+ */
+static void test_exit(realtime_test_obj * obj)
+{
+    sgexit();
+}
+
+/* ---------------------------------------------------------------------------
+ * This function will be called in real time via the hook in the simulation
+ * model.
+ *
+ * It has two arguments: 
+ *   - the test object 
+ *   - the current simulation time (in nanoseconds)
+ * ---------------------------------------------------------------------------
+ */
+static void test_execute(realtime_test_obj * obj, rtos_time_t t_ns)
+{
+    /* The test is realized as a very simple state machine: */
+    switch (test_data.state)
+    {
+    case 0:
+        /* State 0 - Start!
+         * Call sgfunction with value 0.0
+         * */
+        test_data.t_start = t_ns;
+        sgfunction((double)0.0);
+        test_data.state++;
+
+        break;
+
+    case 1:
+        /* State 1 - Running!
+         *
+         * Call the sgfunction with the double value mydelta as parameter which is the
+         * time in seconds since the start of the plugin...
+         * Do not leave this state anymore...
+         * */
+        {
+            double mydelta = (double)(t_ns - test_data.t_start)/1.0e9;
+            sgfunction(mydelta);
+
+            // Generate a dummy testresult. For this example, this is silly,
+            // however it shows the mechanismn:
+            realtime_test_result(obj, REALTIME_TEST_UNDEF, "Signal Generator is running at %f seconds", mydelta);
+        }
+
+        break;
+
+    default:                   /* State: End of test. Do nothing */
+        /* Example for a test result: (it is not called here...) */
+        realtime_test_result(obj, REALTIME_TEST_PASSED, "Everything was perfect!");
+
+        break;
+    }
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+/* ---------------------------------------------------------------------------
+ * This is the interface of the realtime test: 
+ * Pointers to all test functions (init, exit, execute) have to be passed
+ * to the structure "functions" which is then passed to realtime_test_create()
+ * ---------------------------------------------------------------------------
+ */
+static const I_realtime_test test_functions = {
+    .init = &test_init,
+    .exit = &test_exit,
+    .execute = &test_execute
+};
+
+/* The real time test object: */
+static realtime_test_obj *rttest;
+
+//////////////////////////////////////////////////////////////////////////////
+/* ---------------------------------------------------------------------------
+ * General plugin functions - Required to load and unload the plugin.
+ *
+ * These function are general and not restricted to the realtime test usage.
+ * ---------------------------------------------------------------------------
+ */
+
+int on_load(void)
+{
+    return 0;
+}
+
+int on_initialize(void)
+{
+    int rc;
+    /* Create a new realtime test.
+     * The following parameters are used
+     *  - Name of test: Here, no name is required, use NULL pointer
+     *  - Pointers to the test functions in the I_realtime_test Interface object.
+     *  - test local data is passed with a pointer to test_data
+     *  - The maximum size of the result string is 1000 in this case.
+     * */
+    rttest = realtime_test_create(NULL, &test_functions, &test_data, 1000);
+    if (!rttest)
+        return -1;
+
+    /* Add realtime test to test hook.
+     * It is possible to add a single test to multiple hooks */
+    rc = realtime_test_hook_add(HOOK, rttest);
+    return rc;
+}
+void on_terminate(void)
+{
+    realtime_test_hook_remove(HOOK, rttest);
+    realtime_test_delete(rttest);
+}
+
+void on_unload(void)
+{
+}
