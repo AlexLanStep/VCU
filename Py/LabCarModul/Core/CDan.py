@@ -8,7 +8,6 @@ class CDan:
     self.Dan = dict()
     self.TaskDan = dict()
 
-
   def AddFestWert(self, name, val, coment=""):
     self.DanForModel[name] = {"s": f"FESTWERT {self.model}/{name}/Value \n  WERT {str(val)} \nEND\n",
                               "v": val,
@@ -29,12 +28,10 @@ class CDan:
     _ = [s.append(item['s']) for item in self.DanForModel.values() ]
     self.WriteTxt(pathfiles, s)
 
-
   def WriteTxt(self, pathfiles:str, ls:list):
     with open(pathfiles, 'w') as filehandle:
         for listitem in ls:
             filehandle.write('%s\n' % listitem)
-
 
   def DeleteFestWertName(self, name):
     if name in self.DanForModel.keys():
@@ -46,9 +43,8 @@ class CDan:
   def AddTask(self, name, signal, task, comment=""):
     self.TaskDan[name] = {"sig": signal, 'task':task, 'com':comment}
 
-    def GetTask(self, name):
-      return self.TaskDan[name]
-
+  def GetTask(self, name):
+    return self.TaskDan[name]
 
   def GetFestWert(self, name, key=None):
     try:
@@ -71,3 +67,13 @@ class CDan:
         return None
     except:
       return None
+
+  def AddNameParams(self, name, coment=""):
+    self.Dan[name] = {"s": f"{self.model}/{name}/Value",
+                              "c":coment}
+    jj=1
+
+  def AddNameParamsModel(self, name, model, coment=""):
+    self.Dan[name] = {"s": f"{model}/{name}/Value",
+                              "c":coment}
+    jj=1
