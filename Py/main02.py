@@ -1,4 +1,5 @@
 # import COM module for Windows
+import re
 import win32com.client
 import pprint
 import time
@@ -52,25 +53,52 @@ def inicialDan0(*dan):
   cdan.AddTask("Low_Beam_Req", "TEST/Low_Beam_Test/Low_Beam_Req/Value", "Task01")             # , "Acquisition"
   cdan.AddTask("Low_Beam_State", "TEST/Low_Beam_Test/Low_Beam_State/Value", "Task01")         # , "Acquisition"
 
-  cdan.AddNameParams("BatteryIsOn")
-  cdan.AddNameParams("Ignition")
-  cdan.AddNameParams("Butt_Drive_State")
+  lsParams = ["BatteryIsOn", "Ignition", "Butt_Drive_State"]
+  for it in lsParams:
+    cdan.AddNameParams(it)
 
   cdan.AddNameParamsModel("BatteryIsOn1", "xxTEST/xxx/Low_Beam_Test", "twst param")
 
-  return  cdan
+  return  cdan, lsParams
 
-  # pprint.pprint(cdan.DanForModel)
-  # print(cdan.DanForModel["Gain_Signal"]["s"])
-
-
+def InicialScenario0():
+  _wait=0.2
+  ls=[("sampl=0.1"),
+      {'t':_wait,
+            'set':{"Butt_Drive_State":1.0, "BatteryIsOn":1.0}},
+      {'t':_wait,
+            'get':["BatteryIsOn", "Low_Beam_Req", "Butt_Drive_State"],
+            'set':{"Ignition":1.0, "BatteryIsOn":0.0 }},
+      {'t':_wait,
+            'get':["BatteryIsOn", "Low_Beam_Req", "Butt_Drive_State"],
+            'set':{"Butt_Drive_State":0.0, "BatteryIsOn":1.0}},
+      {'t':_wait,
+            'get':["BatteryIsOn", "Low_Beam_Req", "Butt_Drive_State"],
+            'set':{"Butt_Drive_State":1.0, }},
+      {'t':_wait,
+            'get':["BatteryIsOn", "Low_Beam_Req", "Butt_Drive_State"],
+            'rez':["BatteryIsOn==1.0", "Low_Beam_Req==1.0", "Butt_Drive_State==1.0"]},
+     ]
+  return ls
 
 if __name__ == '__main__':
+
+  # pEquals = re.compile('==')
+
   print(" Старт программы ")
+
+
   cdan, pp = inicialLabCar()
   _contextLabCar = ContextLabCar(pp.D, cdan)
 
-  d0 = inicialDan0("TEST/Low_Beam_Test")
+  Scenario0 = InicialScenario0()
+  pprint.pp(Scenario0)
+
+  d0, lsParams = inicialDan0("TEST/Low_Beam_Test")
+
+  _contextLabCar.InstalParam(d0.Dan, lsParams)
+  _contextLabCar.UniTest(Scenario0)
+
 
 #  _contextLabCar.transferLabCar.IniIControlDan({"Param1":d0.DanForModel})
 #  _contextLabCar.InitTask(d0.TaskDan)
@@ -84,170 +112,3 @@ if __name__ == '__main__':
 
 #  _contextLabCar.DisconnectLabCar()
 
-'''
-
-Application = win32com.client.dynamic.Dispatch ("ExperimentEnvironment.Application") # startup
-ExperimentEnvironment = Application.Scripting # get root object
-# Workspace = ExperimentEnvironment.OpenWorkspace ("c:\\temp\\ee\\workspace.eew") # open workspace
-# Experiment = Workspace.OpenExperiment("c:\\temp\\ee\\experiment.eex") # open experiment
-Workspace = ExperimentEnvironment.OpenWorkspace("D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\AUTOMATION\\AUTOMATION.eew") # open workspace
-Experiment = Workspace.OpenExperiment("D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\DefaultExp.eex") # open experiment
-# alternatively, for acessing an already opened project, simply get the Workspace and Experiment properties
-#Workspace = ExperimentEnvironment.Workspace
-#Experiment = Workspace.Experiment
-SignalSources = Experiment.SignalSources # get all signal sources
-
-SignalSources.Download # download the model to the target
-SignalSources.StartSimulation # start simulation on the target
-SignalSources.StartMeasurement # start measurement
-
-# get value of measurement variable
-Measurement = SignalSources.CreateMeasurement("TEST/Control_Signal/Value", "Acquisition")
-time.sleep(3) # wait some time until value is updated from the model execution target
-ValueObject = Measurement.GetValueObject
-Value = ValueObject.GetValue
-
-# set value of calibration variable (parameter)
-Parameter = SignalSources.CreateParameter("TEST/Control_Signal/Value")
-ValueObject = Parameter.GetValueObject
-ValueObject.SetValue(30.000)
-Parameter.SetValueObject(ValueObject)
-
-# download parameters directly from parameter file
-Experiment.CalibrationController.LoadParameters("D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm")
-# add parameter file to experiment explorer
-Experiment.AddFile("D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm")
-Experiment.ActivateFile("D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm", True)
-
-
-# create a new data logger
-Datalogger = Experiment.DataLoggers.CreateDatalogger("MyDataLogger")
-Datalogger.AddScalarRecordingSignal("TEST/Result", "")
-# get existing data logger
-Datalogger = Experiment.DataLoggers.GetDataloggerByName("MyDataLogger")
-Datalogger.StartTriggerPreTriggerTime = 5
-# this call is needed to apply all configuration setting (trigger, file settings)
-Datalogger.ApplyConfiguration
-Datalogger.Activate
-# start data logger for manual start trigger type
-Datalogger.Start
-time.sleep(10) #wait
-# stop data logger for manual stop trigger type
-Datalogger.Stop
-time.sleep(3) #wait some time until datalogger post processing is complete
-
-SignalGeneratorConfiguration = Experiment.SignalGeneratorConfiguration
-# create a signal generator based on signal description set (LCO use case)
-# see interface ISignalGeneratorWithSet in API reference
-SignalGenerator = SignalGeneratorConfiguration.SignalGenerators.CreateSignalGenerator(0, "MySignalGenerator")
-# or get an existing generator by name
-SignalGenerator = SignalGeneratorConfiguration.SignalGenerators.GetSignalGeneratorByName("MySignalGenerator")
-SignalGenerator.StartTimeInSeconds = 5
-# create signal description set by import of measure file or lcs file
-SignalGeneratorConfiguration.SignalDescriptionSets.Import("D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\SignalGenerator_Files\\TEST_Signal_generator.dat")
-# create a sine signal description
-SignalDescriptionSet = SignalGeneratorConfiguration.SignalDescriptionSets.CreateSignalDescriptionSet("MySignalDescription")
-SignalDescription = SignalDescriptionSet.CreateSignalDescription("My Sine Signal")
-SignalSegment = SignalDescription.CreateSegment(7)
-SignalDescriptionSet = SignalGeneratorConfiguration.SignalDescriptionSets.GetSignalDescriptionSetByName("MySignalDescription")
-SignalGenerator.SignalDescriptionSet = SignalDescriptionSet
-SignalGenerator.Device = "RTPC"
-SignalGenerator.Task = "Acquisition"
-SignalGenerator.Start
-# for application of the signal generator to your LABCAR ports, please refer to ISignalFlowManager
-
-
-SignalSources.StopMeasurement # stop measurement
-SignalSources.StopSimulation # stop the simulation on the target
-SignalSources.Disconnect # disconnect the target
-
-Experiment.Close # close the Experiment
-Workspace.Close # close the workspace
-
-ExperimentEnvironment.ShutDown # shut down the application
-
-
-
-
-
-
-  # get value of measurement variable
-  Measurement = SignalSources.CreateMeasurement(cdan.Get("Out1"), "Acquisition")
-  time.sleep(3)  # wait some time until value is updated from the model execution target
-  ValueObject = Measurement.GetValueObject
-  Value = ValueObject.GetValue
-
-  # set value of calibration variable (parameter)
-  Parameter = SignalSources.CreateParameter(cdan.Get("Out1"))
-  ValueObject = Parameter.GetValueObject
-  ValueObject.SetValue(30.000)
-  Parameter.SetValueObject(ValueObject)
-
-  # download parameters directly from parameter file
-  Experiment.CalibrationController.LoadParameters(pp.Get("ControlDan") +\\ParameterFile.dcm")
-  # add parameter file to experiment explorer
-  Experiment.AddFile(
-    "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm")
-  Experiment.ActivateFile(
-    "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm",
-    True)
-
-  # create a new data logger
-  Datalogger = Experiment.DataLoggers.CreateDatalogger("MyDataLogger")
-  Datalogger.AddScalarRecordingSignal("TEST/Result", "")
-  # get existing data logger
-  Datalogger = Experiment.DataLoggers.GetDataloggerByName("MyDataLogger")
-  Datalogger.StartTriggerPreTriggerTime = 5
-  # this call is needed to apply all configuration setting (trigger, file settings)
-  Datalogger.ApplyConfiguration
-  Datalogger.Activate
-  # start data logger for manual start trigger type
-  Datalogger.Start
-  time.sleep(10)  # wait
-  # stop data logger for manual stop trigger type
-  Datalogger.Stop
-  time.sleep(3)  # wait some time until datalogger post processing is complete
-
-  SignalGeneratorConfiguration = Experiment.SignalGeneratorConfiguration
-  # create a signal generator based on signal description set (LCO use case)
-  # see interface ISignalGeneratorWithSet in API reference
-  SignalGenerator = SignalGeneratorConfiguration.SignalGenerators.CreateSignalGenerator(0, "MySignalGenerator")
-  # or get an existing generator by name
-  SignalGenerator = SignalGeneratorConfiguration.SignalGenerators.GetSignalGeneratorByName("MySignalGenerator")
-  SignalGenerator.StartTimeInSeconds = 5
-  # create signal description set by import of measure file or lcs file
-  SignalGeneratorConfiguration.SignalDescriptionSets.Import(
-    "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\SignalGenerator_Files\\TEST_Signal_generator.dat")
-  # create a sine signal description
-  SignalDescriptionSet = SignalGeneratorConfiguration.SignalDescriptionSets.CreateSignalDescriptionSet(
-    "MySignalDescription")
-  SignalDescription = SignalDescriptionSet.CreateSignalDescription("My Sine Signal")
-  SignalSegment = SignalDescription.CreateSegment(7)
-  SignalDescriptionSet = SignalGeneratorConfiguration.SignalDescriptionSets.GetSignalDescriptionSetByName(
-    "MySignalDescription")
-  SignalGenerator.SignalDescriptionSet = SignalDescriptionSet
-  SignalGenerator.Device = "RTPC"
-  SignalGenerator.Task = "Acquisition"
-  SignalGenerator.Start
-  # for application of the signal generator to your LABCAR ports, please refer to ISignalFlowManager
-
-
-
-def smart_divide(func):
-  def inner(a, b):
-    print("I am going to divide", a, "and", b)
-    if b == 0:
-      print("Whoops! cannot divide")
-      return
-
-    return func(a, b)
-
-  return inner
-
-
-@smart_divide
-def divide(a, b):
-  return a / b
-
-
-'''
