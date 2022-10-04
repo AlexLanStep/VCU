@@ -2,7 +2,7 @@ import DanConst0
 
 
 class CDan:
-  def __init__(self, model):
+  def __init__(self, model=""):
     self.model = model
     self.DanForModel = dict()
     self.Dan = dict()
