@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using ETAS.EE.Scripting;
 //using ETAS.EE.RealTimePlugin;
 
 namespace LabCar // Note: actual namespace depends on the project name.

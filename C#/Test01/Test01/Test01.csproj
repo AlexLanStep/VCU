@@ -17,6 +17,9 @@
     <Reference Include="EE.RealTimePlugin.Core.Interfaces">
       <HintPath>..\..\..\Doc\Александру\EE.RealTimePlugin.Core.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="EE.Scripting">
+      <HintPath>bin\Debug\net6.0\EE.Scripting.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

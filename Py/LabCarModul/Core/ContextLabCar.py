@@ -20,7 +20,7 @@ class ContextLabCar(TransferDataToLabCar):
     _ls = sc
     if len(_ls) < 2:
       return
-
+    _bRez = True
     _dGet=dict()
     _config = _ls[0]
     for it in range(1, len(_ls)):
@@ -52,7 +52,15 @@ class ContextLabCar(TransferDataToLabCar):
           if '==' in _ls0:
             ss = _ls0.split('==')
             name=ss[0]
-            _bRez = _bRez & (_dGet[name] == float(ss[1]))
+            _b = _dGet[name] == float(ss[1])
+            if not _b:
+              print(f"  ERROR в {name}")
+            _bRez = _bRez & _b
+    if _bRez:
+      print(" - Тест  пройден правильно!!!!")
+    else:
+      print(" - ERROR - Тест не пройден !!!!")
+
 
     k=1
 #    LabCarBasa.__init__(self, *args)
