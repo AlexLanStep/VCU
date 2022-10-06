@@ -2,22 +2,14 @@ import threading as th
 
 from NegValException import NegValException
 import time
+from datetime import datetime
 
-
-# class AStrateg(th.Thread):
-class AStrateg():
+class AStrateg(th.Thread):
+#class AStrateg():
   def __init__(self, *args, **kwargs):
-    # th.Thread.__init__(self)
-
-    self._pathLabCar = None
-    self.Application = None
-    self.ExperimentEnvironment = None
-    self.Workspace = None
-    self.Experiment = None
-    self.SignalSources = None
-
-    # self = args[0]
-
+    th.Thread.__init__(self)
+    self.BRez = True
+    self.Report = ""
     self._pathLabCar = args[0]._pathLabCar
     self.Application = args[0].Application
     self.ExperimentEnvironment = args[0].ExperimentEnvironment
@@ -28,6 +20,7 @@ class AStrateg():
     self.Measurement = {}
     self.Parameter = {}
 
+    self.NameStrateg = args[1].get("name", 'Strateg')
     self._festwertl = args[1].get("festwertl", None)
     self._input = args[1].get("input", None)
     self._task = args[1].get("task", None)
@@ -35,21 +28,18 @@ class AStrateg():
     self._strateg = args[1].get("strateg", None)
     self._path = args[1].get("path", None)
 
-    # self._festwertl = kwargs.get("festwertl", None)
-    # self._input = kwargs.get("input", None)
-    # self._task = kwargs.get("task", None)
-    # self._output = kwargs.get("output", None)
-    # self._strateg = kwargs.get("strateg", None)
-    # self._path = kwargs.get("path", None)
-
     if (self._festwertl == None) | (self._input == None) | \
         (self._task == None) | (self._output == None) | \
         (self._strateg == None) | (self._path == None):
       NegValException(" No input in AStrateg ", -41)
 
+    # now = datetime.now()
+    # _dt = now.strftime("%Y-%d-%m, %H:%M:%S")
+    _dt = datetime.now().strftime("%Y-%d-%m, %H:%M:%S")
+    self.Report +=f"Name test {self.NameStrateg} \n  Start {_dt} \n"
 
   def InitFestWertlDan(self, path):
-    _path = self._pathLabCar[path] # self._festwertl[path]
+    _path = self._pathLabCar[path]  # self._festwertl[path]
     try:
       # download parameters directly from parameter file
       self.Experiment.CalibrationController.LoadParameters(_path)
@@ -73,7 +63,7 @@ class AStrateg():
       self.Measurement[_task] = self.SignalSources.CreateMeasurement(dan["sig"], dan["task"])
 
   def GetMeasurement(self, name):
-    Value = -99999999
+    Value = None
     if name in self.Measurement.keys():
       ValueObject = self.Measurement[name].GetValueObject
       Value = ValueObject.GetValue
@@ -81,14 +71,14 @@ class AStrateg():
       print(f" !! Error in Measurement - not name {name}")
     return Value
 
-  def InicialParam(self, name, path ):
+  def InicialParam(self, name, path):
     self.Parameter[name] = self.SignalSources.CreateParameter(path)
     # self.Parameter[name] = self.SignalSources.CreateParameter("TEST/Control_Signal/Value")
 
-  def InicialParamDict(self, arg ):
+  def InicialParamDict(self, arg):
     for key in arg[0]:
       val = arg[1][key]['s']
-      self.InicialParam(key, val )
+      self.InicialParam(key, val)
 
   def SetDan(self, name, value):
     # self.Parameter[name] = self.SignalSources.CreateParameter("TEST/Control_Signal/Value")
@@ -99,10 +89,15 @@ class AStrateg():
   def Run(self):
     _ls = self._strateg
     if len(_ls) < 2:
+      self.BRez = False
       return
-    _bRez = True
+
+    self.BRez = True
     _dGet = dict()
     _dconfig = dict(_ls[0])
+
+    _sampl = _dconfig.get("sampl", 0.2)
+    _maxwait = _dconfig.get("maxwait", 10)
 
     print("  -  Load data from files")
     if "loadfile" in _dconfig.keys():
@@ -121,43 +116,30 @@ class AStrateg():
       for it in _dconfig["activfile"]:
         self.ActivParametrs(it)
 
+    _numSten = 0
     print("  -  Start TEST  ")
     for it in range(1, len(_ls)):
       d = dict(_ls[it])
-      print(d)
-      k = 1
-      # if 't' in d.keys():
-      #   time.sleep(d['t'])
+      print(f" NumStep = {_numSten}")
+      _numSten = _numSten + 1
 
       _ = time.sleep(d['t']) if 't' in d.keys() else 1
-      # if "loadfile" in d.keys():
-      #   for it in _dconfig["loadfile"]:
-      #     self.InitFestWertlDan(it)
-
-#      _ = [self.InitFestWertlDan(it) for it in _dconfig["loadfile"] if "loadfile" in d.keys()]
-
-      # if "activfile" in d.keys():
-      #   for it in d["activfile"]:
-      #     self.ActivParametrs(it)
-#      _ = [self.ActivParametrs(it) for it in d["activfile"] if "activfile" in d.keys()]
 
       if 'get' in d.keys():
         for it in list(d['get']):
-          print(it)
-          v = self.GetMeasurement(it)
-          _dGet[it] = v
+          _dGet[it] = self.GetMeasurement(it)
+          print(f" GetMeasurement [ {it} ] = {_dGet[it]} ")
 
       if 'set' in d.keys():
         _set = dict(d['set'])
         for key, val in _set.items():
-          print(key, val)
+          print(f" Set Parems  name- {key}, val- {val} ")
           self.SetDan(key, val)
 
       if 'rez' in d.keys():
-        _bRez = True
+        self.BRez = True
         _rez = list(d['rez'])
         for it in _rez:
-          # print(it)
           _ls0 = it.strip()
           if '==' in _ls0:
             ss = _ls0.split('==')
@@ -168,13 +150,12 @@ class AStrateg():
               pass
             else:
               print(f"  ERROR  {name}")
-            _bRez = _bRez & _b
-        if _bRez:
+            self.BRez = self.BRez & _b
+
+        if self.BRez:
           print(" Test GUD  !!!!")
-          k=1
         else:
           print(" - ERROR - Test  !!!!")
-          k=1
 
     k = 1
 
@@ -193,3 +174,19 @@ class AStrateg():
         self.Experiment.AddFile(_path)
       except:
         print(f" - error Experiment.AddFile - \n File already exists in LabCar {_path}")
+
+
+'''
+      # if "loadfile" in d.keys():
+      #   for it in _dconfig["loadfile"]:
+      #     self.InitFestWertlDan(it)
+
+#      _ = [self.InitFestWertlDan(it) for it in _dconfig["loadfile"] if "loadfile" in d.keys()]
+
+      # if "activfile" in d.keys():
+      #   for it in d["activfile"]:
+      #     self.ActivParametrs(it)
+#      _ = [self.ActivParametrs(it) for it in d["activfile"] if "activfile" in d.keys()]
+
+
+'''

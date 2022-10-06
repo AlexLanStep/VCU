@@ -21,22 +21,3 @@ if __name__ == '__main__':
 
   print(" Стоп программы !!! - все прошло хорошо")
 
-
-'''
-# from DanConst0 import inicialPath, inicialDanFestWert, inicialTask, inicialInput, inicialStrateg, inicialOut, IniciaAll
-
-  # _path = inicialPath()
-  # _danFestWert = inicialDanFestWert()
-  # _taskDan = inicialTask()
-  # _danin = inicialInput()
-  # _danout = inicialOut()
-  # _inicialStrateg = inicialStrateg()
-
-  # _contextLabCar.InicialStrateg(name =_inicialStrateg[0],
-  #                               path = _path,
-  #                               festwertl =_danFestWert,
-  #                               input = _danin,
-  #                               output = _danout,
-  #                               task = _taskDan,
-  #                               strateg = _inicialStrateg[1])
-'''
