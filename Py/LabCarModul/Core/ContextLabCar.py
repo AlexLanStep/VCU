@@ -15,9 +15,14 @@ class ContextLabCar(LabCarBasa):
     LabCarBasa.__init__(self, *args)
     self.DStrateg = {}
 
-  def InicialStrateg(self, *args, **kwargs):
-    _name = kwargs.get("name", "strateg0")
-    self.DStrateg[_name] = AStrateg(self, **kwargs)
+  # def InicialStrateg(self, *args, **kwargs):
+  #   _name = kwargs.get("name", "strateg0")
+  #   self.DStrateg[_name] = AStrateg(self, **kwargs)
+  #   kk = 1
+  def InicialStrateg(self, *args):
+    #_name = kwargs.get("name", "strateg0")
+    _name = args[0].get("name", "strateg0")
+    self.DStrateg[_name] = AStrateg(self, *args)
     kk = 1
 
   def Run(self, name):

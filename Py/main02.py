@@ -1,29 +1,42 @@
 # import COM module for Windows
 
-from DanConst0 import inicialPath, inicialDanFestWert, inicialTask, inicialInput, inicialStrateg, inicialOut
+from DanConst0 import IniciaAll
 from ContextLabCar import ContextLabCar
 
-
 if __name__ == '__main__':
-  _path = inicialPath()
-  _danFestWert = inicialDanFestWert()
-  _taskDan = inicialTask()
-  _danin = inicialInput()
-  _danout = inicialOut()
-  _inicialStrateg = inicialStrateg()
-  print(" Старт программы ")
+  print(" Load config ")
+  x = IniciaAll()
 
-  _contextLabCar = ContextLabCar(_path)
-  _contextLabCar.InicialStrateg(name=_inicialStrateg[0],
-                                path=_path,
-                                festwertl=_danFestWert,
-                                input= _danin,
-                                task = _taskDan,
-                                strateg =_inicialStrateg[1])
+  print(" Старт программы ")
+  _contextLabCar = ContextLabCar(x["path"])
 
 
   _contextLabCar.ConnectLabCar()
-  _contextLabCar.Run(_inicialStrateg[0])
+  print("Загружаем файл с исходными данными")
+  _contextLabCar.InicialStrateg(x)
+
+  print("Запускаем стратегию")
+  _contextLabCar.Run(x["name"])
   _contextLabCar.DisconnectLabCar()
 
   print(" Стоп программы !!! - все прошло хорошо")
+
+
+'''
+# from DanConst0 import inicialPath, inicialDanFestWert, inicialTask, inicialInput, inicialStrateg, inicialOut, IniciaAll
+
+  # _path = inicialPath()
+  # _danFestWert = inicialDanFestWert()
+  # _taskDan = inicialTask()
+  # _danin = inicialInput()
+  # _danout = inicialOut()
+  # _inicialStrateg = inicialStrateg()
+
+  # _contextLabCar.InicialStrateg(name =_inicialStrateg[0],
+  #                               path = _path,
+  #                               festwertl =_danFestWert,
+  #                               input = _danin,
+  #                               output = _danout,
+  #                               task = _taskDan,
+  #                               strateg = _inicialStrateg[1])
+'''
