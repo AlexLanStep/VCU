@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="EE.Scripting.interfaces">
+      <HintPath>..\..\..\3.7\EE.Scripting.interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
