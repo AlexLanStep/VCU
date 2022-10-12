@@ -19,6 +19,7 @@ public class ConnectLabCar: IConnectLabCar
   public IWorkspace Workspace { get; set; } = null;
   public IExperiment Experiment { get; set; } = null;
   public ISignalSourceCollection SignalSources { get; set; } = null;
+
   private readonly string _pathWorkspace;
   private readonly string _pathExperimentEnvironment;
   public ConnectLabCar(string pathWorkspace, string pathExperimentEnvironment)
@@ -35,31 +36,29 @@ public class ConnectLabCar: IConnectLabCar
       throw new MyException("Error EEFactory.GetInstance - Not in conp .", -1);
     }
 
-    if (ExperimentEnvironment.HasOpenWorkspace)
-    {
-      Workspace = ExperimentEnvironment.Workspace;
-    }
-    else
-    {  //   @"D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\AUTOMATION\\AUTOMATION.eew"
-      Workspace = ExperimentEnvironment.OpenWorkspace(_pathWorkspace);// open workspace
-    }
-//    IExperiment experiment = null;
-    if (Workspace.HasOpenExperiment)
-    {
-      Experiment = Workspace.Experiment;
-    }
-    else
-    {
-      @"D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\DefaultExp.eex"
-      Experiment = Workspace.OpenExperiment(_pathExperimentEnvironment);// open experiment
-    }
+    Workspace = ExperimentEnvironment.HasOpenWorkspace ? ExperimentEnvironment.Workspace : ExperimentEnvironment.OpenWorkspace(_pathWorkspace);
+
+    Experiment = Workspace.HasOpenExperiment ? Workspace.Experiment : Workspace.OpenExperiment(_pathExperimentEnvironment);
+
+    SignalSources = Experiment.SignalSources;
+
   }
 
   public void Connect()
   {
+    SignalSources.Download();           // download the model to the target
+    SignalSources.StartSimulation();    // start simulation on the target
+    SignalSources.StartMeasurement();   // start measurement
 
   }
 
+  public void DisConnect()
+  {
+    Experiment.Close();                 // close the Experiment
+    Workspace.Close();                  // close the workspace
+    ExperimentEnvironment.ShutDown();   // shut down the application
+
+  }
 
 
 }
@@ -67,48 +66,8 @@ public class ConnectLabCar: IConnectLabCar
 
 
 /*
-       IExperimentEnvironment experimentEnvironment = EEFactory.GetInstance();// get root object
-            IWorkspace workspace=null;
-            if (experimentEnvironment.HasOpenWorkspace)
-            {
-                workspace = experimentEnvironment.Workspace;
-            }
-            else
-            {
-                workspace = experimentEnvironment.OpenWorkspace(@"D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\AUTOMATION\\AUTOMATION.eew");// open workspace
-            }
-
-            IExperiment experiment = null;
-            if (workspace.HasOpenExperiment)
-            {
-                experiment = workspace.Experiment;
-            }
-            else
-            {
-                experiment = workspace.OpenExperiment(@"D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\DefaultExp.eex");// open experiment
-            }
-
-            
-                                                                                                                                                             // alternatively, for acessing an already opened project, simply get the Workspace and Experiment properties
                                                                                                                                                              //Workspace = ExperimentEnvironment.Workspace;
-            ISignalSourceCollection signalSources;
-            signalSources = experiment.SignalSources;
-//            try
-//            {
-////                ISignalSourceCollection signalSources = experiment.SignalSources;// get all signal sources
-//                signalSources = experiment.SignalSources;// get all signal sources
 
-
-            //            }
-            //            catch (Exception)
-            //            {
-            //                signalSources = experiment.SignalSources;
-
-            //            }          
-
-      signalSources.Download();// download the model to the target
-      signalSources.StartSimulation();// start simulation on the target
-      signalSources.StartMeasurement();// start measurement
 
       // get value of measurement variable
       ISignal measurement = signalSources.CreateMeasurement("TEST/Control_Signal/Value", "Acquisition");
