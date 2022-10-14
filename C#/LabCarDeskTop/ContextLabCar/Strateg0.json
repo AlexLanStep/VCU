@@ -1,0 +1,43 @@
+{
+  "STParams": {
+    "Name": "Swet",
+    "Wait0": 1.0,
+    "Wait1": 1.5
+  },
+
+  "STsetStart": {
+    "loadfile": [ "Str0Param0", "Str0Param1", "Str0Param2" ],
+    "activfile": [ "Str0Param0", "Str0Param2" ],
+    "maxwait": 10
+  },
+
+  "STls": [
+    {
+      "dt0": {
+        "t": "Wait0",
+        "set": {
+          "Butt_Drive_State": 0.0,
+          "BatteryIsOn": 0.0,
+          "Ignition": 0.0
+        }
+      },
+    },
+    {
+      "dt1": {
+        "t": "Wait0",
+        "set": {
+          "Butt_Drive_State": 1.0,
+          "BatteryIsOn": 1.0,
+          "Ignition": 1.0
+        }
+      }
+    },
+    {
+      "dt2": {
+        "t": "Wait0",
+        "get": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State" ],
+        "rez": [ "VCU_DesInvMode==1.0", "Low_Beam_Req==1.0", "Low_Beam_State==1.0" ]
+      }
+    }
+  ]
+}

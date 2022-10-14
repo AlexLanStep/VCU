@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="EE.Scripting.interfaces">
       <HintPath>..\..\..\3.7\EE.Scripting.interfaces.dll</HintPath>
     </Reference>

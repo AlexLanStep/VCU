@@ -9,8 +9,11 @@ public interface IConnectLabCar
   IExperimentEnvironment ExperimentEnvironment { get; set; }
   IWorkspace Workspace { get; set; }
   IExperiment Experiment { get; set; }
-  ISignalSourceCollection SignalSources { get; set; } 
+  ISignalSourceCollection SignalSources { get; set; }
 
+  void Inicial(string pathWorkspace, string pathExperimentEnvironment);
+  void Connect();
+  public void DisConnect();
 }
 
 public class ConnectLabCar: IConnectLabCar
@@ -20,9 +23,11 @@ public class ConnectLabCar: IConnectLabCar
   public IExperiment Experiment { get; set; } = null;
   public ISignalSourceCollection SignalSources { get; set; } = null;
 
-  private readonly string _pathWorkspace;
-  private readonly string _pathExperimentEnvironment;
-  public ConnectLabCar(string pathWorkspace, string pathExperimentEnvironment)
+  private string _pathWorkspace;
+  private string _pathExperimentEnvironment;
+  public ConnectLabCar() {}
+
+  public void Inicial(string pathWorkspace, string pathExperimentEnvironment)
   {
     _pathWorkspace = pathWorkspace;
     _pathExperimentEnvironment = pathExperimentEnvironment;
@@ -31,7 +36,7 @@ public class ConnectLabCar: IConnectLabCar
     {
       ExperimentEnvironment = EEFactory.GetInstance();// get root object
     }
-    catch 
+    catch
     {
       throw new MyException("Error EEFactory.GetInstance - Not in conp .", -1);
     }
@@ -43,7 +48,6 @@ public class ConnectLabCar: IConnectLabCar
     SignalSources = Experiment.SignalSources;
 
   }
-
   public void Connect()
   {
     SignalSources.Download();           // download the model to the target
@@ -57,7 +61,6 @@ public class ConnectLabCar: IConnectLabCar
     Experiment.Close();                 // close the Experiment
     Workspace.Close();                  // close the workspace
     ExperimentEnvironment.ShutDown();   // shut down the application
-
   }
 
 
