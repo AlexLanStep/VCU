@@ -8,6 +8,8 @@ global using System.IO;
 
 global using ETAS.EE.Scripting;
 
+global using Newtonsoft.Json.Linq;
+
 global using ContextLabCar.Core;
 global using ContextLabCar.Core.Interface;
 global using ContextLabCar.Core.Strategies;
