@@ -1,9 +1,7 @@
 ﻿
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace ContextLabCar.Core.Strategies;
 public class ParserJson
@@ -12,11 +10,22 @@ public class ParserJson
   private const string StParams = "STParams";
   private const string StSetStart = "STsetStart";
   private const string Stls = "STls";
-
+  //private Dictionary<string, string> groups = new() 
+  //{
+  //  { "StParams", "STParams" },
+  //  { "StSetStart",  "STsetStart" },
+  //  { "Stls",  "STls" }
+  //};
   private readonly string[] _fieldes = new[] { StParams, StSetStart, Stls };
-
   private readonly string _pathFiles;
-  public ParserJson(string pathFiles) => _pathFiles = pathFiles;
+  public List<StOneStep> LsStOneStep = new List<StOneStep>();
+
+
+  public ParserJson(string pathFiles) 
+  {
+//    _fieldes = groups.Keys.ToArray(); // new[] { StParams, StSetStart, Stls };
+    _pathFiles = pathFiles; 
+  }
   public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null: File.ReadAllText(filejson);
   private JObject _jinfo;
 
@@ -36,55 +45,89 @@ public class ParserJson
 
     lsName.ForEach(item=> BasaParams.AddOrUpdate(item, _jinfo[item], (_, _) => _jinfo[item]));
 
-    foreach (var (key, val) in BasaParams)
-    {
-      //var x0 = key; var x1 = val;
-      switch (key)
-      {
-        case StParams:
-          var _params = CalcStParams(key, val); 
-          break;
-        case StSetStart:
-          var _setStart = CalcStSetStart(key, val); break;
-        case Stls:
-          var _stls = CalcStls(key, val); break;
-
-      }
+    if (BasaParams.ContainsKey(StParams))
+    { 
+      var _params = CalcStParams(StParams, BasaParams[StParams]);
+      BasaParams.AddOrUpdate(StParams, _params, (_, _) =>_params);    
     }
-//    var z0 = BasaParams["STParams"].ToString();
-//    var _z0 = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(z0);
+
+    string stName = GetParams("Name")?.ToString();
+    double? _wait0 = GetParams("Wait0");
+    double? _wait1 = GetParams("Wait1");
+    double? _wait2 = GetParams("Wait2");
+    var _xcx = _wait2 * 3;
+
+    //----------------------------------------------------------------------------------
+
+    if (BasaParams.ContainsKey(StSetStart))
+    { 
+      var _setStart = CalcStSetStart(StSetStart, BasaParams[StSetStart]);
+      BasaParams.AddOrUpdate(StSetStart, _setStart, (_, _) => _setStart); 
+    }
+
+    var s = (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"];
+
+    var s111 = GetSetStart("maxwait");
+
+    if (BasaParams.ContainsKey(Stls))
+    {
+      LsStOneStep = CalcStls(Stls, BasaParams[Stls]);
+    }
+
 
     int kk = 1;
   }
 
-  private object CalcStls(string key, object val)
+  private List<StOneStep> CalcStls(string key, object val)
   {
+    List<StOneStep> stOneSteps = new ();
     ConcurrentDictionary<string, object> basaParams = new();
     Dictionary<string, object> rezul = new();
+    string pattern = @"[0-9]";
+    Regex regex = new Regex(pattern);
 
 
     var lsSt = ((JToken)val).Children().ToList();
     foreach (JToken it in lsSt)
     {
-      var _ee = JsonConvert.DeserializeObject<Dictionary<string, Object>>(it.ToString());
+      StOneStep _stOne = new();
+      var _ee = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(it.ToString());
       var _key0 = _ee.Keys;
       var _vv1 = _ee[_key0.ElementAt(0)];
-      var _ee1 = JsonConvert.DeserializeObject<Dictionary<string, Object>>(_vv1.ToString());
+      var _vv2 = (Dictionary<string, dynamic>) JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(_vv1.ToString());
+      if (_vv2.ContainsKey("t"))
+      {
+        var _xtype = Regex.Replace(((string)(string)_vv2["t"].GetType().Name).ToLower(), pattern, "");
+        _stOne.TimeWait = (_xtype == "string")? (int)GetParams(((string)_vv2["t"])):(int)_vv2["t"];
+      }
+
+      if (_vv2.ContainsKey("get"))
+        _stOne.LoadInicialPosition((List<string>)JsonConvert.DeserializeObject<List<string>>(_vv2["get"].ToString()
+                    ?? string.Empty));
+
+      if (_vv2.ContainsKey("set"))
+        _stOne.LoadInicialPosition((Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(_vv2["set"].ToString() 
+                    ?? string.Empty));
+
+      if (_vv2.ContainsKey("rez"))
+        _stOne.LoadInicialRez((List<string>)JsonConvert.DeserializeObject<List<string>>(_vv2["rez"].ToString()
+                    ?? string.Empty));
+
+      stOneSteps.Add(_stOne);
 
     }
 
-    return null;
+    return stOneSteps;
   }
 
-  private object CalcStSetStart(string key, object val)
+  private Dictionary<string, dynamic> CalcStSetStart(string key, object val)
   {
     ConcurrentDictionary<string, object> basaParams = new ();
-    Dictionary<string, object> rezul = new ();
+    Dictionary<string, dynamic> rezul = new ();
     var lsName = ((JToken)val).Children().ToList()
                                   .Select(item => ((string)((JProperty)item).Name)).ToList();
 
     foreach (var _w in lsName.Select(it => ((JToken) val)[it].ToString())) 
-    
     
     lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
 
@@ -95,23 +138,38 @@ public class ParserJson
         case "loadfile":
 
         case "activfile":
-          var qs = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString());
-          rezul.Add(_key, qs);
+          rezul.Add(_key, JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString()));
           break;
 
         case "maxwait":
-          var q = JsonConvert.DeserializeObject<dynamic>(((JToken)val)[_key].ToString());
-          rezul.Add(_key, q);
+          rezul.Add(_key, JsonConvert.DeserializeObject<dynamic>(((JToken)val)[_key].ToString()));
           break;
       }
     }
-
     return rezul;
   }
 
-  private object? CalcStParams(string key, object val)
+  private Dictionary<string, dynamic> CalcStParams(string key, object val) 
+        => JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(val.ToString() ?? string.Empty);
+
+//  protected dynamic GetParams(string name) => ((Dictionary<string, dynamic>)BasaParams[StParams])[name];
+  protected dynamic? GetParams(string name)=> BasaParams.ContainsKey(StParams)
+            && ((Dictionary<string, dynamic>)BasaParams[StParams]).TryGetValue(name, out dynamic value) ? value : null;
+  
+
+  protected dynamic? GetSetStart(string name)
   {
-    return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(val.ToString() ?? string.Empty); 
+    if(BasaParams.ContainsKey(StSetStart) && ((Dictionary<string, dynamic>)BasaParams[StSetStart]).ContainsKey(name))
+    {
+      return name switch
+      {
+        "loadfile" => (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"],
+        "activfile" => (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["activfile"],
+        "maxwait" => (double)((Dictionary<string, dynamic>)BasaParams[StSetStart])["maxwait"],
+        _ => null,
+      };
+    }
+    return null;
   }
 }
 
