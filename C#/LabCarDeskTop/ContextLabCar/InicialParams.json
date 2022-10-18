@@ -1,0 +1,51 @@
+{
+  "Path": {
+    "PathWorkspace": "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\AUTOMATION\\AUTOMATION.eew",
+    "PathExperiment": "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\DefaultExp.eex",
+    "Str0Param0": "D:\\ControlDan\\Str0\\Str0Param0.dcm",
+    "Str0Param1": "D:\\ControlDan\\Str0\\Str0Param1.dcm"
+  }
+
+  "Input": {
+    "BatteryIsOn": [ "TEST/Low_Beam_Test", "Test 001" ],
+    "Ignition": [ "TEST/Low_Beam_Test" ],
+    "Butt_Drive_State": [ "TEST/Low_Beam_Test", "Comment 1" ]
+  },
+
+  "Output": {
+    "VCU_DesInvMode": [ "TEST/Low_Beam_Test", " xxxxxxx" ],
+    "Low_Beam_Req": [ "TEST/Low_Beam_Test" ],
+    "Low_Beam_State": [ "TEST/Low_Beam_Test", " zzzzzzzz" ]
+  },
+
+  "DanFestWert": {
+    "Str0Param0": {
+      "BatteryIsOn": {
+        "Val": 0.0,
+        "Comment": "Кнопка баттареи"
+      },
+      "Ignition": {
+        "Val": 0.0,
+        "Comment": "Зажигание"
+      },
+      "Butt_Drive_State": {
+        "Val": 0.0,
+        "Comment": "Кнопка устройства"
+      }
+    },
+    "Str0Param1": {
+      "BatteryIsOn1": {
+        "Val": 0.0,
+        "Comment": "1 Кнопка баттареи"
+      },
+      "Ignition1": {
+        "Val": 0.0,
+        "Comment": "1 Зажигание"
+      },
+      "Butt_Drive_State 1": {
+        "Val": 0.0,
+        "Comment": "1 Кнопка устройства"
+      }
+    }
+  }
+}

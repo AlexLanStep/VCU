@@ -1,4 +1,10 @@
 {
+  "Task": {
+    "VCU_DesInvMode": [ "TEST/Low_Beam_Test/VCU_DesInvMode", "Acquisition", "Test 001" ],
+    "Low_Beam_Req": [ "TEST/Low_Beam_Test/Low_Beam_Req", "Acquisition" ],
+    "Low_Beam_State": [ "TEST/Low_Beam_Test/Low_Beam_State", "Acquisition", "Test 1" ]
+  },
+
   "STParams": {
     "Name": "Swet",
     "Wait0": 1000,
@@ -10,6 +16,7 @@
     "activfile": [ "Str0Param0", "Str0Param2" ],
     "maxwait": 10
   },
+
 
   "STls": [
     {
