@@ -4,7 +4,7 @@
     "PathExperiment": "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\DefaultExp.eex",
     "Str0Param0": "D:\\ControlDan\\Str0\\Str0Param0.dcm",
     "Str0Param1": "D:\\ControlDan\\Str0\\Str0Param1.dcm"
-  }
+  },
 
   "Input": {
     "BatteryIsOn": [ "TEST/Low_Beam_Test", "Test 001" ],

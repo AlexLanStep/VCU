@@ -19,13 +19,12 @@ internal class Program
     //xx = new FestWert("TEST/Low_Beam_Test", "BatteryIsOn", "0.001", "Включение баттареи");
     //Console.WriteLine(xx.GetType());
 
-    //    var _stJson = new StrategDanJson(@"E:\LabCar\C#\LabCarDeskTop\ContextLabCar\Strateg0.json");
 
-//    var _parsJsonST = new ParserJsonST(@"E:\LabCar\C#\LabCarDeskTop\ContextLabCar\Strateg0.json");
+//    var _parsJsonST = new ParserJsonST(@"E:\LabCar\C#\LabCarDeskTop\ContextLabCar\Strateg.json");
 //    _parsJsonST.Run();
 
-    var _parsJsonST = new ParserJsonST(@"E:\LabCar\C#\LabCarDeskTop\ContextLabCar\InicialParams.json");
-    _parsJsonST.Run();
+    var _inicialParams = new ParserJsonDan(@"E:\LabCar\C#\LabCarDeskTop\ContextLabCar\InicialParams.json");
+    _inicialParams.Run();
 
     
     //    _stJson.InicialJson();

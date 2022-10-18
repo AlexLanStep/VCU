@@ -202,13 +202,9 @@ public class ParserJsonST
       var _x = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString());
       if (_x.Count < 2)
         continue;
-      if (_x.Count == 2)
-        lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1));
-      if (_x.Count == 3)
-        lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.ElementAt(2));
 
-      if (lTask == null)
-        continue;
+      lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.Count==3?_x.ElementAt(2):"");
+
       rezul.AddOrUpdate(_key, lTask, (_, _)=> lTask);
     }
     return rezul;
