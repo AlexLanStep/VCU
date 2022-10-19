@@ -19,3 +19,7 @@ global using ContextLabCar.Core.Config;
 global using ContextLabCar.Core.Interface;
 global using ContextLabCar.Core.Strategies;
 global using ContextLabCar.Static;
+
+global using DryIoc;
+global using DryCont = DryIoc.Container;
+global using DynamicData;

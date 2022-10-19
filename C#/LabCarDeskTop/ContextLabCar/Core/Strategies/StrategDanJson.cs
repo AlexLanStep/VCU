@@ -1,117 +1,90 @@
 ﻿
-using ContextLabCar.Core.Config;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using System.IO;
-using System.Linq;
-using System.Security.Principal;
-using System.Xml.Linq;
 
 namespace ContextLabCar.Core.Strategies;
 
 public interface IStrategDanJson
 {
-  void InicialJson(string jsonPant);
+  void InicialJson(string pathdir = "");
+  Dictionary<string, DanInput> DDanInput { get; set; }
+  Dictionary<string, DanOutput> DDanOutput { get; set; }
+  Dictionary<string, Dictionary<string, FestWert>> DFestWert { get; set; }
+  Dictionary<string, string> DPath { get; set; }
+  Dictionary<string, LTask> DTask { get; set; }
+  Dictionary<string, dynamic> DSTParams { get; set; }
+  Dictionary<string, dynamic> DSTsetStart { get; set; }
+  List<StOneStep> LsStOneStep { get; set; }
+
 }
 public class StrategDanJson: IStrategDanJson
 {
-  private string _jsonPant;
+  #region ===> Data <===
+  #region ==__ Public __==
+  public Dictionary<string, DanInput> DDanInput { get; set; }
+  public Dictionary<string, DanOutput> DDanOutput { get; set; }
+  public Dictionary<string, Dictionary<string, FestWert>> DFestWert { get; set; }
+  public Dictionary<string, string> DPath { get; set; }
+  public Dictionary<string, LTask> DTask { get; set; }
+  public Dictionary<string, dynamic> DSTParams { get; set; }
+  public Dictionary<string, dynamic> DSTsetStart { get; set; }
+  public List<StOneStep> LsStOneStep { get; set; }
 
-  public StrategDanJson(string jsonPant="")
+  #endregion
+  #region ___ Local ___
+  private string _pathdir;
+  private ParserJsonDan _parserDan;
+  private ParserJsonST _parserSt;
+  #endregion
+  #endregion
+
+
+  public StrategDanJson(string pathdir = "")
   {
-    _jsonPant = jsonPant;
+    _pathdir = pathdir;
+    DDanInput = new();
+    DDanOutput = new();
+    DFestWert = new();
+    DPath = new();
+    DTask = new();
+    DSTParams = new();
+    DSTsetStart = new();
+    LsStOneStep = new();
   }
 
-  protected ConcurrentDictionary<string, dynamic> Params { get; set; }
-  protected ConcurrentDictionary<string, dynamic> SetStartStrateg { get; set; }
-  protected ConcurrentDictionary<string, IFestWert> FestWert { get; set; }
-  protected ConcurrentDictionary<string, DanInput> DDanInput { get; set; }
-  protected ConcurrentDictionary<string, DanOutput> DDanOutput { get; set; }
-  protected ConcurrentDictionary<string, LTask> DTask { get; set; }
 
-
-  public void InicialJson(string jsonPant="")
+public void InicialJson(string pathdir = "")
   {
-    if (string.IsNullOrEmpty(jsonPant) && string.IsNullOrEmpty(_jsonPant))
-      new MyException("Not file JSON", -2);
+    if (string.IsNullOrEmpty(pathdir) && string.IsNullOrEmpty(_pathdir))
+      new MyException("Not path for JSON", -2);
 
-//    Dictionary<string, dynamic> _ddjson = new();
-//    _ddjson.Add("Name", "Swet");
-//    _ddjson.Add("Wait0", 1.0);
-//    _ddjson.Add("Wait1", 1.5);
-
-//    Dictionary<string, Dictionary<string, dynamic>> _dd0json = new();
-//    Dictionary<string, dynamic> _dd0json = new();
-//    _dd0json.Add("Params", _ddjson);
-
-
-
-
-
-//    string _pathFile = @"e:\12.json";
-////    string json111 = JsonConvert.SerializeObject(_dd0json, Formatting.Indented);
-////    File.WriteAllText(_pathFile, json111);
-//    var xxtxt = File.ReadAllText(_pathFile);
-//    //    var __xx = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, dynamic>>>(xxtxt);
-
-//    var googleSearch1 = JObject.Parse(xxtxt);
-//    var _za = googleSearch1["Params"].Children().ToList();
-
-////    var _za = googleSearch1.Children().ToList();
-
-//    var lsName = _za.Select(item => (string)((JProperty)item).Name).ToList();
-//    var danJsonBasa = xxtxt.Select(item => lsName.Find(x => x.ToLower().Contains(item))).Where(z => z != null).ToList();
-
-    //var _za1 = ((JToken)_za).Values();
-
-    //    var _za0 = _za.ToObject<Dictionary<string, dynamic>>();
-
-    //    var lsName = zJson.Select(item => (string)((JProperty)item).Name).ToList();
-
-//    foreach (var item in _za)
-//    {
-//      var _po = ((JProperty)item).Value<Dictionary<string, dynamic>>();
-//  //  var _ff = ((JToken)item).Last.ToObject<Dictionary<string, dynamic>>();
-//      //var ppv0 = ((JProperty)item).Name;
-//      //var ppv01 = ((JProperty)item).First;
-//      //var ppv1 = ((JToken)item).First;
-//      //var ppv2 = ((JToken)item).Last;
-//      //var ppv3 = ((JToken)item.Last).Values<dynamic>();
-
-
-//    }
-//    var _ls0 = _za.ToList();
-
-
-
-//    _jsonPant = string.IsNullOrEmpty(jsonPant) ? _jsonPant : string.IsNullOrEmpty(_jsonPant) ? jsonPant : jsonPant;
+    _pathdir = !string.IsNullOrEmpty(pathdir) ? pathdir : _pathdir;
     
-//    var _txt = File.ReadAllText(_jsonPant);
+    if( !Directory.Exists(_pathdir))
+      new MyException("Not dir strateg", -3);
 
-////    var _x = JsonConvert.DeserializeObject(_txt);
-//    JObject googleSearch = JObject.Parse(_txt);
+    var paths = Directory.GetFiles(_pathdir, "*.json").Select(x=> x.ToLower()).ToArray();
 
-//    var zJson0 = googleSearch["STParams"].Children();
+    foreach (var path in paths)
+    {
+      if (path.Contains("strateg.json"))
+      {
+        var _st = new ParserJsonST(path);
+        _st.Run();
+        DSTParams = _st.DSTParams;
+        DSTsetStart = _st.DSTsetStart;
+        LsStOneStep = _st.LsStOneStep;
+      }
 
-//    foreach ( var z in zJson0)
-//    {
-//      var zz21 = ((JProperty)z).Parent;
-//      var zz0 = ((JProperty)z).Name;
-//      var zz1 = ((JProperty)z).First;
-//    }
-
-
-//    var zJson = googleSearch["STParams"].Children().ToList();
-//    var lsName = zJson.Select(item => (string)((JProperty)item).Name).ToList();
-
-
-
-    //    var _params = googleSearch["STParams"].ToObject<Dictionary<string, dynamic>>();
-    // var _params = (JsonDictionaryContract)googleSearch["STParams"]["Name"].Values();
-    //.Values().ToObject<Dictionary<string, dynamic>>();
-
-
+      if (path.Contains("inicialparams.json"))
+      {
+        var _stdan = new ParserJsonDan(path);
+        _stdan.Run();
+        DDanInput = _stdan.DDanInput;
+        DDanOutput = _stdan.DDanOutput;
+        DFestWert = _stdan.DFestWert;
+        DPath = _stdan.DPath;
+        DTask = _stdan.DTask;
+      }
+    }
   }
 
 }

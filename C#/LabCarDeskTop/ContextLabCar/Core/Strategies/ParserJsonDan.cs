@@ -3,15 +3,15 @@ using System;
 using System.IO;
 
 namespace ContextLabCar.Core.Strategies;
-public class ParserJsonDan
+public class ParserJsonDan: ParserJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-  public Dictionary<string, DanInput> DDanInput = new();
-  public Dictionary<string, DanOutput> DDanOutput = new();
-  public Dictionary<string, Dictionary<string, FestWert>> DFestWert = new();
-  public Dictionary<string, string> DPath = new();
-  public Dictionary<string, LTask> DTask = new();
+  //public Dictionary<string, DanInput> DDanInput = new();
+  //public Dictionary<string, DanOutput> DDanOutput = new();
+  //public Dictionary<string, Dictionary<string, FestWert>> DFestWert = new();
+  //public Dictionary<string, string> DPath = new();
+  //public Dictionary<string, LTask> DTask = new();
   #endregion
   #region ___ Local ___
   private const string Path = "Path";
@@ -19,31 +19,30 @@ public class ParserJsonDan
   private const string Input = "Input";
   private const string Output = "Output";
   private const string FestWert = "FestWert";
-  private readonly string _pathFiles;
 
   #endregion
   #endregion
 
   #region _ Constructor _
-  public ParserJsonDan(string pathFiles) => _pathFiles = pathFiles;
+  public ParserJsonDan(string pathFiles) : base(pathFiles) { }
   #endregion
 
   #region ___ run _ convert _ json
-  public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null : File.ReadAllText(filejson);
-  public virtual void Run()
-  {
-    var tsxtJson = LoadFileJson(_pathFiles);
-    if (tsxtJson != null)
-      _convertJson(tsxtJson);
-  }
+
   public virtual void AddNewPoleJson(ParserJsonDan parserjson)
   {
     //    var x = parserjson.BasaParams;
   }
 
-  private void _convertJson(string tsxtJson)
+  protected override void ConvertJson(string tsxtJson)
   {
-    JObject? _jinfo = JObject.Parse(tsxtJson);
+    DDanInput = new();
+    DDanOutput = new();
+    DFestWert = new();
+    DPath = new();
+    DTask = new();
+
+  JObject? _jinfo = JObject.Parse(tsxtJson);
     var BasaParams = StartParser(_jinfo);
 
     #region ----  Load  -> Path  -------
@@ -79,26 +78,26 @@ public class ParserJsonDan
   }
   #endregion
 
-  #region function
+  //#region function
 
-  protected Dictionary<string, string> jsonToDicStStr(string name) =>
-                (Dictionary<string, string>)JsonConvert.DeserializeObject<Dictionary<string, string>>(name); //
-  protected Dictionary<string, List<string>> jsonToDicStLsStr(string? name) =>
-                (Dictionary<string, List<string>>)JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(name); //
-    protected List<string>? JsonLsString(string name) => (List<string>)JsonConvert.DeserializeObject<List<string>>(name);
-  protected Dictionary<string, dynamic> jsonToDicStDyn(string name) =>
-              (Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); //
-    protected ConcurrentDictionary<string, object> StartParser(object val)
-  {
-    ConcurrentDictionary<string, object> basaParams = new();
+  //protected Dictionary<string, string> jsonToDicStStr(string name) =>
+  //              (Dictionary<string, string>)JsonConvert.DeserializeObject<Dictionary<string, string>>(name); //
+  //protected Dictionary<string, List<string>> jsonToDicStLsStr(string? name) =>
+  //              (Dictionary<string, List<string>>)JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(name); //
+  //  protected List<string>? JsonLsString(string name) => (List<string>)JsonConvert.DeserializeObject<List<string>>(name);
+  //protected Dictionary<string, dynamic> jsonToDicStDyn(string name) =>
+  //            (Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); //
+  //  protected ConcurrentDictionary<string, object> StartParser(object val)
+  //{
+  //  ConcurrentDictionary<string, object> basaParams = new();
 
-    var lsName = ((JToken)val).Children().ToList().Select(item => ((JProperty)item).Name).ToList();
+  //  var lsName = ((JToken)val).Children().ToList().Select(item => ((JProperty)item).Name).ToList();
 
-    foreach (var w in lsName.Select(it => ((JToken)val)[it]?.ToString()))
-      lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
-    return basaParams;
-  }
-  #endregion   function
+  //  foreach (var w in lsName.Select(it => ((JToken)val)[it]?.ToString()))
+  //    lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
+  //  return basaParams;
+  //}
+  //#endregion   function
 
   #region PTask
   private void CalcPTask(object val)

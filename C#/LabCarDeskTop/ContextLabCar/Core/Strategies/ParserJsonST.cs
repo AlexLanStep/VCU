@@ -2,14 +2,14 @@
 
 
 namespace ContextLabCar.Core.Strategies;
-public class ParserJsonST
+public class ParserJsonST: ParserJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-  public ConcurrentDictionary<string, object> BasaParams = new();
-  public List<StOneStep> LsStOneStep = new List<StOneStep>();
 
+//  public ConcurrentDictionary<string, object> BasaParams = new();
   #endregion
+
   #region ___ Local ___
   private const string StParams = "STParams";
   private const string StSetStart = "STsetStart";
@@ -17,78 +17,78 @@ public class ParserJsonST
 
   private readonly string[] _fieldes = new[] { StParams, StSetStart, Stls };
   private readonly string _pathFiles;
-  private JObject _jinfo;
 
   #endregion
   #endregion
 
   #region _ Constructor _
-  public ParserJsonST(string pathFiles) => _pathFiles = pathFiles;
+  public ParserJsonST(string pathFiles) : base(pathFiles) { }
   #endregion
 
   #region ___ run _ convert _ json
-  public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null : File.ReadAllText(filejson);
-  public void Run()
-  {
-    var tsxtJson = LoadFileJson(_pathFiles);
-    if (tsxtJson != null)
-      _convertJson(tsxtJson);
-  }
   public virtual void AddNewPoleJson(ParserJsonST parserjson)
   {
     //    var x = parserjson.BasaParams;
   }
 
-  private void _convertJson(string tsxtJson)
-  { //  "Task", "STParams", "STsetStart", "STls":
-    _jinfo = JObject.Parse(tsxtJson);
-    var zJson = _jinfo.Children().ToList();
-    var lsName = zJson.Select(item => ((string)((JProperty)item).Name)).ToList();
+  protected override void ConvertJson(string tsxtJson)
+  {
+    DSTParams = new();
+    DSTsetStart = new();
+    LsStOneStep = new ();
 
-    lsName.ForEach(item => BasaParams.AddOrUpdate(item, _jinfo[item], (_, _) => _jinfo[item]));
-
+    JObject _jinfo = JObject.Parse(tsxtJson);
+    var BasaParams = StartParser(_jinfo);
 
     #region ----  Load  -> StParams  -------
     if (BasaParams.TryGetValue(StParams, out object value))
-    {
-      var _params = CalcStParams(StParams, value);
-      BasaParams.AddOrUpdate(StParams, _params, (_, _) => _params);
-    }
-    testGetparams();
-
+      DSTParams = jsonToDicStDyn(value.ToString() ?? string.Empty);
     #endregion
 
     #region ---- Load ->  StSetStart  ----------
     if (BasaParams.TryGetValue(StSetStart, out object value1))
-    {
-      var _setStart = CalcStSetStart(StSetStart, value1);
-      BasaParams.AddOrUpdate(StSetStart, _setStart, (_, _) => _setStart);
-    }
-    testStSetStart();
+      CalcStSetStart(value1);
+    else
+    { var s1111 = "!!!!!  error "; }
     #endregion
 
     #region ------ Load ->  Stls  --------------
-    if (BasaParams.TryGetValue(Stls, out object value2))
-      LsStOneStep = CalcStls(Stls, value2);
+    if (BasaParams.TryGetValue(Stls, out object valueStls))
+      CalcStls(valueStls);
+    else
+    { var s1111 = "!!!!!  error "; }
+
     #endregion
   }
   #endregion
 
   #region function
-  private Dictionary<string, dynamic> jsonToDicStDyn(string name)=>
-                (Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); //
-
-  private List<string> jsonLsString(string name) =>(List<string>)JsonConvert.DeserializeObject<List<string>>(name);
-  #endregion
-  #region Stls
-  private List<StOneStep> CalcStls(string key, object val)
+  public dynamic? GetParams(string name) => DSTParams.TryGetValue(name, out dynamic valueName) ? valueName : null;
+  public dynamic? GetSetStart(string name)
   {
-    List<StOneStep> stOneSteps = new();
+    if (DSTsetStart.TryGetValue(name, out object value))
+    {
+      return name switch
+      {
+        "loadfile" => (List<string>)DSTsetStart["loadfile"],
+        "activfile" => (List<string>)DSTsetStart["activfile"],
+        "maxwait" => (double)DSTsetStart["maxwait"],
+        _ => null,
+      };
+    }
+    return null;
+  }
+
+  #endregion
+
+  #region Stls
+  private void CalcStls(object val)
+  {
+    LsStOneStep.Clear();
     ConcurrentDictionary<string, object> basaParams = new();
     Dictionary<string, object> rezul = new();
     string pattern = @"[0-9]";
-    Regex regex = new Regex(pattern);
-
+    Regex regex = new(pattern);
 
     var lsSt = ((JToken)val).Children().ToList();
     foreach (JToken it in lsSt)
@@ -115,24 +115,16 @@ public class ParserJsonST
 
       AddNewPoleJson(this);
 
-      stOneSteps.Add(_stOne);
+      LsStOneStep.Add(_stOne);
 
     }
-
-    return stOneSteps;
   }
   #endregion
-  #region SetStart
-  private Dictionary<string, dynamic> CalcStSetStart(string key, object val)
-  {
-    ConcurrentDictionary<string, object> basaParams = new();
-    Dictionary<string, dynamic> rezul = new();
-    var lsName = ((JToken)val).Children()
-                      .ToList()
-                      .Select(item => ((string)((JProperty)item).Name)).ToList();
 
-    foreach (var _w in lsName.Select(it => ((JToken)val)[it].ToString()))
-    lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
+  #region SetStart
+  private void CalcStSetStart(object val)
+  {
+    var basaParams = StartParser(val);
     foreach (var (_key, _val) in basaParams)
     {
       switch (_key.ToLower())
@@ -140,45 +132,19 @@ public class ParserJsonST
         case "loadfile":
 
         case "activfile":
-          rezul.Add(_key, JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString()));
+          DSTsetStart.Add(_key, JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString()));
           break;
 
         case "maxwait":
-          rezul.Add(_key, JsonConvert.DeserializeObject<dynamic>(((JToken)val)[_key].ToString()));
+          DSTsetStart.Add(_key, JsonConvert.DeserializeObject<dynamic>(((JToken)val)[_key].ToString()));
           break;
       }
     }
-    return rezul;
   }
-  protected dynamic? GetSetStart(string name)
-  {
-    if (BasaParams.TryGetValue(StSetStart, out object value) && ((Dictionary<string, dynamic>)value).ContainsKey(name))
-    {
-      return name switch
-      {
-        "loadfile" => (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"],
-        "activfile" => (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["activfile"],
-        "maxwait" => (double)((Dictionary<string, dynamic>)BasaParams[StSetStart])["maxwait"],
-        _ => null,
-      };
-    }
-    return null;
-  }
-
-
   #endregion
-
-  #region StParams
-  private Dictionary<string, dynamic> CalcStParams(string key, object val) => jsonToDicStDyn(val.ToString() ?? string.Empty);
-  protected dynamic? GetParams(string name) => (BasaParams.ContainsKey(StParams)
-          && ((Dictionary<string, dynamic>)BasaParams[StParams]).TryGetValue(name, out dynamic valueName))? valueName : null;
-
-  #endregion
-
 
   #region __ ==  Test == __
-  #region ___ == GetParams == ___
-  private void testGetparams()
+    private void testGetparams()
   {
     string stName = GetParams("Name")?.ToString();
     double? _wait0 = GetParams("Wait0");
@@ -188,14 +154,15 @@ public class ParserJsonST
 
   }
   #endregion
+
   #region ___ == StSetStart == ___
   private void testStSetStart()
   {
-    var s = (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"];
+    var s = (List<string>)DSTsetStart["loadfile"];
     var s111 = GetSetStart("maxwait");
   }
   #endregion
-  #endregion
+  
 
 
 

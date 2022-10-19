@@ -6,8 +6,10 @@ public class ContainerManager
   private static readonly Lazy<ContainerManager> Lazy = new Lazy<ContainerManager>(() => new ContainerManager());
   private ContainerManager()
   {
-//    LabCarContainer = new DryCont();              // new DryIoc.Container();
+    LabCar = new DryIoc.Container();              // new DryIoc.Container();
 
+    LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
+    LabCar.Register<IStrategDanJson, StrategDanJson>();
     //DbContainer.Register<IParsingXml, ParsingXml>(Reuse.Singleton);
     //DbContainer.Register<IConfigDb, ConfigDb>(Reuse.Singleton);
     //DbContainer.Register<IContext, Context>(Reuse.Singleton);
@@ -19,5 +21,5 @@ public class ContainerManager
 
   public static ContainerManager GetInstance() => Lazy.Value;
 
-//  public DryCont LabCarContainer;
+  public DryCont LabCar;
 }
