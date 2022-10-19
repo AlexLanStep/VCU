@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.IO;
+
 namespace ContextLabCar.Core.Strategies;
 public class ParserJsonDan
 {
@@ -6,21 +9,17 @@ public class ParserJsonDan
   #region ==__ Public __==
   public Dictionary<string, DanInput> DDanInput = new();
   public Dictionary<string, DanOutput> DDanOutput = new();
-  public Dictionary<string, FestWert> DFestWert = new();
+  public Dictionary<string, Dictionary<string, FestWert>> DFestWert = new();
   public Dictionary<string, string> DPath = new();
   public Dictionary<string, LTask> DTask = new();
-  public Dictionary<string, object?> BasaParams = new();
-
   #endregion
   #region ___ Local ___
   private const string Path = "Path";
   private const string PTask = "Task";
   private const string Input = "Input";
   private const string Output = "Output";
-  private const string DanFestWert = "DanFestWert";
-
+  private const string FestWert = "FestWert";
   private readonly string _pathFiles;
-  private JObject? _jinfo;
 
   #endregion
   #endregion
@@ -31,7 +30,7 @@ public class ParserJsonDan
 
   #region ___ run _ convert _ json
   public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null : File.ReadAllText(filejson);
-  public void Run()
+  public virtual void Run()
   {
     var tsxtJson = LoadFileJson(_pathFiles);
     if (tsxtJson != null)
@@ -43,12 +42,9 @@ public class ParserJsonDan
   }
 
   private void _convertJson(string tsxtJson)
-  { 
-    _jinfo = JObject.Parse(tsxtJson);
-    var zJson = _jinfo.Children().ToList();
-    var lsName = zJson.Select(item => ((JProperty)item).Name).ToList();
-
-    lsName.ForEach(item => BasaParams.Add(item, _jinfo[item]));
+  {
+    JObject? _jinfo = JObject.Parse(tsxtJson);
+    var BasaParams = StartParser(_jinfo);
 
     #region ----  Load  -> Path  -------
     if (BasaParams.TryGetValue(Path, out object valuePath))
@@ -62,27 +58,22 @@ public class ParserJsonDan
 
     #region ----  Load  -> Input  -------
     if (BasaParams.TryGetValue(Input, out object valueInput) && valueInput != null)
-    {
-      var paramsIn = jsonToDicStLsStr(valueInput.ToString());
-      foreach( var (key, x) in paramsIn)
-      {
-        var danInput = new DanInput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : "");
-        DDanInput.Add(key, danInput);
-      }
-    }
+      foreach (var (key, x) in jsonToDicStLsStr(valueInput.ToString()))
+        DDanInput.Add(key, new DanInput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
     #endregion
 
     #region ----  Load  -> Output  -------
+    if (BasaParams.TryGetValue(Output, out object valueOutput) && valueOutput != null)
+      foreach (var (key, x) in jsonToDicStLsStr(valueOutput.ToString()))
+        DDanOutput.Add(key, new DanOutput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
+    #endregion
 
-    if (!BasaParams.TryGetValue(Output, out object valueOutput) || valueOutput == null) return;
-
-    var paramsOut = jsonToDicStLsStr(valueOutput.ToString());
-    foreach (var (key, x) in paramsOut)
-    {
-      var danOutput = new DanOutput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : "");
-      DDanOutput.Add(key, danOutput);
+    #region ----  Load  -> FestWert  -------
+    if (BasaParams.TryGetValue(FestWert, out object valueFestWert) && valueFestWert != null)
+    { 
+      CalcFestWert(valueFestWert);
+      writeFestWert();
     }
-
     #endregion
 
   }
@@ -90,194 +81,83 @@ public class ParserJsonDan
 
   #region function
 
-  private Dictionary<string, string> jsonToDicStStr(string name) =>
+  protected Dictionary<string, string> jsonToDicStStr(string name) =>
                 (Dictionary<string, string>)JsonConvert.DeserializeObject<Dictionary<string, string>>(name); //
-  private Dictionary<string, List<string>> jsonToDicStLsStr(string? name) =>
+  protected Dictionary<string, List<string>> jsonToDicStLsStr(string? name) =>
                 (Dictionary<string, List<string>>)JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(name); //
+    protected List<string>? JsonLsString(string name) => (List<string>)JsonConvert.DeserializeObject<List<string>>(name);
+  protected Dictionary<string, dynamic> jsonToDicStDyn(string name) =>
+              (Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); //
+    protected ConcurrentDictionary<string, object> StartParser(object val)
+  {
+    ConcurrentDictionary<string, object> basaParams = new();
 
-  private List<string>? JsonLsString(string name) =>(List<string>)JsonConvert.DeserializeObject<List<string>>(name);
+    var lsName = ((JToken)val).Children().ToList().Select(item => ((JProperty)item).Name).ToList();
+
+    foreach (var w in lsName.Select(it => ((JToken)val)[it]?.ToString()))
+      lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
+    return basaParams;
+  }
   #endregion   function
 
   #region PTask
   private void CalcPTask(object val)
   {
-    ConcurrentDictionary<string, object> basaParams = new();
-//    ConcurrentDictionary<string, LTask> rezul = new();
-    var lsName = ((JToken)val).Children()
-      .ToList()
-      .Select(item => ((JProperty)item).Name).ToList();
-
-    foreach (var w in lsName.Select(it => ((JToken)val)[it]?.ToString()))
-      lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
+    var basaParams = StartParser(val);
 
     foreach (var (_key, _val) in basaParams)
     {
-      LTask lTask = null;
       var _x = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString());
       if (_x.Count < 2)
         continue;
-
-      lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.Count == 3 ? _x.ElementAt(2) : "");
-
-      DTask.Add(_key, lTask);
+      DTask.Add(_key, new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.Count == 3 ? _x.ElementAt(2) : ""));
     }
-
   }
   #endregion
 
+  #region FestWert
+  private void CalcFestWert(object val)
+  {
+    var basaParams = StartParser(val);
 
-  //#region Stls
-  //private List<StOneStep> CalcStls(string key, object val)
-  //{
-  //  List<StOneStep> stOneSteps = new();
-  //  ConcurrentDictionary<string, object> basaParams = new();
-  //  Dictionary<string, object> rezul = new();
-  //  string pattern = @"[0-9]";
-  //  Regex regex = new Regex(pattern);
+    foreach (var (_key, _val) in basaParams)
+    {
+      Dictionary<string, FestWert> dan = new();
+      var val0 = jsonToDicStDyn(_val.ToString());
+      foreach (var it in val0)
+      {
+        var val1 = jsonToDicStDyn(it.Value.ToString());
 
+        dynamic f0(string s) => val1.TryGetValue(s, out dynamic v) ? v : "";
 
-  //  var lsSt = ((JToken)val).Children().ToList();
-  //  foreach (JToken it in lsSt)
-  //  {
-  //    StOneStep _stOne = new();
-  //    var _ee = jsonToDicStDyn(it.ToString());
-  //    var _key0 = _ee.Keys;
-  //    var _vv1 = _ee[_key0.ElementAt(0)];
-  //    var _vv2 = jsonToDicStDyn(_vv1.ToString());
+        dan.Add(it.Key, new FestWert(f0("Model"), it.Key, f0("Val"), f0("Comment")));
+      }
+      DFestWert.Add(_key, dan);
+    }
+  }
 
+  private void writeFestWert()
+  {
+    foreach (var (nameFile, val) in DFestWert)
+    {
+      string _text = "";
+      foreach (var (keyd, vald) in val)
+        _text += vald.Text;
 
-  //    if (_vv2.TryGetValue("t", out dynamic valueT))
-  //      _stOne.TimeWait = (Regex.Replace(((string)(string)valueT.GetType().Name).ToLower(), pattern, "") == "string") 
-  //                            ? (int)GetParams(((string)valueT)) : (int)valueT;
+      if (DPath.TryGetValue(nameFile, out string fullFath))
+      {
+        var _dir = System.IO.Path.GetDirectoryName(fullFath);
+        if (!Directory.Exists(_dir))
+          Directory.CreateDirectory(_dir);
+        File.WriteAllText(fullFath, _text);
+      }
+      else
+      {
+        new MyException($"В json InicialParams, не прописан путь к переменным {nameFile}", -3);
+      }
+    }
+  }
 
-  //    if (_vv2.TryGetValue("get", out dynamic valueGet))
-  //      _stOne.LoadInicialPosition(jsonLsString(valueGet.ToString() ?? string.Empty));
-
-  //    if (_vv2.TryGetValue("set", out dynamic valueSet))
-  //      _stOne.LoadInicialPosition(jsonToDicStDyn(valueSet.ToString() ?? string.Empty));
-
-  //    if (_vv2.TryGetValue("rez", out dynamic valueRez))
-  //      _stOne.LoadInicialRez(jsonLsString(valueRez.ToString() ?? string.Empty));
-
-  //    AddNewPoleJson(this);
-
-  //    stOneSteps.Add(_stOne);
-
-  //  }
-
-  //  return stOneSteps;
-  //}
-  //#endregion  Stls
-  //#region SetStart
-  //private Dictionary<string, dynamic> CalcStSetStart(string key, object val)
-  //{
-  //  ConcurrentDictionary<string, object> basaParams = new();
-  //  Dictionary<string, dynamic> rezul = new();
-  //  var lsName = ((JToken)val).Children()
-  //                    .ToList()
-  //                    .Select(item => ((string)((JProperty)item).Name)).ToList();
-
-  //  foreach (var _w in lsName.Select(it => ((JToken)val)[it].ToString()))
-  //  lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
-  //  foreach (var (_key, _val) in basaParams)
-  //  {
-  //    switch (_key.ToLower())
-  //    {
-  //      case "loadfile":
-
-  //      case "activfile":
-  //        rezul.Add(_key, JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString()));
-  //        break;
-
-  //      case "maxwait":
-  //        rezul.Add(_key, JsonConvert.DeserializeObject<dynamic>(((JToken)val)[_key].ToString()));
-  //        break;
-  //    }
-  //  }
-  //  return rezul;
-  //}
-  //protected dynamic? GetSetStart(string name)
-  //{
-  //  if (BasaParams.TryGetValue(StSetStart, out object value) && ((Dictionary<string, dynamic>)value).ContainsKey(name))
-  //  {
-  //    return name switch
-  //    {
-  //      "loadfile" => (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"],
-  //      "activfile" => (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["activfile"],
-  //      "maxwait" => (double)((Dictionary<string, dynamic>)BasaParams[StSetStart])["maxwait"],
-  //      _ => null,
-  //    };
-  //  }
-  //  return null;
-  //}
-  //#endregion  SetStart
-
-  //#region StParams
-  //private Dictionary<string, dynamic> CalcStParams(string key, object val) => jsonToDicStDyn(val.ToString() ?? string.Empty);
-  //protected dynamic? GetParams(string name) => (BasaParams.ContainsKey(StParams)
-  //        && ((Dictionary<string, dynamic>)BasaParams[StParams]).TryGetValue(name, out dynamic valueName))? valueName : null;
-
-  //#endregion  StParams
-
-  //#region PTask
-  //private ConcurrentDictionary<string, LTask> CalcPTask(string name, object val)
-  //{
-  //  ConcurrentDictionary<string, object> basaParams = new();
-  //  ConcurrentDictionary<string, LTask> rezul = new();
-  //  var lsName = ((JToken)val).Children()
-  //                    .ToList()
-  //                    .Select(item => ((string)((JProperty)item).Name)).ToList();
-
-  //  foreach (var _w in lsName.Select(it => ((JToken)val)[it].ToString()))
-  //  lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
-
-  //  foreach (var (_key, _val) in basaParams)
-  //  {
-  //    LTask lTask=null;
-  //    var _x = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString());
-  //    if (_x.Count < 2)
-  //      continue;
-  //    if (_x.Count == 2)
-  //      lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1));
-  //    if (_x.Count == 3)
-  //      lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.ElementAt(2));
-
-  //    if (lTask == null)
-  //      continue;
-  //    rezul.AddOrUpdate(_key, lTask, (_, _)=> lTask);
-  //  }
-  //  return rezul;
-
-  //}
-  //#endregion PTask
-
-  //#region __ ==  Test == __
-  //#region ___ == GetParams == ___
-  //private void testGetparams()
-  //{
-  //  string stName = GetParams("Name")?.ToString();
-  //  double? _wait0 = GetParams("Wait0");
-  //  double? _wait1 = GetParams("Wait1");
-  //  double? _wait2 = GetParams("Wait2");
-  //  var _xcx = _wait2 * 3;
-
-  //}
-  //#endregion  ___ == GetParams == ___
-  //#region ___ == StSetStart == ___
-  //private void testStSetStart()
-  //{
-  //  var s = (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"];
-  //  var s111 = GetSetStart("maxwait");
-  //}
-  //#endregion  ___ == StSetStart == ___
-  //#endregion  __ ==  Test == __
-
+  #endregion
 
 }
-
-/*
-   "loadfile": [ "Str0Param0", "Str0Param1", "Str0Param2" ],
-    "activfile": [ "Str0Param0", "Str0Param2" ],
-    "maxwait": 10
- 
- */
