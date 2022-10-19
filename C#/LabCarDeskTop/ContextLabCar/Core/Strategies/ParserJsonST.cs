@@ -6,7 +6,6 @@ public class ParserJsonST
 {
   #region ===> Data <===
   #region ==__ Public __==
-  public ConcurrentDictionary<string, LTask> DTask = new();
   public ConcurrentDictionary<string, object> BasaParams = new();
   public List<StOneStep> LsStOneStep = new List<StOneStep>();
 
@@ -15,9 +14,8 @@ public class ParserJsonST
   private const string StParams = "STParams";
   private const string StSetStart = "STsetStart";
   private const string Stls = "STls";
-  private const string PTask = "Task";
 
-  private readonly string[] _fieldes = new[] { PTask, StParams, StSetStart, Stls };
+  private readonly string[] _fieldes = new[] { StParams, StSetStart, Stls };
   private readonly string _pathFiles;
   private JObject _jinfo;
 
@@ -49,13 +47,6 @@ public class ParserJsonST
 
     lsName.ForEach(item => BasaParams.AddOrUpdate(item, _jinfo[item], (_, _) => _jinfo[item]));
 
-    #region ----  Load  -> Task  -------
-    if (BasaParams.TryGetValue(PTask, out object valueTask))
-    {
-      var _params = CalcPTask(PTask, valueTask);
-      BasaParams.AddOrUpdate(PTask, _params, (_, _) => _params);
-    }
-    testGetparams();
 
     #region ----  Load  -> StParams  -------
     if (BasaParams.TryGetValue(StParams, out object value))
@@ -184,33 +175,6 @@ public class ParserJsonST
 
   #endregion
 
-  #region PTask
-  private ConcurrentDictionary<string, LTask> CalcPTask(string name, object val)
-  {
-    ConcurrentDictionary<string, object> basaParams = new();
-    ConcurrentDictionary<string, LTask> rezul = new();
-    var lsName = ((JToken)val).Children()
-                      .ToList()
-                      .Select(item => ((string)((JProperty)item).Name)).ToList();
-
-    foreach (var _w in lsName.Select(it => ((JToken)val)[it].ToString()))
-    lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
-
-    foreach (var (_key, _val) in basaParams)
-    {
-      LTask lTask=null;
-      var _x = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString());
-      if (_x.Count < 2)
-        continue;
-
-      lTask = new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.Count==3?_x.ElementAt(2):"");
-
-      rezul.AddOrUpdate(_key, lTask, (_, _)=> lTask);
-    }
-    return rezul;
-
-  }
-  #endregion
 
   #region __ ==  Test == __
   #region ___ == GetParams == ___
@@ -230,7 +194,6 @@ public class ParserJsonST
     var s = (List<string>)((Dictionary<string, dynamic>)BasaParams[StSetStart])["loadfile"];
     var s111 = GetSetStart("maxwait");
   }
-  #endregion
   #endregion
   #endregion
 

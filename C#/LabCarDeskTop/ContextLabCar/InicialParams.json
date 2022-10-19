@@ -6,6 +6,12 @@
     "Str0Param1": "D:\\ControlDan\\Str0\\Str0Param1.dcm"
   },
 
+  "Task": {
+    "VCU_DesInvMode": [ "TEST/Low_Beam_Test/VCU_DesInvMode", "Acquisition", "Test 001" ],
+    "Low_Beam_Req": [ "TEST/Low_Beam_Test/Low_Beam_Req", "Acquisition" ],
+    "Low_Beam_State": [ "TEST/Low_Beam_Test/Low_Beam_State", "Acquisition", "Test 1" ]
+  },
+
   "Input": {
     "BatteryIsOn": [ "TEST/Low_Beam_Test", "Test 001" ],
     "Ignition": [ "TEST/Low_Beam_Test" ],
