@@ -16,9 +16,13 @@ internal class Program
     _container = ContainerManager.GetInstance();
     var _connect = _container.LabCar.Resolve<IConnectLabCar>();
     var _jsonConfig = _container.LabCar.Resolve<IStrategDanJson>();
-    _jsonConfig.InicialJson(@"D:\TestSystem\Moto\Strategies\St0");
-
-
+//    _jsonConfig.InicialJson(@"D:\TestSystem\Moto\Strategies\St0");
+    var _test = _container.LabCar.Resolve<ITestLabCar>();
+    _test.Run("qazxswedc");
+    var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
+    _testIlab.Run(@"D:\TestSystem\Moto\Strategies\St0");
+    //    var _aStrateg = _container.LabCar.Resolve<IAStrategiesBasa>();
+    //    _aStrateg.Run(@"D:\TestSystem\Moto\Strategies\St0");
 
     Console.WriteLine("Hello World!  \n  Test dll  ContextLabCar");
   }
