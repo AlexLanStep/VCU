@@ -72,7 +72,7 @@ public class ConnectLabCar: IConnectLabCar
                                                                                                                                                              //Workspace = ExperimentEnvironment.Workspace;
 
 
-      // get value of measurement variable
+      // get value of measurement variable ---!!!!  это TASK
       ISignal measurement = signalSources.CreateMeasurement("TEST/Control_Signal/Value", "Acquisition");
       System.Threading.Thread.Sleep(3000); // wait some time until value is updated from the model execution target
       IScalarValue valueObject = (IScalarValue)measurement.GetValueObject();

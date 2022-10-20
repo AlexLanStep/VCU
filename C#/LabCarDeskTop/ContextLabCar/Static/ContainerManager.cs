@@ -11,8 +11,6 @@ public class ContainerManager
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
     LabCar.Register<IStrategDanJson, StrategDanJson>();
     LabCar.Register <IStrategiesBasa, StrategiesBasa>();
-    //    LabCar.Resolve<IAStrategiesBasa, AStrategiesBasa>();
-    LabCar.Register<ITestLabCar, TestLabCar>();
      
 
     //DbContainer.Register<IParsingXml, ParsingXml>(Reuse.Singleton);

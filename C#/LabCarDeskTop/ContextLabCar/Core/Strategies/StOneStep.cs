@@ -12,7 +12,7 @@ public class StOneStep : IStOneStep
   public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
   public Dictionary<string, dynamic> SetPoints { get; set; } = new(); 
   public List<string> LRezult { get; set; } = new();
-
+  
   public dynamic? ReadSetPoints(string name) => SetPoints.TryGetValue(name, value: out dynamic value) ? value : null;
   public dynamic? ReadGetPoints(string name) => GetPoints.TryGetValue(name, value: out dynamic value) ? value : null;
 
@@ -39,6 +39,7 @@ public class StOneStep : IStOneStep
     }
   }
   private List<(string, dynamic, Dftest)> lsRez = new();
+  public void AddGetPoints(string key, dynamic value) => GetPoints.Add(key, value);
   public void LoadInicialRez(List<string> list) 
   {
     Func<string, string, Dftest, (string, dynamic, Dftest)> f0 = (x, y, f) => 

@@ -5,9 +5,9 @@ namespace ContextLabCar.Core.Strategies;
 public interface IStrategDanJson
 {
   void InicialJson(string pathdir = "");
-  Dictionary<string, DanInput> DDanInput { get; set; }
+  Dictionary<string, Parameter> DParameter { get; set; }
   Dictionary<string, DanOutput> DDanOutput { get; set; }
-  Dictionary<string, Dictionary<string, FestWert>> DFestWert { get; set; }
+  Dictionary<string, Dictionary<string, Calibrat>> DCalibrat { get; set; }
   Dictionary<string, string> DPath { get; set; }
   Dictionary<string, LTask> DTask { get; set; }
   Dictionary<string, dynamic> DSTParams { get; set; }
@@ -19,9 +19,9 @@ public class StrategDanJson: IStrategDanJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-  public Dictionary<string, DanInput> DDanInput { get; set; }
+  public Dictionary<string, Parameter> DParameter { get; set; }
   public Dictionary<string, DanOutput> DDanOutput { get; set; }
-  public Dictionary<string, Dictionary<string, FestWert>> DFestWert { get; set; }
+  public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat { get; set; }
   public Dictionary<string, string> DPath { get; set; }
   public Dictionary<string, LTask> DTask { get; set; }
   public Dictionary<string, dynamic> DSTParams { get; set; }
@@ -40,9 +40,9 @@ public class StrategDanJson: IStrategDanJson
   public StrategDanJson(string pathdir = "")
   {
     _pathdir = pathdir;
-    DDanInput = new();
+    DParameter = new();
     DDanOutput = new();
-    DFestWert = new();
+    DCalibrat = new();
     DPath = new();
     DTask = new();
     DSTParams = new();
@@ -78,9 +78,9 @@ public void InicialJson(string pathdir = "")
       {
         var _stdan = new ParserJsonDan(path);
         _stdan.Run();
-        DDanInput = _stdan.DDanInput;
+        DParameter = _stdan.DParameter;
         DDanOutput = _stdan.DDanOutput;
-        DFestWert = _stdan.DFestWert;
+        DCalibrat = _stdan.DCalibrat;
         DPath = _stdan.DPath;
         DTask = _stdan.DTask;
       }

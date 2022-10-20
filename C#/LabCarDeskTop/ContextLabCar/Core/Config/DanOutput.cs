@@ -2,7 +2,7 @@
 namespace ContextLabCar.Core.Config;
 
 
-public class DanOutput : IDanInOut
+public class DanOutput : IParameter
 {
   public string Signal { get; }
   public string Comment { get; }

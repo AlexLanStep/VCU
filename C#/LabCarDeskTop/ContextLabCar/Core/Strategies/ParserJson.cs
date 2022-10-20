@@ -6,9 +6,9 @@ public class ParserJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-  public Dictionary<string, DanInput> DDanInput; // = new();
+  public Dictionary<string, Parameter> DParameter; // = new();
   public Dictionary<string, DanOutput> DDanOutput; // = new();
-  public Dictionary<string, Dictionary<string, FestWert>> DFestWert; //= new();
+  public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat; //= new();
   public Dictionary<string, string> DPath; // = new();
   public Dictionary<string, LTask> DTask; // = new();
   public Dictionary<string, dynamic> DSTParams; // = new();
@@ -71,3 +71,4 @@ public class ParserJson
 
 
 }
+

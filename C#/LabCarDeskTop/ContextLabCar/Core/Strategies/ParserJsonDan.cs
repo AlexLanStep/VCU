@@ -7,18 +7,13 @@ public class ParserJsonDan: ParserJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-  //public Dictionary<string, DanInput> DDanInput = new();
-  //public Dictionary<string, DanOutput> DDanOutput = new();
-  //public Dictionary<string, Dictionary<string, FestWert>> DFestWert = new();
-  //public Dictionary<string, string> DPath = new();
-  //public Dictionary<string, LTask> DTask = new();
   #endregion
   #region ___ Local ___
   private const string Path = "Path";
   private const string PTask = "Task";
-  private const string Input = "Input";
+  private const string Parameter = "Parameter";
   private const string Output = "Output";
-  private const string FestWert = "FestWert";
+  private const string Calibrat = "Calibrat";
 
   #endregion
   #endregion
@@ -36,9 +31,9 @@ public class ParserJsonDan: ParserJson
 
   protected override void ConvertJson(string tsxtJson)
   {
-    DDanInput = new();
+    DParameter = new();
     DDanOutput = new();
-    DFestWert = new();
+    DCalibrat = new();
     DPath = new();
     DTask = new();
 
@@ -55,10 +50,10 @@ public class ParserJsonDan: ParserJson
       CalcPTask(valueTask);
     #endregion
 
-    #region ----  Load  -> Input  -------
-    if (BasaParams.TryGetValue(Input, out object valueInput) && valueInput != null)
-      foreach (var (key, x) in jsonToDicStLsStr(valueInput.ToString()))
-        DDanInput.Add(key, new DanInput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
+    #region ----  Load  -> Parameter  -------
+    if (BasaParams.TryGetValue(Parameter, out object valueParameter) && valueParameter != null)
+      foreach (var (key, x) in jsonToDicStLsStr(valueParameter.ToString()))
+        DParameter.Add(key, new Parameter(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
     #endregion
 
     #region ----  Load  -> Output  -------
@@ -67,10 +62,10 @@ public class ParserJsonDan: ParserJson
         DDanOutput.Add(key, new DanOutput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
     #endregion
 
-    #region ----  Load  -> FestWert  -------
-    if (BasaParams.TryGetValue(FestWert, out object valueFestWert) && valueFestWert != null)
-    { 
-      CalcFestWert(valueFestWert);
+    #region ----  Load  -> Calibrat  -------
+    if (BasaParams.TryGetValue(Calibrat, out object valueCalibrat) && valueCalibrat != null)
+    {
+      CalcCalibrat(valueCalibrat);
       writeFestWert();
     }
     #endregion
@@ -114,14 +109,14 @@ public class ParserJsonDan: ParserJson
   }
   #endregion
 
-  #region FestWert
-  private void CalcFestWert(object val)
+  #region Calibrat
+  private void CalcCalibrat(object val)
   {
     var basaParams = StartParser(val);
 
     foreach (var (_key, _val) in basaParams)
     {
-      Dictionary<string, FestWert> dan = new();
+      Dictionary<string, Calibrat> dan = new();
       var val0 = jsonToDicStDyn(_val.ToString());
       foreach (var it in val0)
       {
@@ -129,15 +124,15 @@ public class ParserJsonDan: ParserJson
 
         dynamic f0(string s) => val1.TryGetValue(s, out dynamic v) ? v : "";
 
-        dan.Add(it.Key, new FestWert(f0("Model"), it.Key, f0("Val"), f0("Comment")));
+        dan.Add(it.Key, new Calibrat(f0("Model"), it.Key, f0("Val"), f0("Comment")));
       }
-      DFestWert.Add(_key, dan);
+      DCalibrat.Add(_key, dan);
     }
   }
 
   private void writeFestWert()
   {
-    foreach (var (nameFile, val) in DFestWert)
+    foreach (var (nameFile, val) in DCalibrat)
     {
       string _text = "";
       foreach (var (keyd, vald) in val)
@@ -152,7 +147,7 @@ public class ParserJsonDan: ParserJson
       }
       else
       {
-        new MyException($"В json InicialParams, не прописан путь к переменным {nameFile}", -3);
+        throw new MyException($"В json InicialParams, не прописан путь к переменным {nameFile}", -3);
       }
     }
   }
