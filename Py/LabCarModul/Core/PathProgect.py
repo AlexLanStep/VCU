@@ -51,6 +51,12 @@ class CPath:
     else:
       NegValException(f"Не такого каталога {path}", -20)
 
+  def AddDirTestOrInc(self,  name, path):
+    if not os.path.isdir(path):
+      os.mkdir(path)
+
+    CPath.D[name] = path
+
 '''
 
   def TestIsFile(func):

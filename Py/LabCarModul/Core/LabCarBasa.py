@@ -31,17 +31,20 @@ class LabCarBasa:
     self.Workspace = self.ExperimentEnvironment.OpenWorkspace(_s)  # open workspace
 
     _e = self._pathLabCar["PathExperiment"]
-    print("Грузим эксперемент  {e}")
+    print(f"Грузим эксперемент  {_e}")
     self.Experiment = self.Workspace.OpenExperiment(_e)  # open experiment
+
     self.SignalSources = self.Experiment.SignalSources  # get all signal sources
 
-    if self.SignalSources.HardwareDetected():
-      print(" LabCar запущен")
-    else:
-      print(" Запускаем LabCar ")
-      self.SignalSources.Download  # download the model to the target
+    # try:
+    #   if self.SignalSources.HardwareDetected():
+    #     print(" LabCar запущен")
+    #   else:
+    print(" Запускаем LabCar ")
+    self.SignalSources.Download  # download the model to the target
 
     self.SignalSources.StartSimulation  # start simulation on the target
+
     self.SignalSources.StartMeasurement  # start measurement
 
   #  Выключение  Labcara

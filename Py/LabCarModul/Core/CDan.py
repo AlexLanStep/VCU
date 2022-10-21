@@ -2,7 +2,7 @@ import DanConst0
 
 
 class CDan:
-  def __init__(self, model):
+  def __init__(self, model=""):
     self.model = model
     self.DanForModel = dict()
     self.Dan = dict()
@@ -68,12 +68,16 @@ class CDan:
     except:
       return None
 
-  def AddNameParams(self, name, coment=""):
+  def AddNameParamsIn(self, name, coment=""):
     self.Dan[name] = {"s": f"{self.model}/{name}/Value",
                               "c":coment}
-    jj=1
+  def AddNameParamsOut(self, name, coment=""):
+    self.Dan[name] = {"s": f"{self.model}/{name}",
+                              "c":coment}
 
-  def AddNameParamsModel(self, name, model, coment=""):
+  def AddNameParamsModelIn(self, name, model, coment=""):
     self.Dan[name] = {"s": f"{model}/{name}/Value",
                               "c":coment}
-    jj=1
+  def AddNameParamsModelOut(self, name, model, coment=""):
+    self.Dan[name] = {"s": f"{model}/{name}",
+                              "c":coment}
