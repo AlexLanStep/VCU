@@ -24,23 +24,23 @@ internal class Program
     var _jsonConfig = _container.LabCar.Resolve<IStrategDanJson>();
     var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
     _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St0");
-    _testIlab.RunTest();
+
 
     //var tast0 = Task.Factory.StartNew(() =>
     //{
     //  var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
     //  _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St0");
 
-        //});
-        //var tast1 = Task.Factory.StartNew(() =>
-        //{
-        //  var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
-        //  _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St1");
+    //});
+    //var tast1 = Task.Factory.StartNew(() =>
+    //{
+    //  var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
+    //  _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St1");
 
-        //});
+    //});
 
-        //Task.WaitAll(tast0, tast1);
-    Console.WriteLine("==== END === !!!! ");
+    //Task.WaitAll(tast0, tast1);
+    Console.WriteLine("Hello World!  \n  Test dll  ContextLabCar");
   }
 
 }

@@ -40,10 +40,7 @@ public class StOneStep : IStOneStep
   }
   private List<(string, dynamic, Dftest)> lsRez = new();
 
-    public void AddGetPoints(string key, dynamic value) 
-    { 
-        GetPoints.TryAdd(key, value); 
-    }
+  public void AddGetPoints(string key, dynamic value) => GetPoints.Add(key, value);
   public void LoadInicialRez(List<string> list) 
   {
     Func<string, string, Dftest, (string, dynamic, Dftest)> f0 = (x, y, f) => 
@@ -85,13 +82,7 @@ public class StOneStep : IStOneStep
       var _name = it.Item1;
       if(_rezul.TryGetValue(_name, out dynamic val1))
       {
-        double x0;
-        double x01=val1;
-        //var b0 = double.TryParse(val1.To, out x0);
-        double x1;
-        var bb= double.TryParse(((string)(it.Item2)).Replace('.',','), out x1);
-        bool _z = it.Item3(x01, x1);
-
+        bool _z = it.Item3(val1, it.Item2);
         _brezult = _brezult && _z;
       }
       else
@@ -104,7 +95,7 @@ public class StOneStep : IStOneStep
 
     return _brezult;
   }
-  public virtual bool RezultEq(dynamic x0, dynamic x1) => (double)x0 == (double)x1;  // ==
+  public virtual bool RezultEq(dynamic x0, dynamic x1) => x0 == x1;  // ==
 
   public virtual bool RezultNe() // !=
   {

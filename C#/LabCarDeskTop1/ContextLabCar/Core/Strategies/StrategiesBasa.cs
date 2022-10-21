@@ -1,7 +1,5 @@
 ﻿
 using DynamicData;
-using ETAS.EE.Scripting;
-using System.IO;
 using System.Xml.Linq;
 
 namespace ContextLabCar.Core.Strategies;
@@ -40,10 +38,9 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
     NameStrateg = DSTParams["Name"];
     MaxWaitRez = (int) (DSTParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
 
-//    return;77
+    return;
     Console.WriteLine("Подключение к LabCar");
     IConLabCar.Inicial(vwork, vexpe);
-    IConLabCar.Connect();
     Console.WriteLine($"Инициализация параметров для стратегии {NameStrateg}:");
     Console.WriteLine("  - Task");
     inicialloadTask();
@@ -75,11 +72,10 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       dMeasurement.AddOrUpdate(val.Signal, measurement, (_, _) => measurement);
     }
   }
-  private string testFile(string fullPath)
+  private string testFile(string path)
   {
-        string path = "";
-//    if (!DPath.TryGetValue(path, out string fullPath))
-//      throw new MyException($"No link to file {path}, in inicialCalibrat", -1);
+    if (!DPath.TryGetValue(path, out string fullPath))
+      throw new MyException($"No link to file {path}, in inicialCalibrat", -1);
 
     if (!File.Exists(fullPath))
       throw new MyException($"No file {path}, in inicialCalibrat", -1);
@@ -141,28 +137,10 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
   }
   protected void setDan(string name, dynamic dsn)
   {
-        //string s = DParameter[name].Signal;
-        //ISignal parameter = IConLabCar.SignalSources.CreateParameter(s);
-        //IScalarValue valueObject = (IScalarValue)parameter.GetValueObject();
-        //valueObject.SetValue(2.000);
-        //parameter.SetValueObject(valueObject);
-        //int k = 1;
-        var ValueObject = (IScalarValue)dParams[name].GetValueObject();
-        ValueObject.SetValue(dsn);
-        dParams[name].SetValueObject(ValueObject);
-
-        //if (dParams.ContainsKey(name))
-        //{
-        //    var xx = (ISignal)dParams[name];
-        //    xx.SetValueObject(ValueObject);
-        //    dParams[name] = xx;
-        //}
-        //else
-        //{
-        //    //        dParams.TryAdd(name);
-        //    int j = 1;
-        //}
-    }
+    var ValueObject = (IScalarValue)dParams[name].GetValueObject();
+    ValueObject.SetValue(dsn);
+    dParams[name].SetValueObject(ValueObject);
+  }
   private void factivCalibr()
   {
     Console.WriteLine(" Активируем калибровки ");
@@ -193,10 +171,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       {
         var _xx0 = getMeasurement(keyGet);
         _oneStep.AddGetPoints(keyGet, _xx0);
-        if(_rezul.ContainsKey(keyGet))
-            _rezul[keyGet]=_xx0;
-        else
-            _rezul.Add(keyGet,_xx0);
+        _rezul.Add(keyGet, _xx0);
       }
     }
     void _setDanLabCar(StOneStep _oneStep)
@@ -217,12 +192,10 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       bool _rez = false;
       DateTime _dt0 = DateTime.Now;
       int _sec = 0;
-      int iii = 0;
-      while ((!_rez) && ((DateTime.Now - _dt0).Seconds <= MaxWaitRez))
+      while ((!_rez) && ((DateTime.Now - _dt0).Seconds <= MaxWaitRez ))
       {
         _getDanLabCar(_oneStep);
         _rez = _oneStep.TestDan(_rezul);
-        Thread.Sleep(1000);
       }
       return _rez;
     }
@@ -242,14 +215,12 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       _setDanLabCar(_oneStep);
       
 
-      if (_oneStep.LRezult.Count > 0)
-      {
-        if (_retDanLabCar(_oneStep))
-            Console.WriteLine("-- !!!!  Test went well !!!!");
-        else
-            Console.WriteLine("-- ==>  Test failed ((((( ----");
-      }
-            _numSten += 1;
+      if ((_oneStep.LRezult.Count > 0) && _retDanLabCar(_oneStep))
+        Console.WriteLine("-- !!!!  Test went well !!!!");
+      else 
+        Console.WriteLine("-- ==>  Test failed ((((( ----"); 
+
+      _numSten += 1;
     }
 
 

@@ -44,7 +44,7 @@ public class ConnectLabCar: IConnectLabCar
     Workspace = ExperimentEnvironment.HasOpenWorkspace ? ExperimentEnvironment.Workspace : ExperimentEnvironment.OpenWorkspace(_pathWorkspace);
 
     Experiment = Workspace.HasOpenExperiment ? Workspace.Experiment : Workspace.OpenExperiment(_pathExperimentEnvironment);
-        
+
     SignalSources = Experiment.SignalSources;
 
   }
