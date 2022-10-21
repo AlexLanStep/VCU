@@ -18,6 +18,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
   protected ConcurrentDictionary<string, ISignal> dMeasurement = new();
   protected ConcurrentDictionary<string, ISignal> dParams = new();
   public string NameStrateg { get; set; } = "";
+  public int MaxWaitRez { get; set; } = 10;
   #endregion
 
   public StrategiesBasa(IConnectLabCar iConLabCar)
@@ -35,7 +36,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
 
     DPath.Add("StDir", pathdir);
     NameStrateg = DSTParams["Name"];
-    
+    MaxWaitRez = (int) (DSTParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
 
     return;
     Console.WriteLine("Подключение к LabCar");
@@ -122,9 +123,9 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       Console.WriteLine($" Problem with activating options {fullPath}");
     }
   }
-  protected dynamic getMeasurement(string name)
+  protected dynamic? getMeasurement(string name)
   {
-    dynamic rezult=null;
+    dynamic? rezult =null;
     if(dMeasurement.ContainsKey(name))
     {
       IScalarValue valueObject = (IScalarValue) dMeasurement[name].GetValueObject();
@@ -140,7 +141,6 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
     ValueObject.SetValue(dsn);
     dParams[name].SetValueObject(ValueObject);
   }
-
   private void factivCalibr()
   {
     Console.WriteLine(" Активируем калибровки ");
@@ -158,8 +158,48 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       Console.WriteLine(" Нет указаний для активации калибровок нет. ");
 
   }
-  public void RunTest()
+  public virtual void RunTest()
   {
+    Dictionary<string, dynamic> _rezul = new();
+    void _getDanLabCar(StOneStep _oneStep)
+    {
+      if (_oneStep.GetPoints.Count == 0)
+        return;
+
+      Console.WriteLine(" _ Читаем переменные _");
+      foreach (var (keyGet, valGet) in _oneStep.GetPoints)
+      {
+        var _xx0 = getMeasurement(keyGet);
+        _oneStep.AddGetPoints(keyGet, _xx0);
+        _rezul.Add(keyGet, _xx0);
+      }
+    }
+    void _setDanLabCar(StOneStep _oneStep)
+    {
+      if (_oneStep.SetPoints.Count == 0)
+        return;
+
+      Console.WriteLine(" _ Пишем переменные _");
+
+      foreach (var (keySet, valSet) in _oneStep.SetPoints)
+      {
+        setDan(keySet, valSet);
+      }
+
+    }
+    bool _retDanLabCar(StOneStep _oneStep)
+    {
+      bool _rez = false;
+      DateTime _dt0 = DateTime.Now;
+      int _sec = 0;
+      while ((!_rez) && ((DateTime.Now - _dt0).Seconds <= MaxWaitRez ))
+      {
+        _getDanLabCar(_oneStep);
+        _rez = _oneStep.TestDan(_rezul);
+      }
+      return _rez;
+    }
+
     if (LsStOneStep.Count < 2)
       throw new MyException("Not a complete strategy StrategiesBasa.RunTest() ", -2);
 
@@ -171,30 +211,14 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
     {
       Console.WriteLine($"  -  Step -> {_numSten} ");
 
-      if (_oneStep.GetPoints.Count > 0)
-      {
-        foreach (var (key, val) in oneStep.GetPoints)
-        {
-          var _xx0 = getMeasurement(key);
-          _oneStep.AddGetPoints(key,_xx0);
-        }
-      }
+      _getDanLabCar(_oneStep);
+      _setDanLabCar(_oneStep);
+      
 
-      if (_oneStep.SetPoints.Count > 0)
-      {
-        foreach (var (key, val) in oneStep.SetPoints)
-        {
-          setDan(key, val);
-        }
-      }
-
-      if (_oneStep.LRezult.Count > 0)
-      {
-        foreach (var it in oneStep.LRezult)
-        {
-          
-        }
-      }
+      if ((_oneStep.LRezult.Count > 0) && _retDanLabCar(_oneStep))
+        Console.WriteLine("-- !!!!  Test went well !!!!");
+      else 
+        Console.WriteLine("-- ==>  Test failed ((((( ----"); 
 
       _numSten += 1;
     }

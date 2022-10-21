@@ -24,11 +24,22 @@ public class ParserJson
   #endregion
 
   #region _ Constructor _
-  public ParserJson(string pathFiles) => _pathFiles = pathFiles;
-  #endregion
+  public ParserJson(string pathFiles) 
+  { 
+    _pathFiles = pathFiles;
+    DParameter = new();
+    DDanOutput = new();
+    DCalibrat= new();
+    DPath = new(); 
+    DTask = new(); 
+    DSTParams = new(); 
+    DSTsetStart = new();
+    LsStOneStep = new();
+  }
+#endregion
 
-  #region ___ run _ convert _ json
-  public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null : File.ReadAllText(filejson);
+#region ___ run _ convert _ json
+public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null : File.ReadAllText(filejson);
   public void Run()
   {
     var tsxtJson = LoadFileJson(_pathFiles);

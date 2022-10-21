@@ -39,6 +39,7 @@ public class StOneStep : IStOneStep
     }
   }
   private List<(string, dynamic, Dftest)> lsRez = new();
+
   public void AddGetPoints(string key, dynamic value) => GetPoints.Add(key, value);
   public void LoadInicialRez(List<string> list) 
   {
@@ -68,9 +69,31 @@ public class StOneStep : IStOneStep
 
     LRezult = new(list);
   }
-  public virtual bool TestDan()
+  public virtual bool TestDan(Dictionary<string, dynamic> rezul)
   {
-    return false;
+    Dictionary<string, dynamic> _rezul = rezul;
+    bool _brezult = true;
+
+    if (_rezul.Count == 0)
+      return false;
+
+    foreach (var it in lsRez)
+    {
+      var _name = it.Item1;
+      if(_rezul.TryGetValue(_name, out dynamic val1))
+      {
+        bool _z = it.Item3(val1, it.Item2);
+        _brezult = _brezult && _z;
+      }
+      else
+      {
+        Console.WriteLine($" Error not {_name} ");
+        return false;
+      }
+      
+    }
+
+    return _brezult;
   }
   public virtual bool RezultEq(dynamic x0, dynamic x1) => x0 == x1;  // ==
 

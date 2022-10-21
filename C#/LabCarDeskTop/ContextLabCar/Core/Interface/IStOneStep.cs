@@ -12,5 +12,5 @@ public interface IStOneStep
     bool RezultLe();
     bool RezultLt();
     bool RezultNe();
-    bool TestDan();
+    bool TestDan(Dictionary<string, dynamic> rezul);
 }

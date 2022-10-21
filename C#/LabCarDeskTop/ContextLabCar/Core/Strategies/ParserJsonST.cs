@@ -16,7 +16,7 @@ public class ParserJsonST: ParserJson
   private const string Stls = "STls";
 
   private readonly string[] _fieldes = new[] { StParams, StSetStart, Stls };
-  private readonly string _pathFiles;
+//  private readonly string _pathFiles;
 
   #endregion
   #endregion

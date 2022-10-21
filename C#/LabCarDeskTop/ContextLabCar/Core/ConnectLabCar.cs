@@ -18,14 +18,14 @@ public interface IConnectLabCar
 
 public class ConnectLabCar: IConnectLabCar
 {
-  public IExperimentEnvironment ExperimentEnvironment { get; set; } = null;
-  public IWorkspace Workspace { get; set; } = null;
-  public IExperiment Experiment { get; set; } = null;
-  public ISignalSourceCollection SignalSources { get; set; } = null;
+  public IExperimentEnvironment ExperimentEnvironment { get; set; }
+  public IWorkspace Workspace { get; set; }
+  public IExperiment Experiment { get; set; }
+  public ISignalSourceCollection SignalSources { get; set; }
 
   private string _pathWorkspace;
   private string _pathExperimentEnvironment;
-  public ConnectLabCar() {}
+  public ConnectLabCar() { }
 
   public void Inicial(string pathWorkspace, string pathExperimentEnvironment)
   {

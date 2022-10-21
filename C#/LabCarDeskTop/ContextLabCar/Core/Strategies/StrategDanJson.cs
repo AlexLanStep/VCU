@@ -31,8 +31,6 @@ public class StrategDanJson: IStrategDanJson
   #endregion
   #region ___ Local ___
   private string _pathdir;
-  private ParserJsonDan _parserDan;
-  private ParserJsonST _parserSt;
   #endregion
   #endregion
 
