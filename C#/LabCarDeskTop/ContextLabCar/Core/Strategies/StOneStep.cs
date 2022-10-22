@@ -1,8 +1,5 @@
 ﻿
-
-using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
-
+#nullable enable
 namespace ContextLabCar.Core.Strategies;
 
 public class StOneStep : IStOneStep
@@ -11,32 +8,30 @@ public class StOneStep : IStOneStep
   public int TimeWait { get; set; }
   public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
   public Dictionary<string, dynamic> SetPoints { get; set; } = new(); 
-  public List<string> LRezult { get; set; } = new();
+  public List<string> LResult { get; set; } = new();
   
-  public dynamic? ReadSetPoints(string name) => SetPoints.TryGetValue(name, value: out dynamic value) ? value : null;
-  public dynamic? ReadGetPoints(string name) => GetPoints.TryGetValue(name, value: out dynamic value) ? value : null;
+  public dynamic? ReadSetPoints(string name) => SetPoints.TryGetValue(name, value: out var value) ? value : null;
+  public dynamic? ReadGetPoints(string name) => GetPoints.TryGetValue(name, value: out var value) ? value : null;
 
-  public void LoadInicialPosition(object d)
+  public void LoadInitializationPosition(object d)
   {
     if(d==null)
       return; 
 
-    string _type1 =(string) Regex.Replace(((string)(string)d.GetType().Name).ToLower(), @"[0-9]", "");
+    var type1 = Regex.Replace(d.GetType().Name.ToLower(), @"[0-9]", "");
 
-    if (_type1.Contains("list"))
+    if (type1.Contains("list"))
     {
       GetPoints.Clear();
       ((List<string>)d).ForEach(x => GetPoints.Add(x, 0));
       return;
     }
 
-    if (_type1.Contains("dict"))
-    {
-      SetPoints.Clear();
-      foreach (var it in (Dictionary<string, dynamic>)d)
-        SetPoints.Add(it.Key, it.Value);
-      return;
-    }
+    if (!type1.Contains("dict")) return;
+
+    SetPoints.Clear();
+    foreach (var it in (Dictionary<string, dynamic>)d)
+      SetPoints.Add(it.Key, it.Value);
   }
   private List<(string, dynamic, Dftest)> lsRez = new();
 
@@ -44,15 +39,15 @@ public class StOneStep : IStOneStep
     { 
         GetPoints.TryAdd(key, value); 
     }
-  public void LoadInicialRez(List<string> list) 
+  public void LoadInitializationRez(List<string> list) 
   {
-    Func<string, string, Dftest, (string, dynamic, Dftest)> f0 = (x, y, f) => 
+    (string, dynamic, Dftest) F0(string x, Dftest f)
     {
-      string[] s = x.Split("==");
-      string name = s[0].Trim();
-      dynamic value = (dynamic)s[1].Trim();
+      var s = x.Split("==");
+      var name = s[0].Trim();
+      var value = (dynamic) s[1].Trim();
       return (name, value, f);
-    };
+    }
 
     lsRez.Clear();
     list.ForEach
@@ -60,66 +55,58 @@ public class StOneStep : IStOneStep
       x =>
       {
         if (x.Contains("=="))
-          lsRez.Add(f0(x, "==", RezultEq));
+          lsRez.Add(F0(x, ResultEq));
         else if (x.Contains(">="))
-          lsRez.Add(f0(x, ">=", RezultGe));
+          lsRez.Add(F0(x, ResultGe));
 
       }
     ); 
 
-//           var xxx = lsRez.ElementAt(0);
-//    bool b = xxx.Item3(3.4, 3.4);
-
-    LRezult = new(list);
+    LResult = new List<string>(list);
   }
-  public virtual bool TestDan(Dictionary<string, dynamic> rezul)
-  {
-    Dictionary<string, dynamic> _rezul = rezul;
-    bool _brezult = true;
 
-    if (_rezul.Count == 0)
+  public virtual bool TestDan(Dictionary<string, dynamic> result)
+  {
+    var bResult = true;
+
+    if (result.Count == 0)
       return false;
 
     foreach (var it in lsRez)
     {
-      var _name = it.Item1;
-      if(_rezul.TryGetValue(_name, out dynamic val1))
+      var name = it.Item1;
+      if(result.TryGetValue(name, out var x0))
       {
-        double x0;
-        double x01=val1;
-        //var b0 = double.TryParse(val1.To, out x0);
+        double x01 = x0;
         double x1;
-        var bb= double.TryParse(((string)(it.Item2)).Replace('.',','), out x1);
-        bool _z = it.Item3(x01, x1);
-
-        _brezult = _brezult && _z;
+        double.TryParse(((string)(it.Item2)).Replace('.',','), out x1);
+        bResult = bResult && it.Item3(x01, x1);
       }
       else
       {
-        Console.WriteLine($" Error not {_name} ");
+        Console.WriteLine($" Error not {name} ");
         return false;
       }
-      
     }
 
-    return _brezult;
+    return bResult;
   }
-  public virtual bool RezultEq(dynamic x0, dynamic x1) => (double)x0 == (double)x1;  // ==
+  public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.000001;  // ==
 
-  public virtual bool RezultNe() // !=
+  public virtual bool ResultNe() // !=
   {
     return false;
   }
-  public virtual bool RezultGe(dynamic x0, dynamic x1) => x0 >= x1; // >= 
-  public virtual bool RezultGt() // > 
+  public virtual bool ResultGe(dynamic x0, dynamic x1) => x0 >= x1; // >= 
+  public virtual bool ResultGt() // > 
   {
     return false;
   }
-  public virtual bool RezultLe() // <= 
+  public virtual bool ResultLe() // <= 
   {
     return false;
   }
-  public virtual bool RezultLt() // < 
+  public virtual bool ResultLt() // < 
   {
     return false;
   }

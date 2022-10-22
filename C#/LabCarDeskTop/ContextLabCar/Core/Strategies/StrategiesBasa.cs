@@ -1,9 +1,4 @@
 ﻿
-using DynamicData;
-using ETAS.EE.Scripting;
-using System.IO;
-using System.Xml.Linq;
-
 namespace ContextLabCar.Core.Strategies;
 
 public interface IStrategiesBasa
@@ -14,7 +9,7 @@ public interface IStrategiesBasa
   void RunTest();
 }
 
-public class StrategiesBasa : StrategDanJson, IStrategiesBasa
+public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 {
   #region Dan
   protected ConcurrentDictionary<string, ISignal> dMeasurement = new();
@@ -32,17 +27,17 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
 
   public void RunInit(string pathdir = "")
   {
-    InicialJson(pathdir);
+    InitializationJson(pathdir);
     if (!(DPath.TryGetValue("Workspace", out string vwork) && DPath.TryGetValue("Experiment", out string vexpe)))
       throw new MyException(" Error in json path Workspace or Experiment ", -5);
 
     DPath.Add("StDir", pathdir);
-    NameStrateg = DSTParams["Name"];
-    MaxWaitRez = (int) (DSTParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
+    NameStrateg = DstParams["Name"];
+    MaxWaitRez = (int) (DstParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
 
-//    return;77
+    return;
     Console.WriteLine("Подключение к LabCar");
-    IConLabCar.Inicial(vwork, vexpe);
+    IConLabCar.Initialization(vwork, vexpe);
     IConLabCar.Connect();
     Console.WriteLine($"Инициализация параметров для стратегии {NameStrateg}:");
     Console.WriteLine("  - Task");
@@ -52,7 +47,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
     inicialParamsDic();
 
     Console.WriteLine("  - Файлы с калибровками");
-    if(DSTsetStart.TryGetValue("loadfile", out dynamic valFiles))
+    if(DstSetStart.TryGetValue("loadfile", out dynamic valFiles))
     {
       foreach (var itFile in (List<string>) valFiles)
       {
@@ -71,7 +66,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
     foreach(var (key, val) in DTask) 
     {
 //      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement("TEST/Control_Signal/Value", "Acquisition");
-      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement(val.TTask, val.NameLabCar);
+      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement(val.LabCarTask, val.NameLabCar);
       dMeasurement.AddOrUpdate(val.Signal, measurement, (_, _) => measurement);
     }
   }
@@ -166,7 +161,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
   private void factivCalibr()
   {
     Console.WriteLine(" Активируем калибровки ");
-    if (DSTsetStart.TryGetValue("activfile", out dynamic valFiles))
+    if (DstSetStart.TryGetValue("activfile", out dynamic valFiles))
     {
       foreach (var itFile in (List<string>)valFiles)
       {
@@ -242,7 +237,7 @@ public class StrategiesBasa : StrategDanJson, IStrategiesBasa
       _setDanLabCar(_oneStep);
       
 
-      if (_oneStep.LRezult.Count > 0)
+      if (_oneStep.LResult.Count > 0)
       {
         if (_retDanLabCar(_oneStep))
             Console.WriteLine("-- !!!!  Test went well !!!!");
@@ -262,7 +257,7 @@ AddDictRecVal(string key, dynamic value)
 
 public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
   public Dictionary<string, dynamic> SetPoints { get; set; } = new(); 
-  public List<string> LRezult { get; set; } = new();
+  public List<string> LResult { get; set; } = new();
 
 
    public Dictionary<string, Parameter> DParameter; // = new();

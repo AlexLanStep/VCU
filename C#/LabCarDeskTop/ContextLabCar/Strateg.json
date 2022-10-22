@@ -3,13 +3,13 @@
   "STParams": {
     "Name": "Swet",
     "Wait0": 1000,
-    "Wait1": 1500
+    "Wait1": 1500,
+    "maxwait": 10
   },
 
   "STsetStart": {
-    "loadfile": [ "Str0Param0", "Str0Param1", "Str0Param2" ],
-    "activfile": [ "Str0Param0", "Str0Param2" ],
-    "maxwait": 10
+    "loadfile": [ "Params0"],
+    "activfile": [ "Params0" ]
   },
 
 

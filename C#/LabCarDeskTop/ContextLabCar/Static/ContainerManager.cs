@@ -9,7 +9,7 @@ public class ContainerManager
     LabCar = new DryIoc.Container();              // new DryIoc.Container();
 
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
-    LabCar.Register<IStrategDanJson, StrategDanJson>();
+    LabCar.Register<IStrategyDanJson, StrategyDanJson>();
     LabCar.Register <IStrategiesBasa, StrategiesBasa>();
      
 

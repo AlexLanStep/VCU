@@ -21,7 +21,7 @@ internal class Program
 
     _container = ContainerManager.GetInstance();
     var _connect = _container.LabCar.Resolve<IConnectLabCar>();
-    var _jsonConfig = _container.LabCar.Resolve<IStrategDanJson>();
+    var _jsonConfig = _container.LabCar.Resolve<IStrategyDanJson>();
     var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
     _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St0");
     _testIlab.RunTest();

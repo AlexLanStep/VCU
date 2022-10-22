@@ -1,24 +1,22 @@
 ﻿
-
-
+#nullable enable
 namespace ContextLabCar.Core.Strategies;
 public class ParserJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-  public Dictionary<string, Parameter> DParameter; // = new();
-  public Dictionary<string, DanOutput> DDanOutput; // = new();
-  public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat; //= new();
-  public Dictionary<string, string> DPath; // = new();
-  public Dictionary<string, LTask> DTask; // = new();
-  public Dictionary<string, dynamic> DSTParams; // = new();
-  public Dictionary<string, dynamic> DSTsetStart; // = new();
-  public List<StOneStep> LsStOneStep; // = new List<StOneStep>();
+  public Dictionary<string, Parameter> DParameter; 
+  public Dictionary<string, DanOutput> DDanOutput; 
+  public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat; 
+  public Dictionary<string, string>? DPath; 
+  public Dictionary<string, LTask> DTask; 
+  public Dictionary<string, dynamic>? DstParams;
+  public Dictionary<string, dynamic?> DsTsetStart;
+  public List<StOneStep> LsStOneStep; 
 
   #endregion
   #region ___ Local ___
   private readonly string _pathFiles;
-  private ConcurrentDictionary<string, object> BasaParams = new();
 
   #endregion
   #endregion
@@ -27,14 +25,14 @@ public class ParserJson
   public ParserJson(string pathFiles) 
   { 
     _pathFiles = pathFiles;
-    DParameter = new();
-    DDanOutput = new();
-    DCalibrat= new();
-    DPath = new(); 
-    DTask = new(); 
-    DSTParams = new(); 
-    DSTsetStart = new();
-    LsStOneStep = new();
+    DParameter = new Dictionary<string, Parameter>();
+    DDanOutput = new Dictionary<string, DanOutput>();
+    DCalibrat= new Dictionary<string, Dictionary<string, Calibrat>>();
+    DPath = new Dictionary<string, string>(); 
+    DTask = new Dictionary<string, LTask>(); 
+    DstParams = new Dictionary<string, dynamic>(); 
+    DsTsetStart = new Dictionary<string, dynamic?>();
+    LsStOneStep = new List<StOneStep>();
   }
 #endregion
 
@@ -57,17 +55,14 @@ public string? LoadFileJson(string filejson) => !File.Exists(filejson) ? null : 
   #endregion
 
   #region function
-  protected Dictionary<string, dynamic> jsonToDicStDyn(string name)=>
-                (Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); //
-  protected List<string> jsonLsString(string name) =>(List<string>)JsonConvert.DeserializeObject<List<string>>(name);
+  protected Dictionary<string, dynamic>? JsonToDicStDyn(string name)=>
+                JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); 
+  protected List<string>? JsonLsString(string name) =>JsonConvert.DeserializeObject<List<string>>(name);
 
-  protected Dictionary<string, string> jsonToDicStStr(string name) =>
-                (Dictionary<string, string>)JsonConvert.DeserializeObject<Dictionary<string, string>>(name); //
+  protected Dictionary<string, string>? JsonToDicStStr(string name) => JsonConvert.DeserializeObject<Dictionary<string, string>>(name); 
 
-  protected Dictionary<string, List<string>> jsonToDicStLsStr(string? name) =>
-                (Dictionary<string, List<string>>)JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(name); //
-  protected List<string>? JsonLsString(string name) => (List<string>)JsonConvert.DeserializeObject<List<string>>(name);
-
+  protected Dictionary<string, List<string>>? JsonToDicStLsStr(string? name) => JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(name); 
+  
   protected ConcurrentDictionary<string, object> StartParser(object val)
   {
     ConcurrentDictionary<string, object> basaParams = new();
