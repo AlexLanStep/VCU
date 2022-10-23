@@ -28,10 +28,10 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   public void RunInit(string pathdir = "")
   {
     InitializationJson(pathdir);
-    if (!(DPath.TryGetValue("Workspace", out string vwork) && DPath.TryGetValue("Experiment", out string vexpe)))
+    if (!(DConfig.TryGetValue("Workspace", out string vwork) && DConfig.TryGetValue("Experiment", out string vexpe)))
       throw new MyException(" Error in json path Workspace or Experiment ", -5);
 
-    DPath.Add("StDir", pathdir);
+    DConfig.Add("StDir", pathdir);
     NameStrateg = DstParams["Name"];
     MaxWaitRez = (int) (DstParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
 
@@ -49,11 +49,13 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     Console.WriteLine("  - Файлы с калибровками");
     if(DstSetStart.TryGetValue("loadfile", out dynamic valFiles))
     {
-      foreach (var itFile in (List<string>) valFiles)
+
+      foreach (var vparam in (List<string>) valFiles)
       {
-        if (!DPath.TryGetValue(itFile, out string pathfull))
-          throw new MyException($"Error in {itFile} StrategiesBasa.RunInit for inicialCalibrat({pathfull}) ", -2);
-        inicialCalibrat(pathfull);
+        if (DCalibrationParams.ContainsKey(vparam))
+          inicialCalibrat(vparam);
+        //          throw new MyException($"Error in {itFile} StrategiesBasa.RunInit for inicialCalibrat({pathfull}) ", -2);
+
       }
     }
     else
@@ -63,12 +65,14 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
   protected void inicialloadTask() 
   { 
+
     foreach(var (key, val) in DTask) 
     {
 //      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement("TEST/Control_Signal/Value", "Acquisition");
-      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement(val.LabCarTask, val.NameLabCar);
-      dMeasurement.AddOrUpdate(val.Signal, measurement, (_, _) => measurement);
+      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement(val.PathTask, val.NameInLabCar);
+      dMeasurement.AddOrUpdate(key, measurement, (_, _) => measurement);
     }
+
   }
   private string testFile(string fullPath)
   {
@@ -83,7 +87,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   }
   protected void inicialCalibrat(string file)
   {
-    string fullPath = testFile(file);
+    string fullPath = testFile(DCalibrationParams[file].PathFiles);
     try
     {
       var _vCollebrator = IConLabCar.Experiment.CalibrationController;
@@ -104,7 +108,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   }
   protected void inicialParamsDic()
   {
-    foreach (var (key, val) in DParameter)
+    foreach (var (key, val) in DParameterNew)
     {
       ISignal isig = IConLabCar.SignalSources.CreateParameter(val.Signal);
       dParams.AddOrUpdate(key, isig, (_, _) => isig);
@@ -165,10 +169,12 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     {
       foreach (var itFile in (List<string>)valFiles)
       {
-        if (!DPath.TryGetValue(itFile, out string pathfull))
-          throw new MyException($"Error in {itFile} StrategiesBasa.RunInit for inicialCalibrat({pathfull}) ", -2);
-
-        activParamsCalibrat(pathfull);
+        if(DCalibrationParams.TryGetValue(itFile, out var dan))
+        {
+          activParamsCalibrat(dan.PathFiles);
+        }
+//        if (!DPath.TryGetValue(itFile, out string pathfull))
+//          throw new MyException($"Error in {itFile} StrategiesBasa.RunInit for inicialCalibrat({pathfull}) ", -2);
       }
     }
     else
@@ -207,19 +213,17 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       }
 
     }
-    bool _retDanLabCar(StOneStep _oneStep)
+    bool _retDanLabCar(StOneStep oneStep)
     {
-      bool _rez = false;
-      DateTime _dt0 = DateTime.Now;
-      int _sec = 0;
-      int iii = 0;
-      while ((!_rez) && ((DateTime.Now - _dt0).Seconds <= MaxWaitRez))
+      var rez = false;
+      var dt0 = DateTime.Now;
+      while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
       {
-        _getDanLabCar(_oneStep);
-        _rez = _oneStep.TestDan(_rezul);
+        _getDanLabCar(oneStep);
+        rez = oneStep.TestDan(_rezul);
         Thread.Sleep(1000);
       }
-      return _rez;
+      return rez;
     }
 
     if (LsStOneStep.Count < 2)
@@ -244,7 +248,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
         else
             Console.WriteLine("-- ==>  Test failed ((((( ----");
       }
-            _numSten += 1;
+      _numSten += 1;
     }
 
 
