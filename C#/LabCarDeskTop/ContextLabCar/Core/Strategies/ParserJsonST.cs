@@ -113,7 +113,10 @@ public class ParserJsonSt: ParserJson
         stOne.LoadInitializationPosition(JsonToDicStDyn(valueSet.ToString() ?? string.Empty));
 
       if (vv2.TryGetValue("rez", out dynamic valueRez))
-        stOne.LoadInitializationRez(JsonLsString(valueRez.ToString() ?? string.Empty));
+        stOne.LoadInitializationRez1(JsonLsString(valueRez.ToString() ?? string.Empty));
+
+      if (vv2.TryGetValue("if", out dynamic valueif))
+        stOne.LoadInitializationIf1(JsonLsString(valueif.ToString() ?? string.Empty));
 
       AddNewPoleJson(this);
 

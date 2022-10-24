@@ -178,7 +178,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       }
     }
     else
-      Console.WriteLine(" Нет указаний для активации калибровок нет. ");
+      Console.WriteLine(" Нет указанных для активации калибровок. ");
 
   }
   public virtual void RunTest()
@@ -240,6 +240,10 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       _getDanLabCar(_oneStep);
       _setDanLabCar(_oneStep);
       
+      if (_numSten > 0)
+      {
+
+      }
 
       if (_oneStep.LResult.Count > 0)
       {
@@ -256,22 +260,3 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
 }
 
-/*
-AddDictRecVal(string key, dynamic value)
-
-public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
-  public Dictionary<string, dynamic> SetPoints { get; set; } = new(); 
-  public List<string> LResult { get; set; } = new();
-
-
-   public Dictionary<string, Parameter> DParameter; // = new();
-  public Dictionary<string, DanOutput> DDanOutput; // = new();
-  public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat; //= new();
-  public Dictionary<string, string> DPath; // = new();
-  public Dictionary<string, LTask> DTask; // = new();
-  public Dictionary<string, dynamic> DSTParams; // = new();
-  public Dictionary<string, dynamic> DSTsetStart; // = new();
-  public List<StOneStep> LsStOneStep; // = new List<StOneStep>();
-
- 
- */

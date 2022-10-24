@@ -8,9 +8,10 @@ public interface IStOneStep
 
     bool ResultEq(dynamic x0, dynamic x1);
     bool ResultGe(dynamic x0, dynamic x1);
-    bool ResultGt();
-    bool ResultLe();
-    bool ResultLt();
-    bool ResultNe();
-    bool TestDan(Dictionary<string, dynamic> result);
+    bool ResultNe(dynamic x0, dynamic x1);
+    bool ResultGt(dynamic x0, dynamic x1);
+    bool ResultLe(dynamic x0, dynamic x1); // <= 
+    bool ResultLt(dynamic x0, dynamic x1); // < 
+
+  bool TestDan(Dictionary<string, dynamic> result);
 }
