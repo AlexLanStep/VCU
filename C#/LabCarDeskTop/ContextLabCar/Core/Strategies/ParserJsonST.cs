@@ -1,6 +1,4 @@
 ﻿
-
-
 #nullable enable
 namespace ContextLabCar.Core.Strategies;
 public class ParserJsonSt: ParserJson
@@ -117,6 +115,9 @@ public class ParserJsonSt: ParserJson
 
       if (vv2.TryGetValue("if", out dynamic valueif))
         stOne.LoadInitializationIf1(JsonLsString(valueif.ToString() ?? string.Empty));
+
+      if (vv2.TryGetValue("ifor", out dynamic valueifor))
+        stOne.LoadInitializationIfOr1(JsonLsString(valueifor.ToString() ?? string.Empty));
 
       AddNewPoleJson(this);
 

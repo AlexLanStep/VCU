@@ -13,9 +13,11 @@ public class StOneStep : IStOneStep
   public Dictionary<string, dynamic> SetPoints { get; set; } = new(); 
   public List<string> LResult { get; set; } = new();
   public List<string> LIf { get; set; } = new();
+  public List<string> LIfOr { get; set; } = new();
+
   private List<(string, dynamic, Dftest)> lsRez = new();
   private List<(string, dynamic, Dftest)> lsIf = new();
-
+  private List<(string, dynamic, Dftest)> lsIfOr = new();
 
   public dynamic? ReadSetPoints(string name) => SetPoints.TryGetValue(name, value: out var value) ? value : null;
   public dynamic? ReadGetPoints(string name) => GetPoints.TryGetValue(name, value: out var value) ? value : null;
@@ -41,10 +43,10 @@ public class StOneStep : IStOneStep
       SetPoints.Add(it.Key, it.Value);
   }
 
-    public void AddGetPoints(string key, dynamic value) 
-    { 
-        GetPoints.TryAdd(key, value); 
-    }
+  public void AddGetPoints(string key, dynamic value)
+  {
+    GetPoints.TryAdd(key, value);
+  }
   public void LoadInitializationRez(List<string> list) 
   {
     (string, dynamic, Dftest) F0(string x, Dftest f)
@@ -122,6 +124,10 @@ public class StOneStep : IStOneStep
   {
     LIf = LoadInitializationLogic(ref lsIf, list);
   }
+  public void LoadInitializationIfOr1(List<string> list)
+  {
+    LIfOr = LoadInitializationLogic(ref lsIfOr, list);
+  }
 
   public virtual bool TestDan(Dictionary<string, dynamic> result)
   {
@@ -156,35 +162,96 @@ public class StOneStep : IStOneStep
     if (result.Count == 0)
       return false;
 
-    foreach (var it in ls)
+    //foreach (var it in ls)
+    //{
+    //  var name = it.Item1;
+    //  if (result.TryGetValue(name, out var x0))
+    //  {
+    //    double x01 = x0;
+    //    //double x1;
+    //    double.TryParse(((string)(it.Item2)).Replace('.', ','), out double x1);
+    //    bResult = bResult && it.Item3(x01, x1);
+    //    if (!bResult)
+    //      return false;
+    //  }
+    //  else
+    //  {
+    //    Console.WriteLine($" Error not {name} ");
+    //    return false;
+    //  }
+    //}
+
+    int i = 0;
+    //while (bResult && (i < ls.Count))
+    //{
+    //  if (result.TryGetValue(ls[i].Item1, out var x0))
+    //  {
+    //    double x01 = x0;
+    //    double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
+    //    bResult = bResult && ls[i].Item3(x01, x1);
+    //  }
+    //  else
+    //  {
+    //    Console.WriteLine($" Error not {ls[i].Item1} ");
+    //    return false;
+    //  }
+    //  i += 1;
+    //}
+    while (bResult && (i < ls.Count) && result.TryGetValue(ls[i].Item1, out var x0))
     {
-      var name = it.Item1;
-      if (result.TryGetValue(name, out var x0))
-      {
-        double x01 = x0;
-        double x1;
-        double.TryParse(((string)(it.Item2)).Replace('.', ','), out x1);
-        bResult = bResult && it.Item3(x01, x1);
-      }
-      else
-      {
-        Console.WriteLine($" Error not {name} ");
-        return false;
-      }
+      double x01 = x0;
+      double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
+      bResult = bResult && ls[i].Item3(x01, x1);
+      //else
+      //{
+      //  Console.WriteLine($" Error not {ls[i].Item1} ");
+      //  return false;
+      //}
+      i += 1;
+    }
+    return bResult;
+  }
+
+  public virtual bool TestDanOr(Dictionary<string, dynamic> result, List<(string, dynamic, Dftest)> ls)
+  {
+    var bResult = false;
+
+    if (result.Count == 0)
+      return false;
+
+    //foreach (var it in ls)
+    //{
+    //  var name = it.Item1;
+    //  if (result.TryGetValue(name, out var x0))
+    //  {
+    //    double x01 = x0;
+    //    double.TryParse(((string)(it.Item2)).Replace('.', ','), out double x1);
+    //    bResult = bResult || it.Item3(x01, x1);
+    //    if (bResult)
+    //      return true;
+    //  }
+    //  else
+    //  {
+    //    Console.WriteLine($" Error not {name} ");
+    //    return false;
+    //  }
+    //}
+
+    int i = 0;
+    while ((!bResult) && (i < ls.Count) && result.TryGetValue(ls[i].Item1, out var x0))
+    {
+      double x01 = x0;
+      double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
+      bResult = bResult || ls[i].Item3(x01, x1);
     }
 
     return bResult;
   }
-  public virtual bool TestIf(Dictionary<string, dynamic> result)
-  {
-    bool _b = TestDanNew(result, lsIf);
-    return _b;
-  }
-  public virtual bool TestRez(Dictionary<string, dynamic> result)
-  {
-    bool _b = TestDanNew(result, lsRez);
-    return _b;
-  }
+
+
+  public virtual bool TestIf(Dictionary<string, dynamic> result) => TestDanNew(result, lsIf);
+  public virtual bool TestIfOr(Dictionary<string, dynamic> result) => TestDanOr(result, lsIfOr);
+  public virtual bool TestRez(Dictionary<string, dynamic> result) => TestDanNew(result, lsRez);
 
   public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.000001;  // ==
   public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.000001;  // !=
