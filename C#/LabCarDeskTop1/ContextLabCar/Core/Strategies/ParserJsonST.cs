@@ -1,13 +1,13 @@
 ﻿
 
 
+#nullable enable
 namespace ContextLabCar.Core.Strategies;
-public class ParserJsonST: ParserJson
+public class ParserJsonSt: ParserJson
 {
   #region ===> Data <===
   #region ==__ Public __==
 
-//  public ConcurrentDictionary<string, object> BasaParams = new();
   #endregion
 
   #region ___ Local ___
@@ -15,69 +15,74 @@ public class ParserJsonST: ParserJson
   private const string StSetStart = "STsetStart";
   private const string Stls = "STls";
 
-  private readonly string[] _fieldes = new[] { StParams, StSetStart, Stls };
-//  private readonly string _pathFiles;
-
   #endregion
   #endregion
 
   #region _ Constructor _
-  public ParserJsonST(string pathFiles) : base(pathFiles) { }
+  public ParserJsonSt(string pathFiles) : base(pathFiles) { }
   #endregion
 
   #region ___ run _ convert _ json
-  public virtual void AddNewPoleJson(ParserJsonST parserjson)
-  {
-    //    var x = parserjson.BasaParams;
-  }
+  public virtual void AddNewPoleJson(ParserJsonSt parserjson) { }
 
   protected override void ConvertJson(string tsxtJson)
   {
-    DSTParams = new();
-    DSTsetStart = new();
-    LsStOneStep = new ();
+    DstParams = new Dictionary<string, dynamic>();
+    DsTsetStart = new Dictionary<string, dynamic?>();
+    LsStOneStep = new List<StOneStep>();
 
-    JObject _jinfo = JObject.Parse(tsxtJson);
-    var BasaParams = StartParser(_jinfo);
+    var jinfo = JObject.Parse(tsxtJson);
+    var basaParams = StartParser(jinfo);
 
     #region ----  Load  -> StParams  -------
-    if (BasaParams.TryGetValue(StParams, out object value))
-      DSTParams = jsonToDicStDyn(value.ToString() ?? string.Empty);
+    if (basaParams.TryGetValue(StParams, out var value))
+      DstParams = JsonToDicStDyn(value.ToString() ?? string.Empty);
     #endregion
 
     #region ---- Load ->  StSetStart  ----------
-    if (BasaParams.TryGetValue(StSetStart, out object value1))
+    if (basaParams.TryGetValue(StSetStart, out var value1))
       CalcStSetStart(value1);
     else
-    { var s1111 = "!!!!!  error "; }
+    {
+      Console.WriteLine($" Error - {StSetStart} "); 
+    }
     #endregion
 
     #region ------ Load ->  Stls  --------------
-    if (BasaParams.TryGetValue(Stls, out object valueStls))
+    if (basaParams.TryGetValue(Stls, out var valueStls))
       CalcStls(valueStls);
     else
-    { var s1111 = "!!!!!  error "; }
+    {
+      Console.WriteLine($" Error - {Stls} ");
+    }
 
     #endregion
   }
   #endregion
 
   #region function
-  public dynamic? GetParams(string name) => DSTParams.TryGetValue(name, out dynamic valueName) ? valueName : null;
+  public dynamic? GetParams(string name) => DstParams != null && DstParams.TryGetValue(name, out var valueName) ? valueName : null;
+
+#pragma warning disable CS8600
+#pragma warning disable CS8605
+  // ReSharper disable for StringLiteralTypo
+
   public dynamic? GetSetStart(string name)
   {
-    if (DSTsetStart.TryGetValue(name, out object value))
+    if (DsTsetStart.TryGetValue(name, out _))
     {
       return name switch
       {
-        "loadfile" => (List<string>)DSTsetStart["loadfile"],
-        "activfile" => (List<string>)DSTsetStart["activfile"],
-        "maxwait" => (double)DSTsetStart["maxwait"],
+        "loadfile" => (List<string>)DsTsetStart["loadfile"],
+        "activfile" => (List<string>)DsTsetStart["activfile"],
+        "maxwait" => (double)DsTsetStart["maxwait"],
         _ => null,
       };
     }
     return null;
   }
+#pragma warning restore CS8605
+#pragma warning restore CS8600
 
   #endregion
 
@@ -85,37 +90,37 @@ public class ParserJsonST: ParserJson
   private void CalcStls(object val)
   {
     LsStOneStep.Clear();
-    ConcurrentDictionary<string, object> basaParams = new();
-    Dictionary<string, object> rezul = new();
-    string pattern = @"[0-9]";
-    Regex regex = new(pattern);
+    const string pattern = @"[0-9]";
 
     var lsSt = ((JToken)val).Children().ToList();
-    foreach (JToken it in lsSt)
+    foreach (var it in lsSt)
     {
-      StOneStep _stOne = new();
-      var _ee = jsonToDicStDyn(it.ToString());
-      var _key0 = _ee.Keys;
-      var _vv1 = _ee[_key0.ElementAt(0)];
-      var _vv2 = jsonToDicStDyn(_vv1.ToString());
+      StOneStep stOne = new();
+      var ee = JsonToDicStDyn(it.ToString());
+      var vv1 = ee?[ee.Keys.ElementAt(0)];
+      var vv2 = JsonToDicStDyn(vv1?.ToString());
 
+#pragma warning disable CS8605
+      if (vv2.TryGetValue("t", out dynamic valueT))
+        stOne.TimeWait = (Regex.Replace(((string)valueT.GetType().Name).ToLower(), pattern, "") == "string") 
+          ? (int)GetParams(((string)valueT)) : (int)valueT;
+#pragma warning restore CS8605
 
-      if (_vv2.TryGetValue("t", out dynamic valueT))
-        _stOne.TimeWait = (Regex.Replace(((string)(string)valueT.GetType().Name).ToLower(), pattern, "") == "string") 
-                              ? (int)GetParams(((string)valueT)) : (int)valueT;
+      if (vv2.TryGetValue("get", out dynamic valueGet))
+        stOne.LoadInitializationPosition(JsonLsString(valueGet.ToString() ?? string.Empty));
 
-      if (_vv2.TryGetValue("get", out dynamic valueGet))
-        _stOne.LoadInicialPosition(jsonLsString(valueGet.ToString() ?? string.Empty));
+      if (vv2.TryGetValue("set", out dynamic valueSet))
+        stOne.LoadInitializationPosition(JsonToDicStDyn(valueSet.ToString() ?? string.Empty));
 
-      if (_vv2.TryGetValue("set", out dynamic valueSet))
-        _stOne.LoadInicialPosition(jsonToDicStDyn(valueSet.ToString() ?? string.Empty));
+      if (vv2.TryGetValue("rez", out dynamic valueRez))
+        stOne.LoadInitializationRez1(JsonLsString(valueRez.ToString() ?? string.Empty));
 
-      if (_vv2.TryGetValue("rez", out dynamic valueRez))
-        _stOne.LoadInicialRez(jsonLsString(valueRez.ToString() ?? string.Empty));
+      if (vv2.TryGetValue("if", out dynamic valueif))
+        stOne.LoadInitializationIf1(JsonLsString(valueif.ToString() ?? string.Empty));
 
       AddNewPoleJson(this);
 
-      LsStOneStep.Add(_stOne);
+      LsStOneStep.Add(stOne);
 
     }
   }
@@ -125,45 +130,21 @@ public class ParserJsonST: ParserJson
   private void CalcStSetStart(object val)
   {
     var basaParams = StartParser(val);
-    foreach (var (_key, _val) in basaParams)
+    foreach (var (key, _) in basaParams)
     {
-      switch (_key.ToLower())
+      switch (key.ToLower())
       {
         case "loadfile":
 
         case "activfile":
-          DSTsetStart.Add(_key, JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString()));
+          DsTsetStart.Add(key, JsonConvert.DeserializeObject<List<string>>(((JToken)val)[key]?.ToString() ?? string.Empty));
           break;
 
         case "maxwait":
-          DSTsetStart.Add(_key, JsonConvert.DeserializeObject<dynamic>(((JToken)val)[_key].ToString()));
+          DsTsetStart.Add(key, JsonConvert.DeserializeObject<dynamic>(((JToken)val)[key]?.ToString() ?? string.Empty));
           break;
       }
     }
   }
   #endregion
-
-  #region __ ==  Test == __
-    private void testGetparams()
-  {
-    string stName = GetParams("Name")?.ToString();
-    double? _wait0 = GetParams("Wait0");
-    double? _wait1 = GetParams("Wait1");
-    double? _wait2 = GetParams("Wait2");
-    var _xcx = _wait2 * 3;
-
-  }
-  #endregion
-
-  #region ___ == StSetStart == ___
-  private void testStSetStart()
-  {
-    var s = (List<string>)DSTsetStart["loadfile"];
-    var s111 = GetSetStart("maxwait");
-  }
-  #endregion
-  
-
-
-
 }

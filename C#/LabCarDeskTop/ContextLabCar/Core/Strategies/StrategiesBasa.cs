@@ -35,7 +35,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     NameStrateg = DstParams["Name"];
     MaxWaitRez = (int) (DstParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
 
-    return;
+//    return;
     Console.WriteLine("Подключение к LabCar");
     IConLabCar.Initialization(vwork, vexpe);
     IConLabCar.Connect();
@@ -213,18 +213,31 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       }
 
     }
-    bool _retDanLabCar(StOneStep oneStep)
+    bool _rezDanLabCar(StOneStep oneStep)
     {
       var rez = false;
       var dt0 = DateTime.Now;
       while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
       {
         _getDanLabCar(oneStep);
-        rez = oneStep.TestDan(_rezul);
-        Thread.Sleep(1000);
+        rez = oneStep.TestRez(_rezul);
+        if(!rez) Thread.Sleep(1000);
       }
       return rez;
     }
+    bool _ifDanLabCar(StOneStep oneStep)
+    {
+      var rez = false;
+      var dt0 = DateTime.Now;
+      while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
+      {
+        _getDanLabCar(oneStep);
+        rez = oneStep.TestIf(_rezul);
+        if (!rez) Thread.Sleep(1000);
+      }
+      return rez;
+    }
+
 
     if (LsStOneStep.Count < 2)
       throw new MyException("Not a complete strategy StrategiesBasa.RunTest() ", -2);
@@ -240,14 +253,18 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       _getDanLabCar(_oneStep);
       _setDanLabCar(_oneStep);
       
-      if (_numSten > 0)
+      if (_oneStep.LIf.Count > 0)
       {
-
+        if (!_ifDanLabCar(_oneStep))
+        {
+          Console.WriteLine("-- ==>  Test failed (if не прошел) ((((( ----");
+          break;
+        }
       }
 
       if (_oneStep.LResult.Count > 0)
       {
-        if (_retDanLabCar(_oneStep))
+        if (_rezDanLabCar(_oneStep))
             Console.WriteLine("-- !!!!  Test went well !!!!");
         else
             Console.WriteLine("-- ==>  Test failed ((((( ----");

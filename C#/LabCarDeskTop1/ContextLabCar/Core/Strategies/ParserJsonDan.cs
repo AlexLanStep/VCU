@@ -1,157 +1,143 @@
 ﻿
-using System;
-using System.IO;
-
 namespace ContextLabCar.Core.Strategies;
-public class ParserJsonDan: ParserJson
-{
-  #region ===> Data <===
-  #region ==__ Public __==
-  #endregion
-  #region ___ Local ___
-  private const string Path = "Path";
-  private const string PTask = "Task";
-  private const string Parameter = "Parameter";
-  private const string Output = "Output";
-  private const string Calibrat = "Calibrat";
+//public class ParserJsonDan: ParserJson
+//{
+//  #region ===> Data <===
+//  #region ==__ Public __==
+//  #endregion
+//  #region ___ Local ___
+//  private const string Path = "Path";
+//  private const string PTask = "Task";
+//  private const string Parameter = "Parameter";
+//  private const string Output = "Output";
+//  private const string Calibration = "Calibration";
 
-  #endregion
-  #endregion
+//  #endregion
+//  #endregion
 
-  #region _ Constructor _
-  public ParserJsonDan(string pathFiles) : base(pathFiles) { }
-  #endregion
+//  #region _ Constructor _
+//  public ParserJsonDan(string pathFiles) : base(pathFiles) { }
+//  #endregion
 
-  #region ___ run _ convert _ json
+//  #region ___ run _ convert _ json
 
-  public virtual void AddNewPoleJson(ParserJsonDan parserjson)
-  {
-    //    var x = parserjson.BasaParams;
-  }
+//  public virtual void AddNewPoleJson(ParserJsonDan parserjson)
+//  {
+//    //    var x = parserjson.BasaParams;
+//  }
 
-  protected override void ConvertJson(string tsxtJson)
-  {
-    DParameter = new();
-    DDanOutput = new();
-    DCalibrat = new();
-    DPath = new();
-    DTask = new();
+//  protected override void ConvertJson(string tsxtJson)
+//  {
+//    DParameter = new Dictionary<string, Parameter>();
+//    DDanOutput = new Dictionary<string, DanOutput>();
+//    DCalibrat = new Dictionary<string, Dictionary<string, Calibrat>>();
+////    DPath = new Dictionary<string, string>();
+////    DTask = new Dictionary<string, LTask>();
 
-  JObject? _jinfo = JObject.Parse(tsxtJson);
-    var BasaParams = StartParser(_jinfo);
+//    var jinfo = JObject.Parse(tsxtJson);
+//    var basaParams = StartParser(jinfo);
 
-    #region ----  Load  -> Path  -------
-    if (BasaParams.TryGetValue(Path, out object valuePath))
-      DPath = jsonToDicStStr(valuePath.ToString() ?? string.Empty);
-    #endregion
+///*
+//    #region ----  Load  -> Path  -------
+//    if (basaParams.TryGetValue(Path, out var valuePath))
+//      DPath = JsonToDicStStr(valuePath.ToString() ?? string.Empty);
+//    #endregion
 
-    #region ----  Load  -> Task  -------
-    if (BasaParams.TryGetValue(PTask, out object valueTask) && valueTask != null)
-      CalcPTask(valueTask);
-    #endregion
+//    #region ----  Load  -> Task  -------
+//    if (basaParams.TryGetValue(PTask, out var valueTask))
+//      CalcPTask(valueTask);
+//    #endregion
+//*/
+//    #region ----  Load  -> Parameter  -------
+//    if (basaParams.TryGetValue(Parameter, out var valueParameter))
+//      foreach (var (key, x) in JsonToDicStLsStr(valueParameter.ToString()))
+//        DParameter.Add(key, new Parameter(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
 
-    #region ----  Load  -> Parameter  -------
-    if (BasaParams.TryGetValue(Parameter, out object valueParameter) && valueParameter != null)
-      foreach (var (key, x) in jsonToDicStLsStr(valueParameter.ToString()))
-        DParameter.Add(key, new Parameter(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
-    #endregion
+//    #endregion
 
-    #region ----  Load  -> Output  -------
-    if (BasaParams.TryGetValue(Output, out object valueOutput) && valueOutput != null)
-      foreach (var (key, x) in jsonToDicStLsStr(valueOutput.ToString()))
-        DDanOutput.Add(key, new DanOutput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
-    #endregion
+//    #region ----  Load  -> Output  -------
+//    if (basaParams.TryGetValue(Output, out var valueOutput))
+//      foreach (var (key, x) in JsonToDicStLsStr(valueOutput.ToString()))
+//        DDanOutput.Add(key, new DanOutput(x.ElementAt(0), key, x.Count == 2 ? x.ElementAt(1) : ""));
+//    #endregion
 
-    #region ----  Load  -> Calibrat  -------
-    if (BasaParams.TryGetValue(Calibrat, out object valueCalibrat) && valueCalibrat != null)
-    {
-      CalcCalibrat(valueCalibrat);
-      writeFestWert();
-    }
-    #endregion
+//    #region ----  Load  -> Calibration  -------
+//    if (basaParams.TryGetValue(Calibration, out var valueCalibrat))
+//    {
+//      CalcCalibrat(valueCalibrat);
+//      WriteCalibrationDan();
+//    }
+//    #endregion
 
-  }
-  #endregion
+//  }
+//  #endregion
+//  /*
+//  #region PTask
+//  private void CalcPTask(object val)
+//  {
+//    var basaParams = StartParser(val);
 
-  //#region function
+//    foreach (var (key, _) in basaParams)
+//    {
+//      var x = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[key]?.ToString() ?? string.Empty);
+//      if (x != null && x.Count < 2)
+//        continue;
 
-  //protected Dictionary<string, string> jsonToDicStStr(string name) =>
-  //              (Dictionary<string, string>)JsonConvert.DeserializeObject<Dictionary<string, string>>(name); //
-  //protected Dictionary<string, List<string>> jsonToDicStLsStr(string? name) =>
-  //              (Dictionary<string, List<string>>)JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(name); //
-  //  protected List<string>? JsonLsString(string name) => (List<string>)JsonConvert.DeserializeObject<List<string>>(name);
-  //protected Dictionary<string, dynamic> jsonToDicStDyn(string name) =>
-  //            (Dictionary<string, dynamic>)JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(name); //
-  //  protected ConcurrentDictionary<string, object> StartParser(object val)
-  //{
-  //  ConcurrentDictionary<string, object> basaParams = new();
+//      if (x != null) DTask.Add(key, new LTask(key, x.ElementAt(0), x.ElementAt(1), x.Count == 3 ? x.ElementAt(2) : ""));
+//    }
+//  }
+//  #endregion
+//  */
+//  #region Calibration
+//  private void CalcCalibrat(object val)
+//  {
+//    var basaParams = StartParser(val);
 
-  //  var lsName = ((JToken)val).Children().ToList().Select(item => ((JProperty)item).Name).ToList();
+//    foreach (var (key, valparam) in basaParams)
+//    {
+//      Dictionary<string, Calibrat> dan = new();
+//      var val0 = JsonToDicStDyn(valparam.ToString() ?? string.Empty);
+//      if (val0 != null)
+//        foreach (var it in val0)
+//        {
+//          var val1 = JsonToDicStDyn(it.Value.ToString());
 
-  //  foreach (var w in lsName.Select(it => ((JToken)val)[it]?.ToString()))
-  //    lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
-  //  return basaParams;
-  //}
-  //#endregion   function
+//          // ReSharper disable once PossibleNullReferenceException
+//          dynamic F0(string s) => val1.TryGetValue(s, out dynamic v) ? v : "";
 
-  #region PTask
-  private void CalcPTask(object val)
-  {
-    var basaParams = StartParser(val);
+//          dan.Add(it.Key, new Calibrat(F0("Model"), it.Key, F0("Val"), F0("Comment")));
+//        }
 
-    foreach (var (_key, _val) in basaParams)
-    {
-      var _x = JsonConvert.DeserializeObject<List<string>>(((JToken)val)[_key].ToString());
-      if (_x.Count < 2)
-        continue;
-      DTask.Add(_key, new LTask(_key, _x.ElementAt(0), _x.ElementAt(1), _x.Count == 3 ? _x.ElementAt(2) : ""));
-    }
-  }
-  #endregion
+//      DCalibrat.Add(key, dan);
+//    }
+//  }
 
-  #region Calibrat
-  private void CalcCalibrat(object val)
-  {
-    var basaParams = StartParser(val);
+//  private void WriteCalibrationDan()
+//  {
+///* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//    foreach (var (nameFile, val) in DCalibrat)
+//    {
+//      string text = "";
+//      foreach (var (_, vald) in val)
+//        text += vald.Text;
 
-    foreach (var (_key, _val) in basaParams)
-    {
-      Dictionary<string, Calibrat> dan = new();
-      var val0 = jsonToDicStDyn(_val.ToString());
-      foreach (var it in val0)
-      {
-        var val1 = jsonToDicStDyn(it.Value.ToString());
+//      if (DPath != null && DPath.TryGetValue(nameFile, out var fullPath))
+//      {
+//        var dir = System.IO.Path.GetDirectoryName(fullPath);
+//        if (!Directory.Exists(dir))
+//          if (dir != null)
+//            Directory.CreateDirectory(dir);
+//        File.WriteAllText(fullPath, text);
+//      }
+//      else
+//      {
+//        throw new MyException($"В json InicialParams, не прописан путь к переменным {nameFile}", -3);
+//      }
+//    }
+//*/
+//  }
 
-        dynamic f0(string s) => val1.TryGetValue(s, out dynamic v) ? v : "";
+//  #endregion
 
-        dan.Add(it.Key, new Calibrat(f0("Model"), it.Key, f0("Val"), f0("Comment")));
-      }
-      DCalibrat.Add(_key, dan);
-    }
-  }
+//}
 
-  private void writeFestWert()
-  {
-    foreach (var (nameFile, val) in DCalibrat)
-    {
-      string _text = "";
-      foreach (var (keyd, vald) in val)
-        _text += vald.Text;
-
-      if (DPath.TryGetValue(nameFile, out string fullFath))
-      {
-        var _dir = System.IO.Path.GetDirectoryName(fullFath);
-        if (!Directory.Exists(_dir))
-          Directory.CreateDirectory(_dir);
-        File.WriteAllText(fullFath, _text);
-      }
-      else
-      {
-        throw new MyException($"В json InicialParams, не прописан путь к переменным {nameFile}", -3);
-      }
-    }
-  }
-
-  #endregion
-
-}

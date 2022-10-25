@@ -1,4 +1,5 @@
-﻿namespace ContextLabCar.Core;
+﻿
+namespace ContextLabCar.Core;
 
 public class MyException : Exception
 {
@@ -22,9 +23,6 @@ public class MyException : Exception
       case -2:
         f0(message, num);
         Environment.Exit(num);
-        break;
-
-      default:
         break;
     }
   }

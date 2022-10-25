@@ -1,7 +1,4 @@
 ﻿
-using ContextLabCar.Static;
-using ETAS.EE.Scripting;
-
 namespace ContextLabCar.Core;
 
 public interface IConnectLabCar
@@ -11,7 +8,7 @@ public interface IConnectLabCar
   IExperiment Experiment { get; set; }
   ISignalSourceCollection SignalSources { get; set; }
 
-  void Inicial(string pathWorkspace, string pathExperimentEnvironment);
+  void Initialization(string pathWorkspace, string pathExperimentEnvironment);
   void Connect();
   public void DisConnect();
 }
@@ -25,9 +22,14 @@ public class ConnectLabCar: IConnectLabCar
 
   private string _pathWorkspace;
   private string _pathExperimentEnvironment;
-  public ConnectLabCar() { }
 
-  public void Inicial(string pathWorkspace, string pathExperimentEnvironment)
+  public ConnectLabCar()
+  {
+    _pathWorkspace="";
+    _pathExperimentEnvironment="";
+  }
+
+public void Initialization(string pathWorkspace, string pathExperimentEnvironment)
   {
     _pathWorkspace = pathWorkspace;
     _pathExperimentEnvironment = pathExperimentEnvironment;
@@ -44,7 +46,7 @@ public class ConnectLabCar: IConnectLabCar
     Workspace = ExperimentEnvironment.HasOpenWorkspace ? ExperimentEnvironment.Workspace : ExperimentEnvironment.OpenWorkspace(_pathWorkspace);
 
     Experiment = Workspace.HasOpenExperiment ? Workspace.Experiment : Workspace.OpenExperiment(_pathExperimentEnvironment);
-
+        
     SignalSources = Experiment.SignalSources;
 
   }
