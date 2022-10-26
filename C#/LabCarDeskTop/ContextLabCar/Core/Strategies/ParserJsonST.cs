@@ -12,12 +12,15 @@ public class ParserJsonSt: ParserJson
   private const string StParams = "STParams";
   private const string StSetStart = "STsetStart";
   private const string Stls = "STls";
-
+  private IStrategiesBasa _stBasa;
   #endregion
   #endregion
 
   #region _ Constructor _
-  public ParserJsonSt(string pathFiles) : base(pathFiles) { }
+  public ParserJsonSt(IStrategiesBasa stBasa, string pathFiles) : base(stBasa, pathFiles) 
+  {
+    _stBasa = stBasa;
+  }
   #endregion
 
   #region ___ run _ convert _ json
@@ -93,7 +96,7 @@ public class ParserJsonSt: ParserJson
     var lsSt = ((JToken)val).Children().ToList();
     foreach (var it in lsSt)
     {
-      StOneStep stOne = new();
+      StOneStep stOne = new(_stBasa);
       var ee = JsonToDicStDyn(it.ToString());
       var vv1 = ee?[ee.Keys.ElementAt(0)];
       var vv2 = JsonToDicStDyn(vv1?.ToString());

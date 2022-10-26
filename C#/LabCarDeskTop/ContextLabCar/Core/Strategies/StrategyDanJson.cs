@@ -42,6 +42,7 @@ public class StrategyDanJson: IStrategyDanJson
   public Dictionary<string, string> DConfig { get; set; }
   public Dictionary<string, dynamic> DParamsStrategy { get; set; }
   public Dictionary<string, CalibrationParams> DCalibrationParams { get; set; }
+  public IStrategiesBasa IStrategiesBasaPRT { get; set; }
 
   #endregion
   #region ___ Local ___
@@ -112,7 +113,7 @@ public class StrategyDanJson: IStrategyDanJson
     var _pathStrategy = pathdir + "\\strateg.json";
     if (!File.Exists(_pathStrategy)) return;
 
-    var st = new ParserJsonSt(_pathStrategy);
+    var st = new ParserJsonSt(IStrategiesBasaPRT,_pathStrategy);
     st.Run();
     DstParams = st.DstParams;
     DstSetStart = st.DsTsetStart;

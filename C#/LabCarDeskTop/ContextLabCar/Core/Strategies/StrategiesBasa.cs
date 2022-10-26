@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics.Metrics;
+
 namespace ContextLabCar.Core.Strategies;
 
 public interface IStrategiesBasa
@@ -7,6 +9,9 @@ public interface IStrategiesBasa
   IConnectLabCar IConLabCar { get; set; }
   void RunInit(string pathdir = "");
   void RunTest();
+  dynamic? GetMeasurement(string name);
+  void SetDan(string name, dynamic dsn);
+
 }
 
 public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
@@ -34,7 +39,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     DConfig.Add("StDir", pathdir);
     NameStrateg = DstParams["Name"];
     MaxWaitRez = (int) (DstParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
-
+    IStrategiesBasaPRT = (IStrategiesBasa)this;
     return;
     Console.WriteLine("Подключение к LabCar");
     IConLabCar.Initialization(vwork, vexpe);
@@ -126,7 +131,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       Console.WriteLine($" Problem with activating options {fullPath}");
     }
   }
-  protected dynamic? getMeasurement(string name)
+  public dynamic? GetMeasurement(string name)
   {
     dynamic? rezult =null;
     if(dMeasurement.ContainsKey(name))
@@ -138,7 +143,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       Console.WriteLine($" - Error in reading measurement {name}  ");
     return rezult;
   }
-  protected void setDan(string name, dynamic dsn)
+  public void SetDan(string name, dynamic dsn)
   {
         //string s = DParameter[name].Signal;
         //ISignal parameter = IConLabCar.SignalSources.CreateParameter(s);
@@ -192,7 +197,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       Console.WriteLine(" _ Читаем переменные _");
       foreach (var (keyGet, valGet) in _oneStep.GetPoints)
       {
-        var _xx0 = getMeasurement(keyGet);
+        var _xx0 = GetMeasurement(keyGet);
         _oneStep.AddGetPoints(keyGet, _xx0);
         if(_rezul.ContainsKey(keyGet))
             _rezul[keyGet]=_xx0;
@@ -209,7 +214,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
       foreach (var (keySet, valSet) in _oneStep.SetPoints)
       {
-        setDan(keySet, valSet);
+        SetDan(keySet, valSet);
       }
 
     }

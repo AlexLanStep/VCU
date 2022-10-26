@@ -21,9 +21,11 @@ public class ParserJson
   #endregion
   #endregion
 
+  public IStrategiesBasa _istBasa;
   #region _ Constructor _
-  public ParserJson(string pathFiles) 
-  { 
+  public ParserJson(IStrategiesBasa istBasa, string pathFiles) 
+  {
+    _istBasa = istBasa;
     _pathFiles = pathFiles;
     DParameter = new Dictionary<string, Parameter>();
     DDanOutput = new Dictionary<string, DanOutput>();
