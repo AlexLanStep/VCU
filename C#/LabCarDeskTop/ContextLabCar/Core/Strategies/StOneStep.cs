@@ -32,7 +32,13 @@ public class StOneStep : IStOneStep
     if (type1.Contains("list"))
     {
       GetPoints.Clear();
-      ((List<string>)d).ForEach(x => GetPoints.Add(x, 0));
+            ((List<string>)d).ForEach(
+                x => { if (!GetPoints.ContainsKey(x))
+                            GetPoints.Add(x, 0);
+                        else
+                            GetPoints[x] = 0;
+                      }
+        );
       return;
     }
 
@@ -84,9 +90,9 @@ public class StOneStep : IStOneStep
   {
     List<(string, dynamic, Dftest)> _lsRez = ls;
 
-    (string, dynamic, Dftest) F0(string x, Dftest f)
+    (string, dynamic, Dftest) F0(string x, string sim, Dftest f)
       {
-        var s = x.Split("==");
+        var s = x.Split(sim);
         var name = s[0].Trim();
         var value = (dynamic)s[1].Trim();
         return (name, value, f);
@@ -98,17 +104,17 @@ public class StOneStep : IStOneStep
       x =>
       {
         if (x.Contains("=="))
-          _lsRez.Add(F0(x, ResultEq));
+          _lsRez.Add(F0(x, "==", ResultEq));
         else if (x.Contains(">="))
-          _lsRez.Add(F0(x, ResultGe));
+          _lsRez.Add(F0(x, ">=", ResultGe));
         else if (x.Contains("<="))
-          _lsRez.Add(F0(x, ResultLe));
+          _lsRez.Add(F0(x, "<=", ResultLe));
         else if (x.Contains("<"))
-          _lsRez.Add(F0(x, ResultLt));
+          _lsRez.Add(F0(x, "<", ResultLt));
         else if (x.Contains(">"))
-          _lsRez.Add(F0(x, ResultGt));
+          _lsRez.Add(F0(x, ">", ResultGt));
         else if (x.Contains("!="))
-          _lsRez.Add(F0(x, ResultNe));
+          _lsRez.Add(F0(x, "!=", ResultNe));
       }
     );
 
@@ -199,9 +205,11 @@ public class StOneStep : IStOneStep
     //}
     while (bResult && (i < ls.Count) && result.TryGetValue(ls[i].Item1, out var x0))
     {
-      double x01 = x0;
+//      double x01 = x0;
       double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
-      bResult = bResult && ls[i].Item3(x01, x1);
+            double _x0 =(double) x0;
+            double _x1 = (double) x1;
+      bResult = bResult && ls[i].Item3(_x0, _x1);
       //else
       //{
       //  Console.WriteLine($" Error not {ls[i].Item1} ");

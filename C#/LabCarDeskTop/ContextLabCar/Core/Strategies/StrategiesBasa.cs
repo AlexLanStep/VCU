@@ -35,7 +35,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     NameStrateg = DstParams["Name"];
     MaxWaitRez = (int) (DstParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
 
-    return;
+//    return;
     Console.WriteLine("Подключение к LabCar");
     IConLabCar.Initialization(vwork, vexpe);
     IConLabCar.Connect();
@@ -198,6 +198,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
             _rezul[keyGet]=_xx0;
         else
             _rezul.Add(keyGet,_xx0);
+//!!!!!!!        Console.WriteLine($" {keyGet} = {_xx0}");
       }
     }
     void _setDanLabCar(StOneStep _oneStep)

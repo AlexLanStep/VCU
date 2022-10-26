@@ -237,6 +237,18 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       }
       return rez;
     }
+    bool _ifOrDanLabCar(StOneStep oneStep)
+    {
+      var rez = false;
+      var dt0 = DateTime.Now;
+      while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
+      {
+        _getDanLabCar(oneStep);
+        rez = oneStep.TestIfOr(_rezul);
+        if (!rez) Thread.Sleep(1000);
+      }
+      return rez;
+    }
 
 
     if (LsStOneStep.Count < 2)
@@ -252,7 +264,16 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
       _getDanLabCar(_oneStep);
       _setDanLabCar(_oneStep);
-      
+
+      if (_oneStep.LIfOr.Count > 0)
+      {
+        if (!_ifOrDanLabCar(_oneStep))
+        {
+          Console.WriteLine("-- ==>  Test failed (ifOr не прошел) ((((( ----");
+          break;
+        }
+      }
+
       if (_oneStep.LIf.Count > 0)
       {
         if (!_ifDanLabCar(_oneStep))
