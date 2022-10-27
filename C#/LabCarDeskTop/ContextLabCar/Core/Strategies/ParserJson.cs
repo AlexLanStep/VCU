@@ -12,7 +12,8 @@ public class ParserJson
 //  public Dictionary<string, LTask> DTask; 
   public Dictionary<string, dynamic>? DstParams;
   public Dictionary<string, dynamic?> DsTsetStart;
-  public List<StOneStep> LsStOneStep; 
+  public List<StOneStep> LsStOneStep;
+
 
   #endregion
   #region ___ Local ___
@@ -33,6 +34,7 @@ public class ParserJson
     DstParams = new Dictionary<string, dynamic>(); 
     DsTsetStart = new Dictionary<string, dynamic?>();
     LsStOneStep = new List<StOneStep>();
+
   }
 #endregion
 

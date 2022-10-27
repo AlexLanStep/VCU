@@ -22,6 +22,10 @@ public class StOneStep : IStOneStep
   public dynamic? ReadSetPoints(string name) => SetPoints.TryGetValue(name, value: out var value) ? value : null;
   public dynamic? ReadGetPoints(string name) => GetPoints.TryGetValue(name, value: out var value) ? value : null;
 
+  public List<string> LoggerNamePole { get; set; } = new();
+  public Dictionary<string, dynamic> StCommand { get; set; } = new();
+
+
   public void LoadInitializationPosition(object d)
   {
     if(d==null)

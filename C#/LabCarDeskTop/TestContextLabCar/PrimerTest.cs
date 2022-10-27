@@ -80,10 +80,11 @@ namespace LabCar // Note: actual namespace depends on the project name.
       experiment.ActivateFile(@"D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm", true);
 
       // create a new data logger
+
       IDataLogger Datalogger = experiment.DataLoggers.CreateDatalogger("MyDataLogger");
       Datalogger.AddScalarRecordingSignal("TEST/Result", "");
       // get existing data logger
-      Datalogger = experiment.DataLoggers.GetDataloggerByName("MyDataLogger");
+*/      Datalogger = experiment.DataLoggers.GetDataloggerByName("MyDataLogger");
       Datalogger.StartTriggerPreTriggerTime = 5;
       // this call is needed to apply all configuration setting (trigger, file settings)
       Datalogger.ApplyConfiguration();
@@ -94,7 +95,7 @@ namespace LabCar // Note: actual namespace depends on the project name.
                                             // stop data logger for manual stop trigger type
       Datalogger.Stop();
       System.Threading.Thread.Sleep(3000); //wait some time until datalogger post processing is complete
-
+/*
       ISignalGeneratorConfig SignalGeneratorConfiguration = experiment.SignalGeneratorConfiguration;
       // create a signal generator based on signal description set (LCO use case)
       // see interface ISignalGeneratorWithSet in API reference
