@@ -119,6 +119,17 @@ public class ParserJsonSt: ParserJson
       if (vv2.TryGetValue("ifor", out dynamic valueifor))
         stOne.LoadInitializationIfOr1(JsonLsString(valueifor.ToString() ?? string.Empty));
 
+      if (vv2.TryGetValue("loggerset", out dynamic valuelogset))
+        stOne.LoggerNamePole = JsonLsString(valuelogset.ToString() ?? string.Empty);
+
+      if (vv2.TryGetValue("logger", out dynamic valuelog))
+      {
+        if(stOne.StCommand.ContainsKey("logger"))
+          stOne.StCommand["logger"] = (string)valuelog;
+        else
+          stOne.StCommand.Add("logger", (string)valuelog);
+      }
+
       AddNewPoleJson(this);
 
       LsStOneStep.Add(stOne);

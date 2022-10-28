@@ -17,6 +17,7 @@
     {
       "dt0": {
         "t": 500,
+        "loggerset": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State" ],
         "get": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State" ],
         "set": {
           "Butt_Drive_State": 10.20,
@@ -27,6 +28,7 @@
     },
     {
       "dt1": {
+        "logger": "start",
         "t": "Wait0",
         "set": {
           "Butt_Drive_State": 12.0,
@@ -39,7 +41,9 @@
       "dt2": {
         "t": "Wait1",
         "get": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State" ],
-        "rez": [ "VCU_DesInvMode==1.0", "Low_Beam_Req==1.0", "Low_Beam_State==1.0" ]
+        "rez": [ "VCU_DesInvMode==1.0", "Low_Beam_Req==1.0", "Low_Beam_State==1.0" ],
+        "logger": "end"
+
       }
     }
   ]

@@ -87,7 +87,7 @@ public class StrategyDanJson: IStrategyDanJson
     if (string.IsNullOrEmpty(pathdir) && string.IsNullOrEmpty(_pathdir))
       throw new MyException("Not path for JSON", -2);
 
-    _pathdir = !string.IsNullOrEmpty(pathdir) ? pathdir : _pathdir;
+        _pathdir = pathdir; //!string.IsNullOrEmpty(pathdir) ? pathdir : _pathdir;
 
     if ( !Directory.Exists(_pathdir))
       throw new MyException("Not dir strateg", -3);

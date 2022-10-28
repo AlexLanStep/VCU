@@ -7,6 +7,7 @@ namespace ContextLabCar.Core.Strategies;
 
 public class StOneStep : IStOneStep
 {
+  public string StoneName { get; set; }
   public delegate bool Dftest(dynamic x0, dynamic x1);
   public int TimeWait { get; set; }
   public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
@@ -255,6 +256,7 @@ public class StOneStep : IStOneStep
       double x01 = x0;
       double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
       bResult = bResult || ls[i].Item3(x01, x1);
+      i += 1;
     }
 
     return bResult;

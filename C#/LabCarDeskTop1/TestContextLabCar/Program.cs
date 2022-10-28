@@ -110,24 +110,35 @@ internal class Program
     _container = ContainerManager.GetInstance();
     var _connect = _container.LabCar.Resolve<IConnectLabCar>();
     var _jsonConfig = _container.LabCar.Resolve<IStrategyDanJson>();
-    var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
-    _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St0");
-    _testIlab.RunTest();
+    Console.WriteLine("=========   Stratedy 0   =======");
+    var _testIlab0 = _container.LabCar.Resolve<IStrategiesBasa>();
+    _testIlab0.RunInit(@"D:\TestSystem\Moto\Strategies\St0");
+    _testIlab0.RunTest();
 
+/*
+    Console.WriteLine("=========   Stratedy 1   =======");
+    var _testIlab1 = _container.LabCar.Resolve<IStrategiesBasa>();
+    _testIlab1.RunInit(@"D:\TestSystem\Moto\Strategies\St1");
+    _testIlab1.RunTest();
+    Console.WriteLine("=========   Stratedy 2   =======");
+    var _testIlab2 = _container.LabCar.Resolve<IStrategiesBasa>();
+    _testIlab2.RunInit(@"D:\TestSystem\Moto\Strategies\St2");
+    _testIlab2.RunTest();
+*/
     //var tast0 = Task.Factory.StartNew(() =>
     //{
     //  var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
     //  _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St0");
 
-        //});
-        //var tast1 = Task.Factory.StartNew(() =>
-        //{
-        //  var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
-        //  _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St1");
+    //});
+    //var tast1 = Task.Factory.StartNew(() =>
+    //{
+    //  var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
+    //  _testIlab.RunInit(@"D:\TestSystem\Moto\Strategies\St1");
 
-        //});
+    //});
 
-        //Task.WaitAll(tast0, tast1);
+    //Task.WaitAll(tast0, tast1);
     Console.WriteLine("==== END === !!!! ");
   }
 

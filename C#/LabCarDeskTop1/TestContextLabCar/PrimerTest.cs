@@ -80,6 +80,7 @@ namespace LabCar // Note: actual namespace depends on the project name.
       experiment.ActivateFile(@"D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\Parameter_Files\\ParameterFile.dcm", true);
 
       // create a new data logger
+
       IDataLogger Datalogger = experiment.DataLoggers.CreateDatalogger("MyDataLogger");
       Datalogger.AddScalarRecordingSignal("TEST/Result", "");
       // get existing data logger
