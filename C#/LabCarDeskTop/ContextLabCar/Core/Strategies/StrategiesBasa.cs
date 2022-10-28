@@ -11,6 +11,8 @@ public interface IStrategiesBasa
   IConnectLabCar IConLabCar { get; set; }
   void RunInit(string pathdir = "");
   void RunTest();
+  bool IsRezulta { get; set; }
+
 }
 
 public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
@@ -21,7 +23,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   public string NameStrateg { get; set; } = "";
   public int MaxWaitRez { get; set; } = 10;
   public IDataLogger Datalogger { get; set; }
-
+  public bool IsRezulta { get; set; }
   private bool _isLogger = false;
   #endregion
 
@@ -29,6 +31,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   {
     IConLabCar = iConLabCar;
     _isLogger = true;
+    IsRezulta = true;
   }
 
   public IConnectLabCar IConLabCar { get; set; }
@@ -89,10 +92,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   }
   private string testFile(string fullPath)
   {
-        string path = "";
-//    if (!DPath.TryGetValue(path, out string fullPath))
-//      throw new MyException($"No link to file {path}, in inicialCalibrat", -1);
-
+    string path = "";
     if (!File.Exists(fullPath))
       throw new MyException($"No file {path}, in inicialCalibrat", -1);
 
@@ -307,9 +307,9 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
     int _numSten = 0;
     Console.WriteLine($"  -  Start TEST - {NameStrateg} ");
-    bool _isRezulta = true;
+    IsRezulta = true;
 //    foreach (var _oneStep in LsStOneStep)
-    while(_isRezulta && _numSten < LsStOneStep.Count)
+    while(IsRezulta && _numSten < LsStOneStep.Count)
     {
       var _oneStep = LsStOneStep[_numSten];
       Console.WriteLine($"  -  Step -> {_oneStep.StoneName} ");
@@ -331,7 +331,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
         if (!_ifOrDanLabCar(_oneStep))
         {
           Console.WriteLine("-- ==>  Test failed (ifOr не прошел) ((((( ----");
-          _isRezulta = false;
+          IsRezulta = false;
           continue;
         }
       }
@@ -341,7 +341,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
         if (!_ifDanLabCar(_oneStep))
         {
           Console.WriteLine("-- ==>  Test failed (if не прошел) ((((( ----");
-          _isRezulta = false;
+          IsRezulta = false;
           continue;
         }
       }
@@ -349,9 +349,15 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       if (_oneStep.LResult.Count > 0)
       {
         if (_rezDanLabCar(_oneStep))
-            Console.WriteLine("-- !!!!  Test went well !!!!");
+        {
+          Console.WriteLine("-- !!!!  Test went well !!!!");
+        }
         else
-            Console.WriteLine("-- ==>  Test failed ((((( ----");
+        { 
+          Console.WriteLine("-- ==>  Test failed ((((( ----");
+          IsRezulta = false;
+          continue;
+        }
       }
 
       if (_isLogger && _oneStep.StCommand.ContainsKey("logger") && (_oneStep.StCommand["logger"] == "end"))
@@ -361,7 +367,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
     }
 
-    if (_isRezulta)
+    if (IsRezulta)
       Console.WriteLine("-- !!!!  Test Прошел !!!!");
     else
       Console.WriteLine("-- ==>  Test ERROR ((((( ----");
