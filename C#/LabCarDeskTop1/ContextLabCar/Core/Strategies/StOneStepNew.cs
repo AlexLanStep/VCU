@@ -6,8 +6,6 @@ using ETAS.EE.Scripting;
 using System;
 using System.Collections.Generic;
 using ContextLabCar.Static;
-using System.IO;
-using DryIoc.ImTools;
 
 namespace ContextLabCar.Core.Strategies;
 
@@ -22,7 +20,7 @@ public interface IStOneStepNew
   Dictionary<string, dynamic> SetPoints { get; set; }
   List<string> LoggerNamePole { get; set; }
   int TimeWait { get; set; }
-  bool Run(Dictionary<string, string> dConfig);
+  bool Run();
   bool IsRezulta { get; set; }
   void LoadInitializationPosition(object d);
   void LoadInitializationIf(List<string> list);
@@ -65,7 +63,7 @@ public class StOneStepNew : IStOneStepNew
   {
     _connect = iConLabCar;
     _iBasaContext = iBasaContext;
-//    dConfig = _iBasaContext.DConfig;
+    dConfig = _iBasaContext.DConfig;
     _isLogger = false;
   }
 
@@ -324,21 +322,20 @@ public class StOneStepNew : IStOneStepNew
       }
     }
     if (_lsPath.Count > 0)
-        LCDan.AddLogger(dConfig["NameDir"], dConfig["FileLogger"], _lsPath.ToArray(), _lsTask.ToArray());
-    }
+      LCDan.AddLogger(dConfig["NameDir"], dConfig["FileLogger"], _lsPath.ToArray(), _lsTask.ToArray());
+  }
 
 
-    public bool Run(Dictionary<string, string> dConfig)
+  public bool Run()
   {
-        this.dConfig= dConfig;
-    MaxWaitRez = (int)ParamsStrategy["Maxwait"];
+    MaxWaitRez = ParamsStrategy["Maxwait"];
     waitCommand = 1000;
     _isLogger = ParamsStrategy.ContainsKey("Logger")? ParamsStrategy["Logger"]:false; 
 
     IsRezulta = true;
 
     Console.WriteLine($"  -  Step -> {StoneName} ");
-    Thread.Sleep(TimeWait);
+
     _getDanLabCar();
     _setDanLabCar();
     _setPathInLogger();
@@ -355,15 +352,7 @@ public class StOneStepNew : IStOneStepNew
 
     if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "end"))
       LCDan.GetLogger(dConfig["NameDir"])?.Stop();
-    if(!IsRezulta)
-    {
-        try
-        {
-            LCDan.GetLogger(dConfig["NameDir"])?.Stop();
-        }
-        catch (Exception)
-        {}
-    }
+
     return IsRezulta;
   }
 

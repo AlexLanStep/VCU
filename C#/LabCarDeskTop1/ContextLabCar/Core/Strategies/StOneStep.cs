@@ -7,6 +7,7 @@ namespace ContextLabCar.Core.Strategies;
 
 public class StOneStep : IStOneStep
 {
+  public string StoneName { get; set; }
   public delegate bool Dftest(dynamic x0, dynamic x1);
   public int TimeWait { get; set; }
   public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
@@ -25,6 +26,9 @@ public class StOneStep : IStOneStep
   public List<string> LoggerNamePole { get; set; } = new();
   public Dictionary<string, dynamic> StCommand { get; set; } = new();
 
+  public List<string> CalibrationsLoad { get; set; } = new();
+  public List<string> CalibrationsActiv { get; set; } = new();
+
 
   public void LoadInitializationPosition(object d)
   {
@@ -36,13 +40,14 @@ public class StOneStep : IStOneStep
     if (type1.Contains("list"))
     {
       GetPoints.Clear();
-            ((List<string>)d).ForEach(
-                x => { if (!GetPoints.ContainsKey(x))
-                            GetPoints.Add(x, 0);
-                        else
-                            GetPoints[x] = 0;
-                      }
-        );
+      ((List<string>)d).ForEach(x => 
+        { 
+          if (!GetPoints.ContainsKey(x))
+            GetPoints.Add(x, 0);
+          else
+            GetPoints[x] = 0;
+        }
+    );
       return;
     }
 

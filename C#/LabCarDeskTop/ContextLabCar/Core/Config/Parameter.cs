@@ -29,11 +29,12 @@ public class ParameterJson : IParameter
     Signal = signal;
     Comment = comment;
   }
-  public ParameterJson(IParameter sourse)
-  {
-    Signal = sourse.Signal;
-    Comment = sourse.Comment;
-  }
+
+  //public ParameterJson(IParameter sourse)
+  //{
+  //  Signal = sourse.Signal;
+  //  Comment = sourse.Comment;
+  //}
 
 }
 
@@ -56,19 +57,19 @@ public class ParameterNew : ParameterJson
       throw new MyException($" Error in {nameField} -> {Signal}", -2);
     }
   }
-  public ParameterNew(IConnectLabCar iConLabCar, string nameField, ParameterJson sourse) : base(sourse)
+  public ParameterNew(IConnectLabCar iConLabCar, string nameField, ParameterJson sourse) : base(sourse.Signal, sourse.Comment)
   {
     Name = nameField;
     _iConLabCar = iConLabCar;
-    //try
-    //{
-    //  SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);
-    //}
-    //catch (Exception e)
-    //{
-    //  Console.WriteLine(e);
-    //  throw new MyException($" Error in {nameField} -> {Signal}", -2);
-    //}
+    try
+    {
+        SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+        throw new MyException($" Error in {nameField} -> {Signal}", -2);
+    }
   }
 
   public bool SetValue(dynamic value)

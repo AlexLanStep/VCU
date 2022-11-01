@@ -12,7 +12,6 @@ public interface IBaseContext
   bool IsResult { get; set; }
   void Initialization(string pathdir);
   void RunTest();
-
 }
 public class BaseContext: IBaseContext
 {
@@ -35,7 +34,7 @@ public class BaseContext: IBaseContext
     DConfig = new Dictionary<string, string>();
   }
 
-    public void Initialization(string pathdir)
+  public void Initialization(string pathdir)
   {
     if (!Directory.Exists(pathdir))
       throw new MyException($"Нет каталога - {pathdir}", -1);
@@ -54,6 +53,8 @@ public class BaseContext: IBaseContext
 
     _parser.ParamsStrategy.Add("Logger", true);
     ParamsStrategy = new Dictionary<string, dynamic>(_parser.ParamsStrategy);
+//    ParamsStrategy.Add("Logger", true);
+
 
     Console.WriteLine("Грузим переменные для старта LabCar");
     _iConLabCar.Initialization(DConfig["Workspace"], DConfig["Experiment"]);
@@ -85,9 +86,6 @@ public class BaseContext: IBaseContext
     string pathConfigDir = string.Join("\\", dirs0.ToArray());
     DConfig.Add("DirConfig", pathConfigDir);
     DConfig.Add("DirCalibrat", pathConfigDir+ "\\Calibration");
-    if (!Directory.Exists(DConfig["DirCalibrat"]))
-        Directory.CreateDirectory(DConfig["DirCalibrat"]);
-            
 
   }
   public void RunTest()
@@ -97,7 +95,7 @@ public class BaseContext: IBaseContext
     var _numSten =0; 
     while (IsResult && _numSten < LsStOneStep.Count)
     {
-      IsResult = LsStOneStep[_numSten].Run(DConfig);
+      IsResult = LsStOneStep[_numSten].Run();
 
       _numSten += 1;
 

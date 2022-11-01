@@ -12,7 +12,8 @@ public class ContainerManager
     LabCar.Register<IStrategyDanJson, StrategyDanJson>();
     LabCar.Register<IStrategiesBasa, StrategiesBasa>();
     LabCar.Register<IBaseContext, BaseContext>();
-    
+    LabCar.Register<IStOneStepNew, StOneStepNew>();
+   
 
 
     //DbContainer.Register<IParsingXml, ParsingXml>(Reuse.Singleton);

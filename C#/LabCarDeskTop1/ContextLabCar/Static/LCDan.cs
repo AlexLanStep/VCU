@@ -130,23 +130,10 @@ public static class LCDan
     LoggerLabCar logger = new LoggerLabCar() {Name=nameDir, PathDirDan=nameDirDan };
 
     logger.Datalogger = _iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
-        if (logger.Datalogger == null)
-            logger.Datalogger = _iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
-        else
-        {
-            try
-            {
-                if(logger.Datalogger.State == EDataloggerState.Recording)
-                    logger.Datalogger.Deactivate();
-            }
-            catch (Exception)
-            {
-            }
-        }
+    logger.Datalogger ??= _iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
 
     if (logger.Datalogger == null) return false;
 
-    logger.Datalogger.AddScalarRecordingSignals(signal, task);
     logger.Datalogger = _iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
     logger.Datalogger.ConfigureRecordingFile(logger.PathDirDan, "MDF", true, 3);
     logger.Datalogger.ApplyConfiguration();

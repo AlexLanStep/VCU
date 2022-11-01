@@ -46,11 +46,7 @@ internal class Program
       Console.WriteLine($"=========   Stratedy {i}   =======");
       var _testIlab = _container.LabCar.Resolve<IBaseContext>();
       _testIlab.Initialization(listDir.ElementAt(i));
-
-      //var _testIlab = _container.LabCar.Resolve<IStrategiesBasa>();
-      //_testIlab.RunInit(listDir.ElementAt(i));
-      //_testIlab.RunTest();
-      
+      _testIlab.RunTest();
       _isRezulta = _testIlab.IsResult;
       i += 1;
     }

@@ -15,3 +15,4 @@ public interface IStOneStep
 
   bool TestDan(Dictionary<string, dynamic> result);
 }
+
