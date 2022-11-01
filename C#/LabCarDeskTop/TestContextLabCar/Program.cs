@@ -1,28 +1,21 @@
-﻿#define DataEmulation
-
-
-using System;
+﻿// #define DataEmulation
+//#if DataEmulation
+//#else
+//#endif
 
 using ContextLabCar.Core;
-using ContextLabCar.Core.Config;
 using ContextLabCar.Core.Strategies;
 using ContextLabCar.Static;
 using DryIoc;
-using Newtonsoft.Json;
 
 namespace TestContextLabCar;  // Note: actual namespace depends on the project name.
 internal class Program
 {
-  static ContainerManager _container;
+  private static ContainerManager _container = null!;
   static void Main(string[] args)
   {
-#if DataEmulation
-    Console.WriteLine(" ---  Включен режим эмуляция данных   --");
-#else 
-    Console.WriteLine(" Real dan");
-#endif
 
-    List<string> listDir = new List<string>() 
+    var listDir = new List<string>() 
       { @"D:\TestSystem\Moto\Strategies\St0",
         @"D:\TestSystem\Moto\Strategies\St1",
         @"D:\TestSystem\Moto\Strategies\St2",
@@ -34,20 +27,20 @@ internal class Program
       };
 
     _container = ContainerManager.GetInstance();
-    var _connect = _container.LabCar.Resolve<IConnectLabCar>();
-    var _jsonConfig = _container.LabCar.Resolve<IStrategyDanJson>();
-    bool _isRezulta = true;
+    _container.LabCar.Resolve<IConnectLabCar>();
+//    _container.LabCar.Resolve<IStrategyDanJson>();
+    var isRezulta = true;
 
-    int NStartStrateg = 0;
-    int NEndStrateg = 1;
-    int i = NStartStrateg;
-    while (_isRezulta && i< NEndStrateg)
+    const int nStartStrategy = 0;
+    const int nEndStrategy = 1;
+    var i = nStartStrategy;
+    while (isRezulta && i< nEndStrategy)
     {
       Console.WriteLine($"=========   Stratedy {i}   =======");
-      var _testIlab = _container.LabCar.Resolve<IBaseContext>();
-      _testIlab.Initialization(listDir.ElementAt(i));
-      _testIlab.RunTest();
-      _isRezulta = _testIlab.IsResult;
+      var testLab = _container.LabCar.Resolve<IBaseContext>();
+      testLab.Initialization(listDir.ElementAt(i));
+      testLab.RunTest();
+      isRezulta = testLab.IsResult;
       i += 1;
     }
 

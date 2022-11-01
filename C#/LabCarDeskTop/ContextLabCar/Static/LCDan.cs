@@ -1,15 +1,12 @@
 ﻿
-using ETAS.EE.Scripting;
-using System.Collections.Concurrent;
-
 namespace ContextLabCar.Static;
 
 public static class LCDan
 {
-  private static ContainerManager _container;
+  private static readonly ContainerManager _container;
   private static ConcurrentDictionary<string, TaskLabCar> _dTaskLabCar = new();
   private static ConcurrentDictionary<string, ParameterNew> _dParameters = new();
-  private static ConcurrentDictionary<string, CalibratNew> _dCalibrats = new();
+  private static ConcurrentDictionary<string, Calibrations> _dCalibrats = new();
   private static ConcurrentDictionary<string, LoggerLabCar> _dLoggerLabCar = new();
 
   private static IConnectLabCar _iconnect;
@@ -35,10 +32,10 @@ public static class LCDan
 
   public static bool AddTask(string nameTask, TaskJsonLoad taskJson)
   {
-    TaskLabCar _task = new TaskLabCar(_iconnect, nameTask, taskJson);
-    if (_task.Measurement != null)
+    var task = new TaskLabCar(_iconnect, nameTask, taskJson);
+    if (task.Measurement != null)
     {
-      _dTaskLabCar.AddOrUpdate(nameTask, _task, (_, _) => _task);
+      _dTaskLabCar.AddOrUpdate(nameTask, task, (_, _) => task);
       return true;
     }
     else
@@ -103,7 +100,7 @@ public static class LCDan
 
   #region ____  Calibration ____
 
-  public static void AddCalibration(string name, CalibratNew calidr)
+  public static void AddCalibration(string name, Calibrations calidr)
   {
     _dCalibrats.AddOrUpdate(name, calidr, (_, _) => calidr);
   }
@@ -141,6 +138,7 @@ public static class LCDan
             }
             catch (Exception)
             {
+              // ignored
             }
         }
 

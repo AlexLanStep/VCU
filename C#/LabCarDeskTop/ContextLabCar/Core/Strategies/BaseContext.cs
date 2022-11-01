@@ -42,7 +42,7 @@ public class BaseContext: IBaseContext
 
     DConfig.Add("StDir", pathdir);
     weFormThePaths();
-    var _parser = new ParserJsonNew(DConfig, ref LsStOneStep);
+    var _parser = new ParserJson(DConfig, ref LsStOneStep);
 
     foreach (var (key, value) in _parser.Config.PathLabCar)
     {

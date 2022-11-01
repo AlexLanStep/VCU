@@ -1,34 +1,52 @@
 ﻿
 #nullable enable
-using System;
-using System.Collections.Generic;
+using ContextLabCar.Static;
 
 namespace ContextLabCar.Core.Strategies;
 
-public class StOneStep : IStOneStep
+public interface IStOneStepNew
 {
+  string StoneName { get; set; }
+  Dictionary<string, dynamic> ParamsStrategy { get; set; }
+  List<string> CalibrationsLoad { get; set; }
+  List<string> CalibrationsActiv { get; set; }
+  List<string> GetPoints { get; set; }
+  List<string> LResult { get; set; }
+  Dictionary<string, dynamic> SetPoints { get; set; }
+  List<string> LoggerNamePole { get; set; }
+  int TimeWait { get; set; }
+  bool Run(Dictionary<string, string> dConfig);
+  void LoadInitializationPosition(object d);
+  void LoadInitializationIf(List<string> list);
+  Dictionary<string, dynamic> StCommand { get; set; }
+}
+
+
+
+public class StOneStep : IStOneStepNew
+{
+  private delegate bool Dftest(dynamic x0, dynamic x1);
+  private delegate bool DTestOr(string name);
+  private Dictionary<string, string> _dConfig;
+  private int waitCommand;
+  public Dictionary<string, dynamic> ParamsStrategy { get; set; } = new ();
   public string StoneName { get; set; }
-  public delegate bool Dftest(dynamic x0, dynamic x1);
   public int TimeWait { get; set; }
-  public Dictionary<string, dynamic> GetPoints { get; set; } = new ();
+  public List<string> GetPoints { get; set; } = new ();
   public Dictionary<string, dynamic> SetPoints { get; set; } = new(); 
   public List<string> LResult { get; set; } = new();
-  public List<string> LIf { get; set; } = new();
-  public List<string> LIfOr { get; set; } = new();
-
-  private List<(string, dynamic, Dftest)> lsRez = new();
-  private List<(string, dynamic, Dftest)> lsIf = new();
-  private List<(string, dynamic, Dftest)> lsIfOr = new();
-
-  public dynamic? ReadSetPoints(string name) => SetPoints.TryGetValue(name, value: out var value) ? value : null;
-  public dynamic? ReadGetPoints(string name) => GetPoints.TryGetValue(name, value: out var value) ? value : null;
-
+  private List<(string, dynamic, object)> lsIf = new();
+  private Dictionary<string, List<(string, dynamic, object)>> lsOr = new();
   public List<string> LoggerNamePole { get; set; } = new();
   public Dictionary<string, dynamic> StCommand { get; set; } = new();
-
   public List<string> CalibrationsLoad { get; set; } = new();
   public List<string> CalibrationsActiv { get; set; } = new();
-
+  public int MaxWaitRez { get; set; }
+  private bool _isLogger;
+  public StOneStep()
+  {
+    _isLogger = false;
+  }
 
   public void LoadInitializationPosition(object d)
   {
@@ -40,14 +58,7 @@ public class StOneStep : IStOneStep
     if (type1.Contains("list"))
     {
       GetPoints.Clear();
-      ((List<string>)d).ForEach(x => 
-        { 
-          if (!GetPoints.ContainsKey(x))
-            GetPoints.Add(x, 0);
-          else
-            GetPoints[x] = 0;
-        }
-    );
+      ((List<string>)d).ForEach(x => GetPoints.Add(x));
       return;
     }
 
@@ -57,219 +68,113 @@ public class StOneStep : IStOneStep
     foreach (var it in (Dictionary<string, dynamic>)d)
       SetPoints.Add(it.Key, it.Value);
   }
-
-  public void AddGetPoints(string key, dynamic value)
+  public void LoadInitializationIf(List<string> list)
   {
-    GetPoints.TryAdd(key, value);
-  }
-  public void LoadInitializationRez(List<string> list) 
-  {
-    (string, dynamic, Dftest) F0(string x, Dftest f)
-    {
-      var s = x.Split("==");
-      var name = s[0].Trim();
-      var value = (dynamic) s[1].Trim();
-      return (name, value, f);
-    }
+    lsIf.Clear();
 
-    lsRez.Clear();
     list.ForEach
     (
       x =>
       {
-        if (x.Contains("=="))
-          lsRez.Add(F0(x, ResultEq));
-        else if (x.Contains(">="))
-          lsRez.Add(F0(x, ResultGe));
-        else if (x.Contains("<="))
-          lsRez.Add(F0(x, ResultLe));
-        else if (x.Contains("<"))
-          lsRez.Add(F0(x, ResultLt));
-        else if (x.Contains(">"))
-          lsRez.Add(F0(x, ResultGt));
-        else if (x.Contains("!="))
-          lsRez.Add(F0(x, ResultNe));
-      }
-    ); 
-
-    LResult = new List<string>(list);
-  }
-
-  public List<string> LoadInitializationLogic(ref List<(string, dynamic, Dftest)> ls, List<string> list)
-  {
-    List<(string, dynamic, Dftest)> _lsRez = ls;
-
-    (string, dynamic, Dftest) F0(string x, string sim, Dftest f)
-      {
-        var s = x.Split(sim);
-        var name = s[0].Trim();
-        var value = (dynamic)s[1].Trim();
-        return (name, value, f);
-      }
-
-    _lsRez.Clear();
-    list.ForEach
-    (
-      x =>
-      {
-        if (x.Contains("=="))
-          _lsRez.Add(F0(x, "==", ResultEq));
-        else if (x.Contains(">="))
-          _lsRez.Add(F0(x, ">=", ResultGe));
-        else if (x.Contains("<="))
-          _lsRez.Add(F0(x, "<=", ResultLe));
-        else if (x.Contains("<"))
-          _lsRez.Add(F0(x, "<", ResultLt));
-        else if (x.Contains(">"))
-          _lsRez.Add(F0(x, ">", ResultGt));
-        else if (x.Contains("!="))
-          _lsRez.Add(F0(x, "!=", ResultNe));
+        if (x.Contains("("))
+        {
+          var nameOr = "or" + lsOr.Count().ToString();
+          TestOrLoad(x, nameOr);
+          lsIf.Add((nameOr, x, (DTestOr)TestOr));
+        }
+        else
+        {
+          lsIf.Add(LogicSignal(x));
+        }
       }
     );
 
-//    LResult = new List<string>(list);
-    return new List<string>(list);
   }
-
-  public void LoadInitializationRez1(List<string> list) 
+  private (string, dynamic, Dftest) LogicSignal(string x)
   {
-    LResult = LoadInitializationLogic(ref lsRez, list);
+    (string, dynamic, Dftest) F0(string x, string sim, Dftest f)
+    {
+      var s = x.Split(sim);
+      var name = s[0].Trim();
+      var value = (dynamic)s[1].Trim();
+      return (name, value, f);
+    }
+    if (x.Contains("=="))
+      return F0(x, "==", ResultEq);
+    else if (x.Contains(">="))
+      return F0(x, ">=", ResultGe);
+    else if (x.Contains("<="))
+      return F0(x, "<=", ResultLe);
+    else if (x.Contains("<"))
+      return F0(x, "<", ResultLt);
+    else if (x.Contains(">"))
+      return F0(x, ">", ResultGt);
+    else if (x.Contains("!="))
+      return F0(x, "!=", ResultNe);
+    return ("null", null, null);
   }
-  public void LoadInitializationIf1(List<string> list)
+  public void TestOrLoad(string stOr, string name)
   {
-    LIf = LoadInitializationLogic(ref lsIf, list);
+    var list = stOr.Replace("(", "").Replace(")", "").Split(",").Select(x => x.Trim()).ToList();
+    List<(string, dynamic, object)> lsRez = new();
+    list.ForEach(x =>
+      {
+        lsRez.Add(LogicSignal(x));
+      }
+    );
+    if (lsOr.ContainsKey(name))
+      lsOr[name] = lsRez;
+    else
+      lsOr.Add(name, lsRez);
   }
-  public void LoadInitializationIfOr1(List<string> list)
+  public bool TestOr(string nameOr)
   {
-    LIfOr = LoadInitializationLogic(ref lsIfOr, list);
-  }
-
-  public virtual bool TestDan(Dictionary<string, dynamic> result)
-  {
-    var bResult = true;
-
-    if (result.Count == 0)
+    if (string.IsNullOrEmpty(nameOr) || (!lsOr.ContainsKey(nameOr)) || (lsOr[nameOr].Count() < 2))
       return false;
 
-    foreach (var it in lsRez)
-    {
-      var name = it.Item1;
-      if(result.TryGetValue(name, out var x0))
-      {
-        double x01 = x0;
-        double x1;
-        double.TryParse(((string)(it.Item2)).Replace('.',','), out x1);
-        bResult = bResult && it.Item3(x01, x1);
-      }
-      else
-      {
-        Console.WriteLine($" Error not {name} ");
-        return false;
-      }
-    }
-
-    return bResult;
-  }
-  public virtual bool TestDanNew(Dictionary<string, dynamic> result, List<(string, dynamic, Dftest)> ls)
-  {
-    var bResult = true;
-
-    if (result.Count == 0)
-      return false;
-
-    //foreach (var it in ls)
-    //{
-    //  var name = it.Item1;
-    //  if (result.TryGetValue(name, out var x0))
-    //  {
-    //    double x01 = x0;
-    //    //double x1;
-    //    double.TryParse(((string)(it.Item2)).Replace('.', ','), out double x1);
-    //    bResult = bResult && it.Item3(x01, x1);
-    //    if (!bResult)
-    //      return false;
-    //  }
-    //  else
-    //  {
-    //    Console.WriteLine($" Error not {name} ");
-    //    return false;
-    //  }
-    //}
-
-    int i = 0;
-    //while (bResult && (i < ls.Count))
-    //{
-    //  if (result.TryGetValue(ls[i].Item1, out var x0))
-    //  {
-    //    double x01 = x0;
-    //    double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
-    //    bResult = bResult && ls[i].Item3(x01, x1);
-    //  }
-    //  else
-    //  {
-    //    Console.WriteLine($" Error not {ls[i].Item1} ");
-    //    return false;
-    //  }
-    //  i += 1;
-    //}
-    while (bResult && (i < ls.Count) && result.TryGetValue(ls[i].Item1, out var x0))
-    {
-//      double x01 = x0;
-      double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
-            double _x0 =(double) x0;
-            double _x1 = (double) x1;
-      bResult = bResult && ls[i].Item3(_x0, _x1);
-      //else
-      //{
-      //  Console.WriteLine($" Error not {ls[i].Item1} ");
-      //  return false;
-      //}
-      i += 1;
-    }
-    return bResult;
-  }
-
-  public virtual bool TestDanOr(Dictionary<string, dynamic> result, List<(string, dynamic, Dftest)> ls)
-  {
+    var ls = lsOr[nameOr];
     var bResult = false;
 
-    if (result.Count == 0)
-      return false;
-
-    //foreach (var it in ls)
-    //{
-    //  var name = it.Item1;
-    //  if (result.TryGetValue(name, out var x0))
-    //  {
-    //    double x01 = x0;
-    //    double.TryParse(((string)(it.Item2)).Replace('.', ','), out double x1);
-    //    bResult = bResult || it.Item3(x01, x1);
-    //    if (bResult)
-    //      return true;
-    //  }
-    //  else
-    //  {
-    //    Console.WriteLine($" Error not {name} ");
-    //    return false;
-    //  }
-    //}
-
-    int i = 0;
-    while ((!bResult) && (i < ls.Count) && result.TryGetValue(ls[i].Item1, out var x0))
+    var i = 0;
+    while ((!bResult) && (i < ls.Count))
     {
-      double x01 = x0;
+
+      var x01 = (double) LCDan.GetTask(ls[i].Item1);
       double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
-      bResult = bResult || ls[i].Item3(x01, x1);
+      var f0 = (Dftest)ls[i].Item3;
+      bResult = bResult || f0(x01, x1);
       i += 1;
     }
-
     return bResult;
   }
+  public virtual bool TestDan()
+  {
+    var bResult = true;
 
+    int i = 0;
+    while (bResult && (i < lsIf.Count)) //  && result.TryGetValue(lsIf[i].Item1, out var x0)
+    {
+      //      double x01 = x0;
+      var stype = lsIf[i].Item3.GetType().Name;
+      switch (stype)
+      {
+        case "DTestOr":
+          bResult = bResult && TestOr(lsIf[i].Item1);
+          break;
+        case "Dftest":
+        {
+          var x0 = (double) LCDan.GetTask(lsIf[i].Item1);
+          double x1;
+          double.TryParse(((string)lsIf[i].Item2).Replace('.', ','), out x1);
+          bResult = bResult && ((Dftest)lsIf[i].Item3)(x0, x1);
+          break;
+        }
+      }
 
-  public virtual bool TestIf(Dictionary<string, dynamic> result) => TestDanNew(result, lsIf);
-  public virtual bool TestIfOr(Dictionary<string, dynamic> result) => TestDanOr(result, lsIfOr);
-  public virtual bool TestRez(Dictionary<string, dynamic> result) => TestDanNew(result, lsRez);
+      i += 1;
+    }
+    return bResult;
+  }
 
   public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.000001;  // ==
   public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.000001;  // !=
@@ -277,6 +182,110 @@ public class StOneStep : IStOneStep
   public virtual bool ResultGt(dynamic x0, dynamic x1) => x0 > x1; // >
   public virtual bool ResultLe(dynamic x0, dynamic x1) => x0 <= x1; // <= 
   public virtual bool ResultLt(dynamic x0, dynamic x1) => x0 < x1; // < 
+
+
+
+  private void _getDanLabCar()
+  {
+    if (GetPoints.Count == 0) return;
+    Console.WriteLine(" _ Вывод переменных _");
+    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LCDan.GetTask(x)}"));
+  }
+  private void _setDanLabCar()
+  {
+    if (SetPoints.Count == 0) return;
+    Console.WriteLine(" _ Устанавливаем переменные _");
+
+    foreach (var (keySet, valSet) in SetPoints)
+      LCDan.SetParam(keySet, valSet);
+  }
+  private bool _ifDanLabCar()
+  {
+    if( lsIf.Count<=0 ) return true;
+
+    var rez = false;
+    var dt0 = DateTime.Now;
+    while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
+    {
+      if (GetPoints.Count > 0) _getDanLabCar();
+
+      rez = TestDan();
+      if (!rez) Thread.Sleep(waitCommand);
+    }
+    return rez;
+  }
+  private void _setPathInLogger()
+  {
+    if ((!_isLogger)|| (LoggerNamePole.Count <= 0))
+      return;
+
+    List<string> lsPath = new List<string>();
+    List<string> lsTask = new List<string>();
+    foreach (var item in LoggerNamePole)
+    {
+      var task = LCDan.GetTaskInfo(item);
+      if (task!=null)
+      {
+        lsPath.Add(task.PathTask);
+        lsTask.Add(task.TimeLabCar);
+      }
+      else 
+      {
+        var param = LCDan.GetParamInfo(item);
+        if (param != null)
+        {
+          lsPath.Add(param.Signal);
+          lsTask.Add("");
+        }
+      }
+    }
+    if (lsPath.Count > 0)
+        LCDan.AddLogger(_dConfig["NameDir"], _dConfig["FileLogger"], lsPath.ToArray(), lsTask.ToArray());
+  }
+
+
+  public bool Run(Dictionary<string, string> dConfig)
+  {
+    this._dConfig= dConfig;
+    MaxWaitRez = (int)ParamsStrategy["Maxwait"];
+    waitCommand = 1000;
+    _isLogger = ParamsStrategy.ContainsKey("Logger")? ParamsStrategy["Logger"]:false; 
+
+    bool isRezulta = true;
+
+    Console.WriteLine($"  -  Step -> {StoneName} ");
+    Thread.Sleep(TimeWait);
+    _getDanLabCar();
+    _setDanLabCar();
+    _setPathInLogger();
+
+    if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "start"))
+      LCDan.GetLogger(dConfig["NameDir"])?.Start();
+
+    var isIf = _ifDanLabCar();
+    if (!isIf)
+    {
+        Console.WriteLine("-- ==>  IF не прошел ((((( ----");
+        isRezulta = false;
+    }
+
+    if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "end"))
+      LCDan.GetLogger(dConfig["NameDir"])?.Stop();
+    if(!isRezulta)
+    {
+        try
+        {
+            LCDan.GetLogger(dConfig["NameDir"])?.Stop();
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
+    }
+    return isRezulta;
+  }
+
+
 
 
 }

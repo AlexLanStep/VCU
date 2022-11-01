@@ -1,35 +1,17 @@
 ﻿
-using ETAS.EE.Scripting;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ContextLabCar.Core.Config;
 
-// ReSharper disable six IdentifierTypo
-public interface ICalibratJson
+public interface ICalibrationsJson
 {
   string Signal { get; }
   dynamic Val { get;}
   string Comment { get; }
   string Text { get; }
 }
-public class Calibrat : ICalibratJson
-{
-  public string Signal { get; }
-  public dynamic Val { get; }
-  public string Comment { get; }
-  public string Text { get; }
-  public Calibrat(string nameModel, string name, dynamic val, string comment="")
-  {
-    Signal = Signal;
-    Val = (val is string)?0.0:val;
-    Comment = comment;
-    Text = $"FESTWERT {nameModel}/{name}/Value \n  WERT {((string)Val.ToString()).Replace(',', '.')} \nEND\n";
-  }
-}
 
-public class CalibratJson : ICalibratJson
+public class CalibrationsJson : ICalibrationsJson
 {
   [JsonPropertyName("Signal")]
   public string Signal { get; }
@@ -42,13 +24,13 @@ public class CalibratJson : ICalibratJson
   public string Text => $"FESTWERT {Signal} \n  WERT {((string)Val.ToString()).Replace(',', '.')} \nEND\n";
 
   [Newtonsoft.Json.JsonConstructor]
-  public CalibratJson(string signal,  dynamic val, string comment = "")
+  public CalibrationsJson(string signal,  dynamic val, string comment = "")
   {
     Signal = signal;
     Val = (val is string) ? 0.0 : val;
     Comment = comment;
   }
-  public CalibratJson(ICalibratJson sourser)
+  public CalibrationsJson(ICalibrationsJson sourser)
   {
     Signal = sourser.Signal;
     Val = (sourser.Val is string) ? 0.0 : sourser.Val;
@@ -57,47 +39,47 @@ public class CalibratJson : ICalibratJson
 
 }
 
-public interface ICalibratNew
+public interface ICalibrations
 {
   void LoadingCalibrations();
   void ActionCalibrations();
 }
-public class CalibratNew : ICalibratNew
+public class Calibrations : ICalibrations
 {
   private IConnectLabCar _iConLabCar;
-  private string _pathDirCalibrat { get; }
-  private readonly string _text;
+  private string PathDirCalibration { get; }
 
-  public CalibratNew(IConnectLabCar iConLabCar, string pathDirCalibr, string nameCalibr, Dictionary<string, CalibratJson> dCalibrat)
+  public Calibrations(IConnectLabCar iConLabCar, string pathDirCalibr, string nameCalibr, Dictionary<string, CalibrationsJson> dCalibrat)
   {
-    _text = "";
+    var text = "";
     _iConLabCar = iConLabCar; 
-    _pathDirCalibrat = pathDirCalibr + "\\"+nameCalibr+".dcm";
+    PathDirCalibration = pathDirCalibr + "\\"+nameCalibr+".dcm";
 
     foreach (var (_, value) in dCalibrat)
-      _text += value.Text;
+      text += value.Text;
 
-    File.WriteAllText(_pathDirCalibrat, _text);
+    File.WriteAllText(PathDirCalibration, text);
   }
 
   public void LoadingCalibrations()
   {
     try
     {
-      _iConLabCar.Experiment.CalibrationController.LoadParameters(_pathDirCalibrat);
+      _iConLabCar.Experiment.CalibrationController.LoadParameters(PathDirCalibration);
     }
     catch (Exception)
     {
-      Console.WriteLine($" - Calibration c сылка {_pathDirCalibrat} загружена. ", -3); 
+      // ReSharper disable free StringLiteralTypo
+      Console.WriteLine($" - Calibration c сылка {PathDirCalibration} загружена. ", -3); 
     }
 
     try
     {
-      _iConLabCar.Experiment.AddFile(_pathDirCalibrat);
+      _iConLabCar.Experiment.AddFile(PathDirCalibration);
     }
     catch (Exception)
     {
-      Console.WriteLine($" - Calibration c сылка {_pathDirCalibrat} загружена.. ", -3);
+      Console.WriteLine($" - Calibration c сылка {PathDirCalibration} загружена.. ", -3);
     }
 
   }
@@ -106,11 +88,11 @@ public class CalibratNew : ICalibratNew
   {
     try
     {
-      _iConLabCar.Experiment.ActivateFile(_pathDirCalibrat, true);
+      _iConLabCar.Experiment.ActivateFile(PathDirCalibration, true);
     }
     catch (Exception)
     {
-      Console.WriteLine($" Problem with activating options {_pathDirCalibrat}");
+      Console.WriteLine($" Problem with activating options {PathDirCalibration}");
     }
 
   }
@@ -118,9 +100,4 @@ public class CalibratNew : ICalibratNew
 
 }
 
-
-
-
-//    Text = $"FESTWERT {nameModel}/{name}/Value \n  WERT {((string)Val.ToString()).Replace(',', '.')} \nEND\n";
-//    Text = $"FESTWERT {nameModel} \n  WERT {((string)Val.ToString()).Replace(',', '.')} \nEND\n";
 

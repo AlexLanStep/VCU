@@ -1,7 +1,5 @@
 ﻿
-using System.IO;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 
 namespace ContextLabCar.Core.Config;
 public class Parameter : IParameter
@@ -30,26 +28,18 @@ public class ParameterJson : IParameter
     Comment = comment;
   }
 
-  //public ParameterJson(IParameter sourse)
-  //{
-  //  Signal = sourse.Signal;
-  //  Comment = sourse.Comment;
-  //}
-
 }
 
 public class ParameterNew : ParameterJson
 {
   public string Name { get; set; }
-  private readonly IConnectLabCar _iConLabCar;
-  public ISignal? SignalParams { get; set; } = null;
+  public ISignal? SignalParams { get; set; }
   public ParameterNew(IConnectLabCar iConLabCar, string nameField, string signal, string comment = "") : base(signal, comment)
   {
     Name = nameField;
-    _iConLabCar = iConLabCar;
     try
     {
-      SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);
+      SignalParams = iConLabCar.SignalSources.CreateParameter(Signal);
     }
     catch (Exception e)
     {
@@ -60,10 +50,9 @@ public class ParameterNew : ParameterJson
   public ParameterNew(IConnectLabCar iConLabCar, string nameField, ParameterJson sourse) : base(sourse.Signal, sourse.Comment)
   {
     Name = nameField;
-    _iConLabCar = iConLabCar;
     try
     {
-        SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);
+        SignalParams = iConLabCar.SignalSources.CreateParameter(Signal);
     }
     catch (Exception e)
     {
@@ -77,18 +66,11 @@ public class ParameterNew : ParameterJson
     if (SignalParams == null)
       return false;
 
-    //protected void setDan(string name, dynamic dsn)
-    //{
-    //  var ValueObject = (IScalarValue)dParams[name].GetValueObject();
-    //  ValueObject.SetValue(dsn);
-    //  dParams[name].SetValueObject(ValueObject);
-    //}
-
     try
     {
-      var ValueObject = (IScalarValue)SignalParams.GetValueObject();
-      ValueObject.SetValue(value);
-      SignalParams.SetValueObject(ValueObject);
+      var valueObject = (IScalarValue)SignalParams.GetValueObject();
+      valueObject.SetValue(value);
+      SignalParams.SetValueObject(valueObject);
       return true;
 
     }
