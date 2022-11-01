@@ -28,7 +28,7 @@ public class Test01
       var value = (dynamic)s[1].Trim();
       return (name, value, f);
     }
-
+    
     _lsRez.Clear();
     list.ForEach
     (
@@ -87,7 +87,7 @@ public class Test01
 }
 
 
-private (string, dynamic, Dftest) logicSignal(string x)
+  private (string, dynamic, Dftest) logicSignal(string x)
   {
     (string, dynamic, Dftest) F0(string x, string sim, Dftest f)
     {

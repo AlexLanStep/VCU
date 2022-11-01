@@ -1,4 +1,5 @@
 ﻿
+using ContextLabCar.Core.Interface;
 using ETAS.EE.Scripting;
 using System.Security.Cryptography;
 
@@ -10,6 +11,8 @@ public interface IStrategiesBasa
   IConnectLabCar IConLabCar { get; set; }
   void RunInit(string pathdir = "");
   void RunTest();
+  bool IsRezulta { get; set; }
+
 }
 
 public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
@@ -20,7 +23,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   public string NameStrateg { get; set; } = "";
   public int MaxWaitRez { get; set; } = 10;
   public IDataLogger Datalogger { get; set; }
-
+  public bool IsRezulta { get; set; }
   private bool _isLogger = false;
   #endregion
 
@@ -28,6 +31,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   {
     IConLabCar = iConLabCar;
     _isLogger = true;
+    IsRezulta = true;
   }
 
   public IConnectLabCar IConLabCar { get; set; }
@@ -44,9 +48,12 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     var _dirs =pathdir.Split('\\');
     string _nameDir = _dirs[_dirs.Length - 1];
     DConfig.Add("NameDir", _nameDir);
-    DConfig.Add("FileLogger", pathdir+"\\"+"Logger"+ _nameDir+"_.dat");
+    string _pathDan = pathdir + "\\Dan";
+    if(!Directory.Exists(_pathDan))
+        Directory.CreateDirectory(_pathDan);
+    DConfig.Add("FileLogger", _pathDan + "\\"+"Logger"+ _nameDir+"_.dat");
 
-//    return;
+    return;
     Console.WriteLine("Подключение к LabCar");
     IConLabCar.Initialization(vwork, vexpe);
     IConLabCar.Connect();
@@ -85,10 +92,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
   }
   private string testFile(string fullPath)
   {
-        string path = "";
-//    if (!DPath.TryGetValue(path, out string fullPath))
-//      throw new MyException($"No link to file {path}, in inicialCalibrat", -1);
-
+    string path = "";
     if (!File.Exists(fullPath))
       throw new MyException($"No file {path}, in inicialCalibrat", -1);
 
@@ -99,7 +103,6 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     string fullPath = testFile(DCalibrationParams[file].PathFiles);
     try
     {
-      var _vCollebrator = IConLabCar.Experiment.CalibrationController;
       IConLabCar.Experiment.CalibrationController.LoadParameters(fullPath);
     }
     catch (Exception)
@@ -152,7 +155,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
         var ValueObject = (IScalarValue)dParams[name].GetValueObject();
         ValueObject.SetValue(dsn);
         dParams[name].SetValueObject(ValueObject);
-    }
+  }
   private void factivCalibr()
   {
     Console.WriteLine(" Активируем калибровки ");
@@ -189,7 +192,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
             _rezul[keyGet]=_xx0;
         else
             _rezul.Add(keyGet,_xx0);
-//!!!!!!!        Console.WriteLine($" {keyGet} = {_xx0}");
+        Console.WriteLine($" {keyGet} = {_xx0}");
       }
     }
     void _setDanLabCar(StOneStep _oneStep)
@@ -243,30 +246,57 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
     }
     void setPathInLogger(StOneStep  _oneStep)
     {
-      Datalogger = IConLabCar.Experiment.DataLoggers.CreateDatalogger(DConfig["NameDir"]);
-
-      foreach (var item in _oneStep.LoggerNamePole)
+      try
       {
-        try
+        Datalogger = IConLabCar.Experiment.DataLoggers.GetDataloggerByName(DConfig["NameDir"]);
+        if (Datalogger == null)
+          Datalogger = IConLabCar.Experiment.DataLoggers.CreateDatalogger(DConfig["NameDir"]);
+      }
+      catch (Exception)
+      {
+        Console.WriteLine("Error inicial Logger");
+        Datalogger = null;
+      }
+
+      if (Datalogger != null)
+      {
+        List<string> _lsPath = new List<string>();
+        List<string> _lsTask = new List<string>();
+        foreach (var item in _oneStep.LoggerNamePole)
         {
           if (DTask.ContainsKey(item))
           {
-            Datalogger.AddScalarRecordingSignal(DTask[item].PathTask, "");
+            _lsPath.Add(DTask[item].PathTask);
+            _lsTask.Add(DTask[item].NameInLabCar);
+            //              Datalogger.AddScalarRecordingSignal(DTask[item].PathTask, "");
           }
-          else if(DParameterNew.ContainsKey(item))
+          else if (DParameterNew.ContainsKey(item))
           {
-            Datalogger.AddScalarRecordingSignal(DParameterNew[item].Signal, "");
+            _lsPath.Add(DParameterNew[item].Signal);
+            _lsTask.Add("");
+
+            //              Datalogger.AddScalarRecordingSignal(DParameterNew[item].Signal, "");
+            //              Datalogger.AddScalarRecordingSignal(DParameterNew[item].Signal, "");
           }
         }
-        catch (Exception)
+        if (_lsPath.Count > 0) 
         {
-          Console.WriteLine($" Проблема с полем {item}");            
+          try
+          {
+            Datalogger.AddScalarRecordingSignals(_lsPath.ToArray(), _lsTask.ToArray());
+          }
+          catch (Exception)
+          {
+            Console.WriteLine("Ошибка записи в Datalogger сигналов ");
+          }
         }
+
+        Datalogger = IConLabCar.Experiment.DataLoggers.GetDataloggerByName(DConfig["NameDir"]);
+        Datalogger.ConfigureRecordingFile(DConfig["FileLogger"], "MDF", true, 3);  //ASCII "MDF"
+        Datalogger.ApplyConfiguration();
+        Datalogger.Activate();
       }
-      Datalogger = IConLabCar.Experiment.DataLoggers.GetDataloggerByName(DConfig["NameDir"]);
-      Datalogger.ConfigureRecordingFile(DConfig["FileLogger"], "MDF", true, 2 );
-      Datalogger.ApplyConfiguration();
-      Datalogger.Activate();
+
     }
 
     if (LsStOneStep.Count < 2)
@@ -276,9 +306,12 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
 
     int _numSten = 0;
     Console.WriteLine($"  -  Start TEST - {NameStrateg} ");
-    foreach (var _oneStep in LsStOneStep)
+    IsRezulta = true;
+
+    while(IsRezulta && _numSten < LsStOneStep.Count)
     {
-      Console.WriteLine($"  -  Step -> {_numSten} ");
+      var _oneStep = LsStOneStep[_numSten];
+      Console.WriteLine($"  -  Step -> {_oneStep.StoneName} ");
 
       _getDanLabCar(_oneStep);
       _setDanLabCar(_oneStep);
@@ -289,7 +322,7 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       }
 
       if(_isLogger && _oneStep.StCommand.ContainsKey("logger") && (_oneStep.StCommand["logger"] == "start"))
-        Datalogger.Start();
+        Datalogger?.Start();
       
 
       if (_oneStep.LIfOr.Count > 0)
@@ -297,7 +330,8 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
         if (!_ifOrDanLabCar(_oneStep))
         {
           Console.WriteLine("-- ==>  Test failed (ifOr не прошел) ((((( ----");
-          break;
+          IsRezulta = false;
+          continue;
         }
       }
 
@@ -306,25 +340,36 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
         if (!_ifDanLabCar(_oneStep))
         {
           Console.WriteLine("-- ==>  Test failed (if не прошел) ((((( ----");
-          break;
+          IsRezulta = false;
+          continue;
         }
       }
 
       if (_oneStep.LResult.Count > 0)
       {
         if (_rezDanLabCar(_oneStep))
-            Console.WriteLine("-- !!!!  Test went well !!!!");
+        {
+          Console.WriteLine("-- !!!!  Test went well !!!!");
+        }
         else
-            Console.WriteLine("-- ==>  Test failed ((((( ----");
+        { 
+          Console.WriteLine("-- ==>  Test failed ((((( ----");
+          IsRezulta = false;
+          continue;
+        }
       }
 
       if (_isLogger && _oneStep.StCommand.ContainsKey("logger") && (_oneStep.StCommand["logger"] == "end"))
-        Datalogger.Stop();
+        Datalogger?.Stop();
 
       _numSten += 1;
 
     }
 
+    if (IsRezulta)
+      Console.WriteLine("-- !!!!  Test Прошел !!!!");
+    else
+      Console.WriteLine("-- ==>  Test ERROR ((((( ----");
 
   }
 

@@ -95,6 +95,9 @@ public class ParserJsonSt: ParserJson
     {
       StOneStep stOne = new();
       var ee = JsonToDicStDyn(it.ToString());
+      if (ee == null) 
+        continue;
+      stOne.StoneName = ee.Keys.ToArray()[0];
       var vv1 = ee?[ee.Keys.ElementAt(0)];
       var vv2 = JsonToDicStDyn(vv1?.ToString());
 

@@ -6,11 +6,11 @@ public interface IStrategyDanJson
 {
   void InitializationJson(string pathdir = "");
 //  Dictionary<string, Parameter> DParameter { get; set; }
-  Dictionary<string, ParameterNew> DParameterNew { get; set; }
+  Dictionary<string, ParameterJson> DParameterNew { get; set; }
 //  Dictionary<string, DanOutput> DDanOutput { get; set; }
   Dictionary<string, DanOutputNew> DDanOutputNew { get; set; }
 //  Dictionary<string, Dictionary<string, Calibrat>> DCalibrat { get; set; }
-//  Dictionary<string, Dictionary<string, CalibratNew>> DCalibration { get; set; }
+//  Dictionary<string, Dictionary<string, CalibratJson>> DCalibration { get; set; }
   //  Dictionary<string, string> DPath { get; set; }
   //  Dictionary<string, LTask> DTask { get; set; }
   Dictionary<string, dynamic> DstParams { get; set; }
@@ -25,16 +25,8 @@ public class StrategyDanJson: IStrategyDanJson
 {
   #region ===> Data <===
   #region ==__ Public __==
-//  public Dictionary<string, Parameter> DParameter { get; set; }
-  public Dictionary<string, ParameterNew> DParameterNew { get; set; }
-//  public Dictionary<string, DanOutput> DDanOutput { get; set; }
+  public Dictionary<string, ParameterJson> DParameterNew { get; set; }
   public Dictionary<string, DanOutputNew> DDanOutputNew { get; set; }
-  //  public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat { get; set; }
-  //  public Dictionary<string, Dictionary<string, CalibratNew>> DCalibration { get; set; }
-
-  //  public Dictionary<string, string> DPath { get; set; }
-  //  public Dictionary<string, LTask> DTask { get; set; }
-//  public Dictionary<string, LabCarTaskName> DTaskLabCar { get; set; }
   public Dictionary<string, LabCarTaskName> DTask { get; set; }
   public Dictionary<string, dynamic> DstParams { get; set; }
   public Dictionary<string, dynamic> DstSetStart { get; set; }
@@ -52,18 +44,12 @@ public class StrategyDanJson: IStrategyDanJson
   public StrategyDanJson(string pathdir = "")
   {
     _pathdir = pathdir;
-//    DParameter = new Dictionary<string, Parameter>();
-//    DDanOutput = new Dictionary<string, DanOutput>();
-//    DCalibrat = new Dictionary<string, Dictionary<string, Calibrat>>();
-//    DPath = new Dictionary<string, string>();
     DConfig = new Dictionary<string, string>();
-//    DTask = new Dictionary<string, LTask>();
     DstParams = new Dictionary<string, dynamic>();
     DstSetStart = new Dictionary<string, dynamic>();
     LsStOneStep = new List<StOneStep>();
     DParamsStrategy = new Dictionary<string, dynamic>();
-//    DCalibration = new Dictionary<string, Dictionary<string, CalibratNew>>();
-    DParameterNew = new Dictionary<string, ParameterNew>();
+    DParameterNew = new Dictionary<string, ParameterJson>();
     DDanOutputNew = new Dictionary<string, DanOutputNew>();
     DCalibrationParams = new Dictionary<string, CalibrationParams>();
   }

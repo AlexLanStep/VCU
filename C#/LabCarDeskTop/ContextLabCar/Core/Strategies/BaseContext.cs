@@ -1,180 +1,113 @@
 ﻿
-using ContextLabCar.Core.Interface;
+using ContextLabCar.Core.Config;
 using ETAS.EE.Scripting;
-using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace ContextLabCar.Core.Strategies;
 
-public interface IStrategiesBasa
+public interface IBaseContext
 {
-  string NameStrateg { get; set; }
-  IConnectLabCar IConLabCar { get; set; }
-  void RunInit(string pathdir = "");
+  Dictionary<string, string> DConfig { get; set; }
+  //  Dictionary<string, dynamic> ParamsStrategy { get; set; }
+  bool IsResult { get; set; }
+  void Initialization(string pathdir);
   void RunTest();
-  bool IsRezulta { get; set; }
 
 }
-
-public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
+public class BaseContext: IBaseContext
 {
-  #region Dan
-  protected ConcurrentDictionary<string, ISignal> dMeasurement = new();
-  protected ConcurrentDictionary<string, ISignal> dParams = new();
-  public string NameStrateg { get; set; } = "";
-  public int MaxWaitRez { get; set; } = 10;
-  public IDataLogger Datalogger { get; set; }
-  public bool IsRezulta { get; set; }
-  private bool _isLogger = false;
-  #endregion
+  #region Data
+  public bool IsResult { get; set; }
 
-  public StrategiesBasa(IConnectLabCar iConLabCar)
+  public Dictionary<string, string> DConfig { get; set; }
+
+  public Dictionary<string, dynamic> ParamsStrategy { get; set; }
+  private List<IStOneStepNew> LsStOneStep = new List<IStOneStepNew>();
+
+  private Dictionary<string, string> PathLabCar { get; set; } = new Dictionary<string, string>();
+
+  #endregion
+  private IConnectLabCar _iConLabCar;
+  public BaseContext(IConnectLabCar iConLabCar)
   {
-    IConLabCar = iConLabCar;
-    _isLogger = true;
-    IsRezulta = true;
+    _iConLabCar = iConLabCar;
+    IsResult = true;
+    DConfig = new Dictionary<string, string>();
   }
 
-  public IConnectLabCar IConLabCar { get; set; }
-
-  public void RunInit(string pathdir = "")
+    public void Initialization(string pathdir)
   {
-    InitializationJson(pathdir);
-    if (!(DConfig.TryGetValue("Workspace", out string vwork) && DConfig.TryGetValue("Experiment", out string vexpe)))
-      throw new MyException(" Error in json path Workspace or Experiment ", -5);
+    if (!Directory.Exists(pathdir))
+      throw new MyException($"Нет каталога - {pathdir}", -1);
 
     DConfig.Add("StDir", pathdir);
-    NameStrateg = DstParams["Name"];
-    MaxWaitRez = (int) (DstParams.TryGetValue("maxwait", out dynamic valRez) ? valRez : 10);
-    var _dirs =pathdir.Split('\\');
-    string _nameDir = _dirs[_dirs.Length - 1];
-    DConfig.Add("NameDir", _nameDir);
-    string _pathDan = pathdir + "\\Dan";
-    if(!Directory.Exists(_pathDan))
-        Directory.CreateDirectory(_pathDan);
-    DConfig.Add("FileLogger", _pathDan + "\\"+"Logger"+ _nameDir+"_.dat");
+    weFormThePaths();
+    var _parser = new ParserJsonNew(DConfig, ref LsStOneStep);
 
-    return;
+    foreach (var (key, value) in _parser.Config.PathLabCar)
+    {
+      if(DConfig.ContainsKey(key))
+        DConfig[key] = value;
+      else
+        DConfig.Add(key, value);
+    }
+
+    _parser.ParamsStrategy.Add("Logger", true);
+    ParamsStrategy = new Dictionary<string, dynamic>(_parser.ParamsStrategy);
+
+    Console.WriteLine("Грузим переменные для старта LabCar");
+    _iConLabCar.Initialization(DConfig["Workspace"], DConfig["Experiment"]);
     Console.WriteLine("Подключение к LabCar");
-    IConLabCar.Initialization(vwork, vexpe);
-    IConLabCar.Connect();
-    Console.WriteLine($"Инициализация параметров для стратегии {NameStrateg}:");
-    Console.WriteLine("  - Task");
-    inicialloadTask();
+    _iConLabCar.Connect();
+    Console.WriteLine($"Инициализация параметров для стратегии {ParamsStrategy["Name"]}:");
 
-    Console.WriteLine("  - Params");
-    inicialParamsDic();
+    _parser.LoadJsonStrategy();
 
-    Console.WriteLine("  - Файлы с калибровками");
-    if(DstSetStart.TryGetValue("loadfile", out dynamic valFiles))
-    {
-
-      foreach (var vparam in (List<string>) valFiles)
-      {
-        if (DCalibrationParams.ContainsKey(vparam))
-          inicialCalibrat(vparam);
-      }
-    }
-    else
-      Console.WriteLine(" Калибровок нет. ");
+    _parser.RunInicialDan();
 
   }
-
-  protected void inicialloadTask() 
-  { 
-
-    foreach(var (key, val) in DTask) 
-    {
-//      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement("TEST/Control_Signal/Value", "Acquisition");
-      ISignal measurement = IConLabCar.SignalSources.CreateMeasurement(val.PathTask, val.NameInLabCar);
-      dMeasurement.AddOrUpdate(key, measurement, (_, _) => measurement);
-    }
-
-  }
-  private string testFile(string fullPath)
+  private void weFormThePaths()
   {
-    string path = "";
-    if (!File.Exists(fullPath))
-      throw new MyException($"No file {path}, in inicialCalibrat", -1);
+    var pathdir = DConfig["StDir"];
+    var dirs = pathdir.Split('\\');
+    string nameDir = dirs[^1];
+    DConfig.Add("NameDir", nameDir);
 
-    return fullPath;
-  }
-  protected void inicialCalibrat(string file)
-  {
-    string fullPath = testFile(DCalibrationParams[file].PathFiles);
-    try
-    {
-      IConLabCar.Experiment.CalibrationController.LoadParameters(fullPath);
-    }
-    catch (Exception)
-    { Console.WriteLine($" - parameters are already set {fullPath}  "); }
+    string pathDan = pathdir + "\\Dan";
+    if (!Directory.Exists(pathDan))
+      Directory.CreateDirectory(pathDan);
+    DConfig.Add("FileLogger", pathDan + "\\" + "Logger" + nameDir + "_.dat");
 
-    try
-    { IConLabCar.Experiment.AddFile(fullPath); }
-    catch (Exception)
-    { Console.WriteLine($" the file is already written {fullPath} "); }
-  }
-  protected void inicialParams(string name, string path)
-  {
-    ISignal isig = IConLabCar.SignalSources.CreateParameter(path);
-    dParams.AddOrUpdate(name, isig, (_, _) => isig);
-  }
-  protected void inicialParamsDic()
-  {
-    foreach (var (key, val) in DParameterNew)
-    {
-      ISignal isig = IConLabCar.SignalSources.CreateParameter(val.Signal);
-      dParams.AddOrUpdate(key, isig, (_, _) => isig);
-    }
-  }
-  protected void activParamsCalibrat(string file)
-  {
-    string fullPath = testFile(file);
-    try
-    {
-      IConLabCar.Experiment.ActivateFile(fullPath, true);
-    }
-    catch (Exception)
-    {
-      Console.WriteLine($" Problem with activating options {fullPath}");
-    }
-  }
-  protected dynamic? getMeasurement(string name)
-  {
-    dynamic? rezult =null;
-    if(dMeasurement.ContainsKey(name))
-    {
-      IScalarValue valueObject = (IScalarValue) dMeasurement[name].GetValueObject();
-      rezult = valueObject.GetValue();
-    }
-    else
-      Console.WriteLine($" - Error in reading measurement {name}  ");
-    return rezult;
-  }
-  protected void setDan(string name, dynamic dsn)
-  {
-        var ValueObject = (IScalarValue)dParams[name].GetValueObject();
-        ValueObject.SetValue(dsn);
-        dParams[name].SetValueObject(ValueObject);
-  }
-  private void factivCalibr()
-  {
-    Console.WriteLine(" Активируем калибровки ");
-    if (DstSetStart.TryGetValue("activfile", out dynamic valFiles))
-    {
-      foreach (var itFile in (List<string>)valFiles)
-      {
-        if(DCalibrationParams.TryGetValue(itFile, out var dan))
-        {
-          activParamsCalibrat(dan.PathFiles);
-        }
-//        if (!DPath.TryGetValue(itFile, out string pathfull))
-//          throw new MyException($"Error in {itFile} StrategiesBasa.RunInit for inicialCalibrat({pathfull}) ", -2);
-      }
-    }
-    else
-      Console.WriteLine(" Нет указанных для активации калибровок. ");
+    var count = dirs.Length;
+    var dirs0 = dirs.ToList();
+    dirs0.RemoveAt(count - 1);
+    dirs0.RemoveAt(count - 2);
+    string pathConfigDir = string.Join("\\", dirs0.ToArray());
+    DConfig.Add("DirConfig", pathConfigDir);
+    DConfig.Add("DirCalibrat", pathConfigDir+ "\\Calibration");
+    if (!Directory.Exists(DConfig["DirCalibrat"]))
+        Directory.CreateDirectory(DConfig["DirCalibrat"]);
+            
 
   }
+  public void RunTest()
+  {
+    Console.WriteLine($"  -  Start TEST - {ParamsStrategy["Name"]} ");
+
+    var _numSten =0; 
+    while (IsResult && _numSten < LsStOneStep.Count)
+    {
+      IsResult = LsStOneStep[_numSten].Run(DConfig);
+
+      _numSten += 1;
+
+    }
+    Console.WriteLine(IsResult ? "-- !!!!  Test Прошел !!!!" : "-- ==>  Test ERROR ((((( ----");
+  }
+}
+
+/*
+ 
   public virtual void RunTest()
   {
     Dictionary<string, dynamic> _rezul = new();
@@ -372,6 +305,8 @@ public class StrategiesBasa : StrategyDanJson, IStrategiesBasa
       Console.WriteLine("-- ==>  Test ERROR ((((( ----");
 
   }
+ 
 
-}
 
+
+ */

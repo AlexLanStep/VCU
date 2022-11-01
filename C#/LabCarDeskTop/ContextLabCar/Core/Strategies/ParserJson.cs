@@ -8,8 +8,6 @@ public class ParserJson
   public Dictionary<string, Parameter> DParameter; 
   public Dictionary<string, DanOutput> DDanOutput; 
   public Dictionary<string, Dictionary<string, Calibrat>> DCalibrat; 
-//  public Dictionary<string, string>? DPath; 
-//  public Dictionary<string, LTask> DTask; 
   public Dictionary<string, dynamic>? DstParams;
   public Dictionary<string, dynamic?> DsTsetStart;
   public List<StOneStep> LsStOneStep;
@@ -29,8 +27,6 @@ public class ParserJson
     DParameter = new Dictionary<string, Parameter>();
     DDanOutput = new Dictionary<string, DanOutput>();
     DCalibrat= new Dictionary<string, Dictionary<string, Calibrat>>();
-//    DPath = new Dictionary<string, string>(); 
-//    DTask = new Dictionary<string, LTask>(); 
     DstParams = new Dictionary<string, dynamic>(); 
     DsTsetStart = new Dictionary<string, dynamic?>();
     LsStOneStep = new List<StOneStep>();
