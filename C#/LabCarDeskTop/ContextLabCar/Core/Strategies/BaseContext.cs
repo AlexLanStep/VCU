@@ -10,7 +10,7 @@ public interface IBaseContext
   Dictionary<string, string> DConfig { get; set; }
   //  Dictionary<string, dynamic> ParamsStrategy { get; set; }
   bool IsResult { get; set; }
-  void Initialization(string pathdir);
+  void Initialization(string pathdir, bool islogLabCar=false);
   void RunTest();
 
 }
@@ -18,14 +18,11 @@ public class BaseContext: IBaseContext
 {
   #region Data
   public bool IsResult { get; set; }
-
   public Dictionary<string, string> DConfig { get; set; }
-
   public Dictionary<string, dynamic> ParamsStrategy { get; set; }
   private List<IStOneStepNew> LsStOneStep = new List<IStOneStepNew>();
-
   private Dictionary<string, string> PathLabCar { get; set; } = new Dictionary<string, string>();
-
+  private bool _islogLabCar;
   #endregion
   private IConnectLabCar _iConLabCar;
   public BaseContext(IConnectLabCar iConLabCar)
@@ -33,10 +30,12 @@ public class BaseContext: IBaseContext
     _iConLabCar = iConLabCar;
     IsResult = true;
     DConfig = new Dictionary<string, string>();
+    _islogLabCar = false;
   }
 
-    public void Initialization(string pathdir)
+  public void Initialization(string pathdir, bool islogLabCar = false)
   {
+    _islogLabCar = islogLabCar;
     if (!Directory.Exists(pathdir))
       throw new MyException($"Нет каталога - {pathdir}", -1);
 
@@ -62,6 +61,21 @@ public class BaseContext: IBaseContext
     Console.WriteLine($"Инициализация параметров для стратегии {ParamsStrategy["Name"]}:");
 
     _parser.LoadJsonStrategy();
+    _parser.ParamsStrategy.Add("Logger", _islogLabCar);
+    
+    string _reportFile = DConfig["StDir"] + "\\repoer.txt";
+    if (File.Exists(_reportFile))
+    {
+      var s = File.ReadAllText(_reportFile);
+      string[] ss = s.Split("Badly");
+      DConfig["Excellent"] = ss[0];
+      DConfig["Badly"] = ss[1];
+    }
+    else
+    {
+      DConfig.Add("Excellent", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично!");
+      DConfig.Add("Badly", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично!");
+    }
 
     _parser.RunInicialDan();
 
@@ -87,7 +101,11 @@ public class BaseContext: IBaseContext
     DConfig.Add("DirCalibrat", pathConfigDir+ "\\Calibration");
     if (!Directory.Exists(DConfig["DirCalibrat"]))
         Directory.CreateDirectory(DConfig["DirCalibrat"]);
-            
+
+    DConfig.Add("DirReport", pathConfigDir + "\\Report");
+    if (!Directory.Exists(DConfig["DirReport"]))
+      Directory.CreateDirectory(DConfig["DirReport"]);
+
 
   }
   public void RunTest()
@@ -98,7 +116,6 @@ public class BaseContext: IBaseContext
     while (IsResult && _numSten < LsStOneStep.Count)
     {
       IsResult = LsStOneStep[_numSten].Run(DConfig);
-
       _numSten += 1;
 
     }
@@ -107,6 +124,9 @@ public class BaseContext: IBaseContext
 }
 
 /*
+ * 
+      //      DConfig["Excellent"] = $"#Excellent# \n\r Стратегия {ParamsStrategy["Name"]} работает! Отлично!"
+      //      DConfig["Badly"] = $"#Excellent# \n\r Стратегия {ParamsStrategy["Name"]} работает! Отлично!"
  
   public virtual void RunTest()
   {

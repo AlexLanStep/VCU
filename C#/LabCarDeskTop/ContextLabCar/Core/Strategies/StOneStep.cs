@@ -50,7 +50,7 @@ public class StOneStep : IStOneStepNew
 
   public void LoadInitializationPosition(object d)
   {
-    if(d==null)
+    if (d == null)
       return; 
 
     var type1 = Regex.Replace(d.GetType().Name.ToLower(), @"[0-9]", "");
@@ -149,6 +149,7 @@ public class StOneStep : IStOneStepNew
   }
   public virtual bool TestDan()
   {
+    _isLogger = (bool)ParamsStrategy["isLogLabCar"];
     var bResult = true;
 
     int i = 0;

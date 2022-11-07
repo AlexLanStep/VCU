@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestContextLabCar": {
+      "commandName": "Project",
+      "commandLineArgs": "e:\\1.json"
+    }
+  }
+}
