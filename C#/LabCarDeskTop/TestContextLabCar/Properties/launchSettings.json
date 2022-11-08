@@ -2,7 +2,7 @@
   "profiles": {
     "TestContextLabCar": {
       "commandName": "Project",
-      "commandLineArgs": "e:\\1.json"
+      "commandLineArgs": "D:\\TestSystem\\Moto\\TStrateg0.json"
     }
   }
 }

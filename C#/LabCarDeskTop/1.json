@@ -1,0 +1,27 @@
+[
+  {
+    "Path": "D:\\TestSystem\\Moto\\Strategies\\St0",
+    "Repeat": 2,
+    "LabCarLog": "log"
+  },
+  {
+    "Path": "D:\\TestSystem\\Moto\\Strategies\\St1"
+  },
+  {
+    "Path": "D:\\TestSystem\\Moto\\Strategies\\St2",
+    "Repeat": 4
+  },
+  {
+    "Path": "D:\\TestSystem\\Moto\\Strategies\\St3",
+    "LabCarLog": "log"
+  },
+  {
+    "Path": "D:\\TestSystem\\Moto\\Strategies\\St4",
+    "Repeat": 5,
+    "LabCarLog": "log"
+  },
+  {
+    "Path": "D:\\TestSystem\\Moto\\Strategies\\St5",
+    "Repeat": 2
+  }
+]

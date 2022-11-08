@@ -61,20 +61,23 @@ public class BaseContext: IBaseContext
     Console.WriteLine($"Инициализация параметров для стратегии {ParamsStrategy["Name"]}:");
 
     _parser.LoadJsonStrategy();
-    _parser.ParamsStrategy.Add("Logger", _islogLabCar);
-    
+    if(_parser.ParamsStrategy.ContainsKey("Logger")) 
+        _parser.ParamsStrategy["Logger"]=_islogLabCar;
+    else
+        _parser.ParamsStrategy.Add("Logger", _islogLabCar);
+
     string _reportFile = DConfig["StDir"] + "\\repoer.txt";
     if (File.Exists(_reportFile))
     {
       var s = File.ReadAllText(_reportFile);
-      string[] ss = s.Split("Badly");
+      string[] ss = s.Split("#Badly#");
       DConfig["Excellent"] = ss[0];
       DConfig["Badly"] = ss[1];
     }
     else
     {
-      DConfig.Add("Excellent", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично!");
-      DConfig.Add("Badly", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично!");
+      DConfig.Add("Excellent", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично! \n\r");
+      DConfig.Add("Badly", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично! \n\r");
     }
 
     _parser.RunInicialDan();
@@ -115,7 +118,7 @@ public class BaseContext: IBaseContext
     var _numSten =0; 
     while (IsResult && _numSten < LsStOneStep.Count)
     {
-      IsResult = LsStOneStep[_numSten].Run(DConfig);
+      IsResult = LsStOneStep[_numSten].Run(DConfig, _islogLabCar);
       _numSten += 1;
 
     }

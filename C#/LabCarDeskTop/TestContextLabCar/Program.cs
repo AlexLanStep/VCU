@@ -85,7 +85,7 @@ internal class Program
       _txtReport += _txtReportLoc;
       i += 1;
     }
-    File.WriteAllText(_dirRepost + "\\good_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"), _txtReport);
+    File.WriteAllText(_dirRepost + "\\good_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".txt", _txtReport);
 
 
 

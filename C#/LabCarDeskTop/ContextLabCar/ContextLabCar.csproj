@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Reference Include="EE.Scripting.interfaces">
-      <HintPath>..\..\..\3.7\EE.Scripting.interfaces.dll</HintPath>
+      <HintPath>..\..\3.7\EE.Scripting.interfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
 

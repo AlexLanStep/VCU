@@ -15,7 +15,7 @@ public interface IStOneStepNew
   Dictionary<string, dynamic> SetPoints { get; set; }
   List<string> LoggerNamePole { get; set; }
   int TimeWait { get; set; }
-  bool Run(Dictionary<string, string> dConfig);
+  bool Run(Dictionary<string, string> dConfig, bool islog);
   void LoadInitializationPosition(object d);
   void LoadInitializationIf(List<string> list);
   Dictionary<string, dynamic> StCommand { get; set; }
@@ -149,7 +149,7 @@ public class StOneStep : IStOneStepNew
   }
   public virtual bool TestDan()
   {
-    _isLogger = (bool)ParamsStrategy["isLogLabCar"];
+    _isLogger = (bool)ParamsStrategy["Logger"];
     var bResult = true;
 
     int i = 0;
@@ -245,12 +245,17 @@ public class StOneStep : IStOneStepNew
   }
 
 
-  public bool Run(Dictionary<string, string> dConfig)
+  public bool Run(Dictionary<string, string> dConfig, bool islog)
   {
     this._dConfig= dConfig;
     MaxWaitRez = (int)ParamsStrategy["Maxwait"];
     waitCommand = 1000;
-    _isLogger = ParamsStrategy.ContainsKey("Logger")? ParamsStrategy["Logger"]:false; 
+    if(ParamsStrategy.ContainsKey("Logger"))
+        ParamsStrategy["Logger"]=islog;
+    else
+        ParamsStrategy.Add("Logger", islog);
+
+    _isLogger = ParamsStrategy["Logger"]; 
 
     bool isRezulta = true;
 
