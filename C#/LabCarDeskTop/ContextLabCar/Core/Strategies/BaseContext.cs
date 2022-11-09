@@ -12,7 +12,9 @@ public interface IBaseContext
   bool IsResult { get; set; }
   void Initialization(string pathdir, bool islogLabCar=false);
   void RunTest();
-
+  void ReStart();
+  void StartSimul();
+  void StopSimult();
 }
 public class BaseContext: IBaseContext
 {
@@ -32,6 +34,15 @@ public class BaseContext: IBaseContext
     DConfig = new Dictionary<string, string>();
     _islogLabCar = false;
   }
+    
+   public void ReStart()
+  {
+    StopSimult();
+    StartSimul();
+  }
+
+  public void StartSimul() =>_iConLabCar.StartSimulation();
+  public void StopSimult()=>_iConLabCar.StopSimulation();
 
   public void Initialization(string pathdir, bool islogLabCar = false)
   {
@@ -77,7 +88,7 @@ public class BaseContext: IBaseContext
     else
     {
       DConfig.Add("Excellent", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично! \n\r");
-      DConfig.Add("Badly", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично! \n\r");
+      DConfig.Add("Badly", $"Стратегия {_parser.ParamsStrategy["Name"]} не работает((! Опять бардак \n\r");
     }
 
     _parser.RunInicialDan();

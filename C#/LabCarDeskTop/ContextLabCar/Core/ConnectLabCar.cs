@@ -10,7 +10,9 @@ public interface IConnectLabCar
 
   void Initialization(string pathWorkspace, string pathExperimentEnvironment);
   void Connect();
-  public void DisConnect();
+  void DisConnect();
+  void StartSimulation();
+  public void StopSimulation();
 }
 
 public class ConnectLabCar: IConnectLabCar
@@ -58,6 +60,27 @@ public void Initialization(string pathWorkspace, string pathExperimentEnvironmen
 
   }
 
+  public void StartSimulation() 
+  {
+    try
+    {
+      SignalSources.StartSimulation();    // start simulation on the target
+    }
+    catch (Exception)
+    {
+    }
+  }
+  public void StopSimulation() 
+  { 
+    try
+    {
+      SignalSources.StopSimulation();
+    }
+    catch (Exception)
+    {
+    }
+
+  }
   public void DisConnect()
   {
     Experiment.Close();                 // close the Experiment

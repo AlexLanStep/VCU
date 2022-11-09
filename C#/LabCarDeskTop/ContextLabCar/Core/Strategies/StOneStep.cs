@@ -48,6 +48,13 @@ public class StOneStep : IStOneStepNew
     _isLogger = false;
   }
 
+  private void restartStrategy()
+  {
+    ContainerManager _container = ContainerManager.GetInstance();
+    IConnectLabCar connectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
+    connectLabCar.StopSimulation();
+    connectLabCar.StartSimulation();
+  }
   public void LoadInitializationPosition(object d)
   {
     if (d == null)
@@ -177,8 +184,8 @@ public class StOneStep : IStOneStepNew
     return bResult;
   }
 
-  public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.000001;  // ==
-  public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.000001;  // !=
+  public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.0001;  // ==
+  public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.0001;  // !=
   public virtual bool ResultGe(dynamic x0, dynamic x1) => x0 >= x1; // >= 
   public virtual bool ResultGt(dynamic x0, dynamic x1) => x0 > x1; // >
   public virtual bool ResultLe(dynamic x0, dynamic x1) => x0 <= x1; // <= 
@@ -247,6 +254,10 @@ public class StOneStep : IStOneStepNew
 
   public bool Run(Dictionary<string, string> dConfig, bool islog)
   {
+    if (ParamsStrategy.ContainsKey("restart"))
+      restartStrategy();
+
+    
     this._dConfig= dConfig;
     MaxWaitRez = (int)ParamsStrategy["Maxwait"];
     waitCommand = 1000;

@@ -17,6 +17,7 @@ public class MyArg
   public string Path { get; set; }
   public int Repeat { get; set; }
   public string LabCarLog { get; set; }
+  public string ReStart { get; set; }
 
 }
 internal class Program
@@ -48,7 +49,6 @@ internal class Program
 
     _container = ContainerManager.GetInstance();
     _container.LabCar.Resolve<IConnectLabCar>();
-//    _container.LabCar.Resolve<IStrategyDanJson>();
     var isRezulta = true;
     string _txtReport = "";
     string _dirRepost = "";
@@ -60,72 +60,38 @@ internal class Program
       int Repeat = it.Repeat > 0? it.Repeat:1;
       bool loggerCar = it.LabCarLog != null;
       string _txtReportLoc = "";
+      bool _restart = it.ReStart != null;
 
-      Console.WriteLine($"=========   Stratedy {i}   =======");
+      Console.WriteLine($"=========   Stratedy {i+1}   =======");
       for (int j = 0; j < Repeat; j++)
       {
         var testLab = _container.LabCar.Resolve<IBaseContext>();
+        if (_restart)
+          testLab.ReStart();
+
         testLab.Initialization(it.Path, loggerCar);
         testLab.RunTest();
         isRezulta = testLab.IsResult;
+        _dirRepost = testLab.DConfig["DirReport"];
+
         _txtReportLoc = isRezulta 
               ? testLab.DConfig["Excellent"] 
               : testLab.DConfig["Badly"];
-        _dirRepost= testLab.DConfig["DirReport"];
+
         if (!isRezulta)
         {
-          Console.WriteLine($" Error в стратегии {i+1} на {j+1} повторении ");
-          _txtReport += _txtReportLoc;
-          File.WriteAllText(_dirRepost+"\\error_"+DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"), _txtReport);
+          string ss = $" Error в стратегии {i + 1} на {j + 1} повторении ";
+          Console.WriteLine(ss);
+          _txtReport += _txtReportLoc + $"\n\r  {ss}  \n\r";
+          File.WriteAllText(_dirRepost+"\\error_"+DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".txt", _txtReport);
           Environment.Exit(-10);
         }
-//        DConfig["Excellent"] = ss[0];
-//        DConfig["Badly"] = ss[1];
       }
       _txtReport += _txtReportLoc;
       i += 1;
     }
     File.WriteAllText(_dirRepost + "\\good_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".txt", _txtReport);
-
-
-
-    //    const int nStartStrategy = 0;
-    //    const int nEndStrategy = 1;
-    //    var i = nStartStrategy;
-    //while (isRezulta && i< nEndStrategy)
-    //{
-    //  Console.WriteLine($"=========   Stratedy {i}   =======");
-    //  var testLab = _container.LabCar.Resolve<IBaseContext>();
-    //  testLab.Initialization(listDir.ElementAt(i));
-    //  testLab.RunTest();
-    //  isRezulta = testLab.IsResult;
-    //  i += 1;
-    //}
-
-
     Console.WriteLine("==== END === !!!! ");
   }
 }
 
-
-//var listDir = new List<string>()
-//      { @"D:\TestSystem\Moto\Strategies\St0",
-//        @"D:\TestSystem\Moto\Strategies\St1",
-//        @"D:\TestSystem\Moto\Strategies\St2",
-//        @"D:\TestSystem\Moto\Strategies\St3",
-//        @"D:\TestSystem\Moto\Strategies\St4",
-//        @"D:\TestSystem\Moto\Strategies\St5",
-//        @"D:\TestSystem\Moto\Strategies\St6",
-//        @"D:\TestSystem\Moto\Strategies\St7"
-//      };
-
-
-//_myArgs.Add(new MyArg() { Path = @"D:\TestSystem\Moto\Strategies\St0", Repeat = 2, LabCarLog = "log" });
-//_myArgs.Add(new MyArg() { Path = @"D:\TestSystem\Moto\Strategies\St1" });
-//_myArgs.Add(new MyArg() { Path = @"D:\TestSystem\Moto\Strategies\St2", Repeat = 4 });
-//_myArgs.Add(new MyArg() { Path = @"D:\TestSystem\Moto\Strategies\St3", LabCarLog = "log" });
-//_myArgs.Add(new MyArg() { Path = @"D:\TestSystem\Moto\Strategies\St4", Repeat = 5, LabCarLog = "log" });
-//_myArgs.Add(new MyArg() { Path = @"D:\TestSystem\Moto\Strategies\St5", Repeat = 2});
-
-//var s = JsonConvert.SerializeObject(_myArgs);
-//File.WriteAllText("E:\\1.json", s);
