@@ -48,13 +48,22 @@ public class StOneStep : IStOneStepNew
     _isLogger = false;
   }
 
-  private void restartStrategy()
+  private IConnectLabCar inicialCont()
   {
     ContainerManager _container = ContainerManager.GetInstance();
-    IConnectLabCar connectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
+    return _container.LabCar.Resolve<IConnectLabCar>();
+  
+  }
+  private void restartStrategy()
+  {
+    IConnectLabCar connectLabCar = inicialCont();
     connectLabCar.StopSimulation();
     connectLabCar.StartSimulation();
   }
+  private void simstart()=>  inicialCont().StartSimulation();
+  private void simstop()=> inicialCont().StopSimulation();
+
+
   public void LoadInitializationPosition(object d)
   {
     if (d == null)
@@ -192,7 +201,6 @@ public class StOneStep : IStOneStepNew
   public virtual bool ResultLt(dynamic x0, dynamic x1) => x0 < x1; // < 
 
 
-
   private void _getDanLabCar()
   {
     if (GetPoints.Count == 0) return;
@@ -254,9 +262,11 @@ public class StOneStep : IStOneStepNew
 
   public bool Run(Dictionary<string, string> dConfig, bool islog)
   {
-    if (ParamsStrategy.ContainsKey("restart"))
-      restartStrategy();
+    if (StCommand.TryGetValue("sim", out var val) && (val == "on"))
+      simstart();
 
+    if (StCommand.ContainsKey("restart"))
+      restartStrategy();
     
     this._dConfig= dConfig;
     MaxWaitRez = (int)ParamsStrategy["Maxwait"];
@@ -299,6 +309,9 @@ public class StOneStep : IStOneStepNew
           // ignored
         }
     }
+    if (StCommand.TryGetValue("sim", out var valsim) && (valsim == "off"))
+      simstop();
+
     return isRezulta;
   }
 

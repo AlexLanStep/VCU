@@ -1,4 +1,6 @@
 ﻿
+using ETAS.EE.Scripting;
+
 namespace ContextLabCar.Core;
 
 public interface IConnectLabCar

@@ -173,6 +173,22 @@ public class ParserJson
       if (vv2.TryGetValue("if", out dynamic valueif))
         stOneNew.LoadInitializationIf(JsonLsString(valueif.ToString() ?? string.Empty));
 
+      if (vv2.TryGetValue("restart", out dynamic valuerestart))
+      {
+        if(stOneNew.StCommand.ContainsKey("restart"))
+          stOneNew.StCommand["restart"] = (string)"";
+        else
+          stOneNew.StCommand.Add("restart", (string)"");
+      }
+      if (vv2.TryGetValue("sim", out dynamic valuesim))
+      {
+        if (stOneNew.StCommand.ContainsKey("sim"))
+          stOneNew.StCommand["sim"] = (string)valuesim;
+        else
+          stOneNew.StCommand.Add("sim", (string)valuesim);
+      }
+
+
       if (vv2.TryGetValue("loggerset", out dynamic valuelogset))
         stOneNew.LoggerNamePole = JsonLsString(valuelogset.ToString() ?? string.Empty);
 

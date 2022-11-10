@@ -65,6 +65,7 @@ public class BaseContext: IBaseContext
     _parser.ParamsStrategy.Add("Logger", true);
     ParamsStrategy = new Dictionary<string, dynamic>(_parser.ParamsStrategy);
 
+
     Console.WriteLine("Грузим переменные для старта LabCar");
     _iConLabCar.Initialization(DConfig["Workspace"], DConfig["Experiment"]);
     Console.WriteLine("Подключение к LabCar");
@@ -77,7 +78,7 @@ public class BaseContext: IBaseContext
     else
         _parser.ParamsStrategy.Add("Logger", _islogLabCar);
 
-    string _reportFile = DConfig["StDir"] + "\\repoer.txt";
+    string _reportFile = DConfig["StDir"] + "\\report.txt"; 
     if (File.Exists(_reportFile))
     {
       var s = File.ReadAllText(_reportFile);

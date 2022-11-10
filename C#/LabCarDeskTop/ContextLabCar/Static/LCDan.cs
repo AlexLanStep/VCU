@@ -125,6 +125,14 @@ public static class LCDan
   public static bool AddLogger(string nameDir, string nameDirDan, string[] signal, string[] task )
   {
     LoggerLabCar logger = new LoggerLabCar() {Name=nameDir, PathDirDan=nameDirDan };
+    try
+    {
+      IDataLoggerCollection _idlcol = (IDataLoggerCollection)_iconnect.Experiment.DataLoggers;
+      _idlcol.ClearConfiguration();
+    }
+    catch (Exception)
+    {
+    }
 
     logger.Datalogger = _iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
         if (logger.Datalogger == null)
@@ -133,8 +141,11 @@ public static class LCDan
         {
             try
             {
-                if(logger.Datalogger.State == EDataloggerState.Recording)
-                    logger.Datalogger.Deactivate();
+              _iconnect.Experiment.DataLoggers.RemoveDatalogger(logger.Datalogger);
+              logger.Datalogger = _iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
+
+              //if (logger.Datalogger.State == EDataloggerState.Recording)
+              //            logger.Datalogger.Deactivate();
             }
             catch (Exception)
             {
