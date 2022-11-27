@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<File xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Extension=".tad" TDC="ATCL Architecture File for Port usage" TDL="ATCL" Type="Test Architecture Description" Version="1.0">
-  <TestComponent Name="TC_PY_IdleController">
-    <Ports>
-      <Port Name="P_MA" Type="Type_ModelAccess_port" />
-    </Ports>
-  </TestComponent>
-</File>
