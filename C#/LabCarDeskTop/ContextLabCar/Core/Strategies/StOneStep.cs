@@ -22,7 +22,6 @@ public interface IStOneStepNew
 }
 
 
-
 public class StOneStep : IStOneStepNew
 {
   private delegate bool Dftest(dynamic x0, dynamic x1);

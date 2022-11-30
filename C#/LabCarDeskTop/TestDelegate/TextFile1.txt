@@ -1,0 +1,8 @@
+﻿[ "sas = Butt_Drive_State + 3", "ss11 = VCU_DesInvMode - 2 + sas", "ee1 = kx + (4* (sas + ss11) + sas) /10" ]
+
+1. Проверить наличие скобок
+2. Разложить на вложения
+ee1 = kx + (4* (sas + ss11) + sas) /10
+2.1. ee1 = kx + p0 /10  =>  p0=(4* (sas + ss11) + sas)
+2.2. p0 = 4* p1 + sas  =>  p1=(sas + ss11)
+-----------

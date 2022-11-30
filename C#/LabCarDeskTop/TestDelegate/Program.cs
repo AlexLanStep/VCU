@@ -1,14 +1,22 @@
 ﻿#define TestDanLabCar
 #define DataEmulation
 
+using ContextLabCar.Core;
+using ContextLabCar.Static;
+using DryIoc;
+using DryIoc.ImTools;
 using System;
 
+using System.Text.RegularExpressions;
 
 
 namespace TestDelegate // Note: actual namespace depends on the project name.
 {
+
   internal class Program
   {
+    private static ContainerManager _container = null!;
+
     static void TestType<T>(T signal)
     {
       string s = typeof(T).Name;
@@ -29,6 +37,27 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //}
 
     }
+    static void Main(string[] args)
+    {
+
+      OneElement oneElement = new OneElement("ee =(5+ ss11)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee + (10+8)/7");
+      oneElement.ConvertScobki(oneElement.CommandAri);
+
+//            var _arDeistv = new ArDeistv("ee =(5+ ss11)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee + (10+8)/7");
+//      _arDeistv.SetStr(_arDeistv.CommandRoot);
+
+
+      _container = ContainerManager.GetInstance();
+      IArifmetic _arifmetic = _container.LabCar.Resolve<IArifmetic>();
+      _arifmetic.LoadStr("ee =(5+ ss11)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee + (10+8)/7");
+
+      string s00 = "000";
+
+    }
+  }
+}
+
+/*
     static void Main(string[] args)
     {
       string s00 = "000";
@@ -70,5 +99,6 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       _test01.Run();
 
     }
-  }
-}
+ 
+ 
+ */
