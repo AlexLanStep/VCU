@@ -16,9 +16,11 @@ global using Newtonsoft.Json.Linq;
 
 
 global using ContextLabCar.Core;
+global using ContextLabCar.Core.Arif;
 global using ContextLabCar.Core.Config;
 global using ContextLabCar.Core.Interface;
 global using ContextLabCar.Core.Strategies;
+
 
 global using DryIoc;
 global using DryCont = DryIoc.Container;

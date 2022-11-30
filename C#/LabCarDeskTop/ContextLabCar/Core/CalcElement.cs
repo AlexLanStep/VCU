@@ -1,8 +1,12 @@
-﻿using DryIoc.ImTools;
+﻿using ContextLabCar.Static;
+using DryIoc.ImTools;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -13,18 +17,9 @@ public interface ICalcElement
 }
 public class CalcElement: ICalcElement
 {
-  #region pattern
-  private readonly string _patternPlusMin = @"[\+\-]";
-  private readonly string _patternUmnDiv = @"[\*\/]";
-  private readonly string _patternDestv = @"[\+\-\*\/]";
-  private readonly string _patternLifet = @"\(";
-  private readonly string _patternRite = @"\)";
-  private readonly string _patternScobki = @"[\(\)]";
-  #endregion
-
-  private List<(int, int)> xScop = new();
-  public Dictionary<string, string> DComands { get; set; }
-  public OneElement oneElement { get; set; }
+  public string BasaCommanda { get; set; }
+//  public Dictionary<string, string> DComands { get; set; }
+//  public OneElement oneElement { get; set; }
 
   private readonly string _nameTree = "__#";
   private int _indexCom = 0;
@@ -33,16 +28,17 @@ public class CalcElement: ICalcElement
   {
     _nameTree = _nameTree+name;
 
-    DComands = new Dictionary<string, string>();
+//    DComands = new Dictionary<string, string>();
   }
 
   public void CaclScobki(string scobki)
   {
-    DComands.Clear();
-    while (IsScobki(scobki).Item1)
+    BasaCommanda = scobki;
+//    DComands.Clear();
+    while (StArithmetic.IsScobki(scobki).Item1)
     {
       var _st0 = scobki;
-      scobkiX(scobki);
+      var xScop = StArithmetic.ScobkiX(scobki);
 
       if (xScop.Count <= 0)
         continue;
@@ -53,45 +49,37 @@ public class CalcElement: ICalcElement
       var _nameTreeX = _nameTree + _indexCom;
       _st0 = _st0.Replace(ssx, _nameTreeX);
       ssx = ssx.Replace("(", "").Replace(")", "");
-      DComands.Add(_nameTreeX, ssx);
+//      DComands.Add(_nameTreeX, ssx);
+      
+      var _s00 = _nameTreeX + "=" + ssx;
+      var cv = new CVariable(_s00);
+      if(!cv.IsValue)
+        StArithmetic.DVarCommand.AddOrUpdate(_nameTreeX, cv, (_, _)=>cv);
+
       xScop.RemoveAt(0);
       scobki = _st0;
       _indexCom++;
     }
+    BasaCommanda = scobki;
   }
 
-  private Func<string, string, (bool, int)> _f00 = (s0, s1) =>
+  public void ReplaseSimvolDan()
   {
-    int count = Regex.Matches(s0, s1, RegexOptions.IgnoreCase).Count;
-    return (count > 0, count);
-  };
+    var _keyVal = StArithmetic.DVarCommand.Where(_z=>_z.Value.IsValue==true)
+          .Select(x=>new {x.Key, x.Value.Value }).ToList();
 
-  public (bool, int) IsScobki(string str) => _f00(str, _patternScobki);
-  public (bool, int) IsDestv(string str) => _f00(str, _patternDestv);
-  public (bool, int) IsPlusMin(string str) => _f00(str, _patternPlusMin);
-  public (bool, int) IsUmnDiv(string str) => _f00(str, _patternUmnDiv);
-  private void scobkiX(string _str0)
-  {
-    var _newSig = _str0;
-    var xl = Regex.Matches(_newSig, _patternLifet, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
-    var xr = Regex.Matches(_newSig, _patternRite, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
-    var countnewSig = _newSig.Length;
+    Dictionary<string, string> _d= new();
+    foreach (var item in _keyVal)
+      _d.Add(item.Key, ((string)Convert.ToString(item.Value)).Replace(',', '.'));
 
-    xScop.Clear();
-
-    while (xr.Count > 0)
+    foreach (var it in _d)
     {
-      int _valR = xr.ElementAt(0);
-      int _valL = xl.Where(x => x < _valR).ToList().Max();
-      xScop.Add((_valL, _valR));
-      xl.Remove(_valL);
-      xr.Remove(_valR);
-    }
-
+      bool b = BasaCommanda.Contains(it.Key);
+      
+        BasaCommanda.FirstOrDefault()
+    }    
 
   }
-
-
 
 }
 //OneElement

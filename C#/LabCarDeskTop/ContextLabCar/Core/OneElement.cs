@@ -59,6 +59,7 @@ public class OneElement : IOneElement
   public void ConvertScobki(string _commandScobki)
   {
     _calcElement.CaclScobki(_commandScobki);
+    _calcElement.ReplaseSimvolDan();
   }
 
 }
