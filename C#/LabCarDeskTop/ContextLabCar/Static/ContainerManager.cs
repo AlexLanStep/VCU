@@ -12,6 +12,7 @@ public class ContainerManager
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
     LabCar.Register<IBaseContext, BaseContext>();
     LabCar.Register<IStOneStepNew, StOneStep>();
+    LabCar.Register<IArifmetic, Arifmetic>();
   }
 
   public static ContainerManager GetInstance() => Lazy.Value;
