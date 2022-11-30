@@ -12,21 +12,21 @@ public class LoggerLabCar
 				{
 						Datalogger?.Start();
 				}
-				catch (Exception)
-				{
-				}
-		}
+    catch (Exception)
+    {
+      // ignored
+    }
+  }
   public void Stop()
   {
 				try
 				{
 						Datalogger?.Stop();
 				}
-				catch (Exception)
-				{
-				}
-		}
-//  public void AddScalarRecordingSignals(string[] name, string[] tasks) => Datalogger?.AddScalarRecordingSignals(name, tasks);
-//  public void AddScalarSignals(string name, string tasks) { }
+    catch (Exception)
+    {
+      // ignored
+    }
+  }
 
 }

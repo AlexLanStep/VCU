@@ -1,12 +1,4 @@
-﻿using ContextLabCar.Static;
-using DryIoc.ImTools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContextLabCar.Core.Arif;
+﻿namespace ContextLabCar.Core.Arif;
 
 public class CVariable
 {
@@ -27,7 +19,7 @@ public class CVariable
     IsValue = CalcCommand(StValue);
   }
 
-  public CVariable(string name, dynamic dan)
+  public CVariable(string name, dynamic? dan)
   {
     Name = name;
     Value = dan;
@@ -44,35 +36,31 @@ public class CVariable
     if (StArithmetic.IsNoPlusMin(stcomand).Item1)
       return false;
 
-    var _arr = StArithmetic.ArrayPlusMin(stcomand);
-    if (_arr == null) return false;
-    var _arrSp = StArithmetic.SplitPlusMin(stcomand);
-    dynamic[] _xd = new dynamic[_arrSp.Count];
+    var arr = StArithmetic.ArrayPlusMin(stcomand);
+    if (arr == null) return false;
+    var arrSp = StArithmetic.SplitPlusMin(stcomand);
+    var xd = new dynamic?[arrSp.Count];
 
-    bool _is = true;
-    int i = 0;
-    while (_is && (i < _arrSp.Count))
+    var @is = true;
+    var i = 0;
+    while (@is && (i < arrSp.Count))
     {
-      _xd[i] = StArithmetic.ReadDanExperiment(_arrSp[i]);
-      _is &= _xd[i] != null;
+      xd[i] = StArithmetic.ReadDanExperiment(arrSp[i]);
+      @is &= xd[i] != null;
       i++;
     }
 
-    if(!_is) return false;
+    if(!@is) return false;
 
-    dynamic _z = _xd[0];
-    for (int i1 = 1; i1 < _xd.Length; i1++)
-      _z = StArithmetic.CalcElemrnt(_z, _xd[i1], _arr[i1-1]);
+    var z = xd[0];
+    for (var i1 = 1; i1 < xd.Length; i1++)
+      z = StArithmetic.CalcElemrnt(z, xd[i1], arr[i1-1]);
 
-    int kk = 1;
-    if (_z != null)
-    {
-      CVariable _cv = new CVariable(Name, _z);
-      StArithmetic.DVarCommand.AddOrUpdate(_cv.Name, _cv, (_, _) => _cv);
-    }
+    if (z == null) return false;
+
+    var cv = new CVariable(Name, z);
+    StArithmetic.DVarCommand.AddOrUpdate(cv.Name, cv, (_, _) => cv);
 
     return true;
   }
-
-  
 }

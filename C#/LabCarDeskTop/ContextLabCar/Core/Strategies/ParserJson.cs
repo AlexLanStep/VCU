@@ -1,6 +1,4 @@
 ﻿
-using ContextLabCar.Static;
-
 namespace ContextLabCar.Core.Strategies;
 
 public class ParserJson
@@ -57,18 +55,18 @@ public class ParserJson
 
     Console.WriteLine("  - Task");
 #pragma warning disable CS8602
-    var ls0 = LCDan.AddTaskRange(Config.LabCarTask);
+    var ls0 = LcDan.AddTaskRange(Config.LabCarTask);
 #pragma warning restore CS8602
     if (ls0 != null && ls0.Any()) WriteError(ls0, "Task");
 
     Console.WriteLine("  - Params");
-    var ls1 = LCDan.AddParamsRange(Config.Parameters);
+    var ls1 = LcDan.AddParamsRange(Config.Parameters);
     if (ls1 != null && ls1.Any()) WriteError(ls1, "Parameters");
 
 
     Console.WriteLine("  - Файлы с калибровками");
     foreach (var (key,value) in Config.Calibration)
-      LCDan.AddCalibration(key, new Calibrations(_connect, _dConfig["DirCalibrat"], key, value));
+      LcDan.AddCalibration(key, new Calibrations(_connect, _dConfig["DirCalibrat"], key, value));
   }
 
   private void LoadJsonConfig()

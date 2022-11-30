@@ -22,8 +22,7 @@ public class BaseContext: IBaseContext
   public bool IsResult { get; set; }
   public Dictionary<string, string> DConfig { get; set; }
   public Dictionary<string, dynamic> ParamsStrategy { get; set; }
-  private List<IStOneStepNew> LsStOneStep = new List<IStOneStepNew>();
-  private Dictionary<string, string> PathLabCar { get; set; } = new Dictionary<string, string>();
+  private List<IStOneStepNew> _lsStOneStep = new List<IStOneStepNew>();
   private bool _islogLabCar;
   #endregion
   private IConnectLabCar _iConLabCar;
@@ -52,9 +51,9 @@ public class BaseContext: IBaseContext
 
     DConfig.Add("StDir", pathdir);
     weFormThePaths();
-    var _parser = new ParserJson(DConfig, ref LsStOneStep);
+    var parser = new ParserJson(DConfig, ref _lsStOneStep);
 
-    foreach (var (key, value) in _parser.Config.PathLabCar)
+    foreach (var (key, value) in parser.Config.PathLabCar)
     {
       if(DConfig.ContainsKey(key))
         DConfig[key] = value;
@@ -62,8 +61,8 @@ public class BaseContext: IBaseContext
         DConfig.Add(key, value);
     }
 
-    _parser.ParamsStrategy.Add("Logger", true);
-    ParamsStrategy = new Dictionary<string, dynamic>(_parser.ParamsStrategy);
+    parser.ParamsStrategy?.Add("Logger", true);
+    ParamsStrategy = new Dictionary<string, dynamic>(parser.ParamsStrategy);
 
 
     Console.WriteLine("Грузим переменные для старта LabCar");
@@ -72,27 +71,27 @@ public class BaseContext: IBaseContext
     _iConLabCar.Connect();
     Console.WriteLine($"Инициализация параметров для стратегии {ParamsStrategy["Name"]}:");
 
-    _parser.LoadJsonStrategy();
-    if(_parser.ParamsStrategy.ContainsKey("Logger")) 
-        _parser.ParamsStrategy["Logger"]=_islogLabCar;
+    parser.LoadJsonStrategy();
+    if(parser.ParamsStrategy.ContainsKey("Logger")) 
+        parser.ParamsStrategy["Logger"]=_islogLabCar;
     else
-        _parser.ParamsStrategy.Add("Logger", _islogLabCar);
+        parser.ParamsStrategy.Add("Logger", _islogLabCar);
 
-    string _reportFile = DConfig["StDir"] + "\\report.txt"; 
-    if (File.Exists(_reportFile))
+    var reportFile = DConfig["StDir"] + "\\report.txt"; 
+    if (File.Exists(reportFile))
     {
-      var s = File.ReadAllText(_reportFile);
-      string[] ss = s.Split("#Badly#");
+      var s = File.ReadAllText(reportFile);
+      var ss = s.Split("#Badly#");
       DConfig["Excellent"] = ss[0];
       DConfig["Badly"] = ss[1];
     }
     else
     {
-      DConfig.Add("Excellent", $"Стратегия {_parser.ParamsStrategy["Name"]} работает! Отлично! \n\r");
-      DConfig.Add("Badly", $"Стратегия {_parser.ParamsStrategy["Name"]} не работает((! Опять бардак \n\r");
+      DConfig.Add("Excellent", $"Стратегия {parser.ParamsStrategy["Name"]} работает! Отлично! \n\r");
+      DConfig.Add("Badly", $"Стратегия {parser.ParamsStrategy["Name"]} не работает((! Опять бардак \n\r");
     }
 
-    _parser.RunInicialDan();
+    parser.RunInicialDan();
 
   }
   private void weFormThePaths()
@@ -127,221 +126,14 @@ public class BaseContext: IBaseContext
   {
     Console.WriteLine($"  -  Start TEST - {ParamsStrategy["Name"]} ");
 
-    var _numSten =0; 
-    while (IsResult && _numSten < LsStOneStep.Count)
+    var numSten =0; 
+    while (IsResult && numSten < _lsStOneStep.Count)
     {
-      IsResult = LsStOneStep[_numSten].Run(DConfig, _islogLabCar);
-      _numSten += 1;
+      IsResult = _lsStOneStep[numSten].Run(DConfig, _islogLabCar);
+      numSten += 1;
 
     }
     Console.WriteLine(IsResult ? "-- !!!!  Test Прошел !!!!" : "-- ==>  Test ERROR ((((( ----");
   }
 }
 
-/*
- * 
-      //      DConfig["Excellent"] = $"#Excellent# \n\r Стратегия {ParamsStrategy["Name"]} работает! Отлично!"
-      //      DConfig["Badly"] = $"#Excellent# \n\r Стратегия {ParamsStrategy["Name"]} работает! Отлично!"
- 
-  public virtual void RunTest()
-  {
-    Dictionary<string, dynamic> _rezul = new();
-    void _getDanLabCar(StOneStep _oneStep)
-    {
-      if (_oneStep.GetPoints.Count == 0)
-        return;
-
-      Console.WriteLine(" _ Читаем переменные _");
-      foreach (var (keyGet, valGet) in _oneStep.GetPoints)
-      {
-        var _xx0 = getMeasurement(keyGet);
-        _oneStep.AddGetPoints(keyGet, _xx0);
-        if(_rezul.ContainsKey(keyGet))
-            _rezul[keyGet]=_xx0;
-        else
-            _rezul.Add(keyGet,_xx0);
-        Console.WriteLine($" {keyGet} = {_xx0}");
-      }
-    }
-    void _setDanLabCar(StOneStep _oneStep)
-    {
-      if (_oneStep.SetPoints.Count == 0)
-        return;
-
-      Console.WriteLine(" _ Пишем переменные _");
-
-      foreach (var (keySet, valSet) in _oneStep.SetPoints)
-      {
-        setDan(keySet, valSet);
-      }
-
-    }
-    bool _rezDanLabCar(StOneStep oneStep)
-    {
-      var rez = false;
-      var dt0 = DateTime.Now;
-      while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
-      {
-        _getDanLabCar(oneStep);
-        rez = oneStep.TestRez(_rezul);
-        if(!rez) Thread.Sleep(1000);
-      }
-      return rez;
-    }
-    bool _ifDanLabCar(StOneStep oneStep)
-    {
-      var rez = false;
-      var dt0 = DateTime.Now;
-      while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
-      {
-        _getDanLabCar(oneStep);
-        rez = oneStep.TestIf(_rezul);
-        if (!rez) Thread.Sleep(1000);
-      }
-      return rez;
-    }
-    bool _ifOrDanLabCar(StOneStep oneStep)
-    {
-      var rez = false;
-      var dt0 = DateTime.Now;
-      while ((!rez) && ((DateTime.Now - dt0).Seconds <= MaxWaitRez))
-      {
-        _getDanLabCar(oneStep);
-        rez = oneStep.TestIfOr(_rezul);
-        if (!rez) Thread.Sleep(1000);
-      }
-      return rez;
-    }
-    void setPathInLogger(StOneStep  _oneStep)
-    {
-      try
-      {
-        Datalogger = IConLabCar.Experiment.DataLoggers.GetDataloggerByName(DConfig["NameDir"]);
-        if (Datalogger == null)
-          Datalogger = IConLabCar.Experiment.DataLoggers.CreateDatalogger(DConfig["NameDir"]);
-      }
-      catch (Exception)
-      {
-        Console.WriteLine("Error inicial Logger");
-        Datalogger = null;
-      }
-
-      if (Datalogger != null)
-      {
-        List<string> _lsPath = new List<string>();
-        List<string> _lsTask = new List<string>();
-        foreach (var item in _oneStep.LoggerNamePole)
-        {
-          if (DTask.ContainsKey(item))
-          {
-            _lsPath.Add(DTask[item].PathTask);
-            _lsTask.Add(DTask[item].NameInLabCar);
-            //              Datalogger.AddScalarRecordingSignal(DTask[item].PathTask, "");
-          }
-          else if (DParameterNew.ContainsKey(item))
-          {
-            _lsPath.Add(DParameterNew[item].Signal);
-            _lsTask.Add("");
-
-            //              Datalogger.AddScalarRecordingSignal(DParameterNew[item].Signal, "");
-            //              Datalogger.AddScalarRecordingSignal(DParameterNew[item].Signal, "");
-          }
-        }
-        if (_lsPath.Count > 0) 
-        {
-          try
-          {
-            Datalogger.AddScalarRecordingSignals(_lsPath.ToArray(), _lsTask.ToArray());
-          }
-          catch (Exception)
-          {
-            Console.WriteLine("Ошибка записи в Datalogger сигналов ");
-          }
-        }
-
-        Datalogger = IConLabCar.Experiment.DataLoggers.GetDataloggerByName(DConfig["NameDir"]);
-        Datalogger.ConfigureRecordingFile(DConfig["FileLogger"], "MDF", true, 3);  //ASCII "MDF"
-        Datalogger.ApplyConfiguration();
-        Datalogger.Activate();
-      }
-
-    }
-
-    if (LsStOneStep.Count < 2)
-      throw new MyException("Not a complete strategy StrategiesBasa.RunTest() ", -2);
-
-    factivCalibr();
-
-    int _numSten = 0;
-    Console.WriteLine($"  -  Start TEST - {NameStrateg} ");
-    IsRezulta = true;
-
-    while(IsRezulta && _numSten < LsStOneStep.Count)
-    {
-      var _oneStep = LsStOneStep[_numSten];
-      Console.WriteLine($"  -  Step -> {_oneStep.StoneName} ");
-
-      _getDanLabCar(_oneStep);
-      _setDanLabCar(_oneStep);
-
-      if(_isLogger && _oneStep.LoggerNamePole.Count> 0)
-      {
-        setPathInLogger(_oneStep);
-      }
-
-      if(_isLogger && _oneStep.StCommand.ContainsKey("logger") && (_oneStep.StCommand["logger"] == "start"))
-        Datalogger?.Start();
-      
-
-      if (_oneStep.LIfOr.Count > 0)
-      {
-        if (!_ifOrDanLabCar(_oneStep))
-        {
-          Console.WriteLine("-- ==>  Test failed (ifOr не прошел) ((((( ----");
-          IsRezulta = false;
-          continue;
-        }
-      }
-
-      if (_oneStep.LIf.Count > 0)
-      {
-        if (!_ifDanLabCar(_oneStep))
-        {
-          Console.WriteLine("-- ==>  Test failed (if не прошел) ((((( ----");
-          IsRezulta = false;
-          continue;
-        }
-      }
-
-      if (_oneStep.LResult.Count > 0)
-      {
-        if (_rezDanLabCar(_oneStep))
-        {
-          Console.WriteLine("-- !!!!  Test went well !!!!");
-        }
-        else
-        { 
-          Console.WriteLine("-- ==>  Test failed ((((( ----");
-          IsRezulta = false;
-          continue;
-        }
-      }
-
-      if (_isLogger && _oneStep.StCommand.ContainsKey("logger") && (_oneStep.StCommand["logger"] == "end"))
-        Datalogger?.Stop();
-
-      _numSten += 1;
-
-    }
-
-    if (IsRezulta)
-      Console.WriteLine("-- !!!!  Test Прошел !!!!");
-    else
-      Console.WriteLine("-- ==>  Test ERROR ((((( ----");
-
-  }
- 
-
-
-
- */

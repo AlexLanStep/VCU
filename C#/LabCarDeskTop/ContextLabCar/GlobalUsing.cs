@@ -14,12 +14,12 @@ global using ETAS.EE.Scripting;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Linq;
 
-
 global using ContextLabCar.Core;
 global using ContextLabCar.Core.Arif;
 global using ContextLabCar.Core.Config;
 global using ContextLabCar.Core.Interface;
 global using ContextLabCar.Core.Strategies;
+global using ContextLabCar.Static;
 
 
 global using DryIoc;

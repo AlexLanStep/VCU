@@ -1,26 +1,27 @@
 ﻿
 namespace ContextLabCar.Static;
 
-public static class LCDan
+public static class LcDan
 {
-  private static readonly ContainerManager _container;
+  // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+  private static readonly ContainerManager Container;
   private static ConcurrentDictionary<string, TaskLabCar> _dTaskLabCar = new();
   private static ConcurrentDictionary<string, ParameterNew> _dParameters = new();
   private static ConcurrentDictionary<string, Calibrations> _dCalibrats = new();
   private static ConcurrentDictionary<string, LoggerLabCar> _dLoggerLabCar = new();
 
-  private static IConnectLabCar _iconnect;
+  private static readonly IConnectLabCar Iconnect;
 
-  static LCDan()
+  static LcDan()
   {
-    _container = ContainerManager.GetInstance();
-    _iconnect = _container.LabCar.Resolve<IConnectLabCar>();
+    Container = ContainerManager.GetInstance();
+    Iconnect = Container.LabCar.Resolve<IConnectLabCar>();
   }
 
   #region ___ Task ___
   public static bool AddTask(string nameTask, string pathTask, string timeLabCar, string comment = "")
   {
-    var task = new TaskLabCar(_iconnect, pathTask, timeLabCar, comment);
+    var task = new TaskLabCar(Iconnect, pathTask, timeLabCar, comment);
     if (task.Measurement != null)
     {
       _dTaskLabCar.AddOrUpdate(nameTask, task, (_, _) => task);
@@ -32,7 +33,7 @@ public static class LCDan
 
   public static bool AddTask(string nameTask, TaskJsonLoad taskJson)
   {
-    var task = new TaskLabCar(_iconnect, nameTask, taskJson);
+    var task = new TaskLabCar(Iconnect, nameTask, taskJson);
     if (task.Measurement != null)
     {
       _dTaskLabCar.AddOrUpdate(nameTask, task, (_, _) => task);
@@ -55,7 +56,7 @@ public static class LCDan
   #region ___ Params ____
   public static bool AddParams(string nameParama, ParameterJson param)
   {
-    var parameter = new ParameterNew(_iconnect, nameParama, param);
+    var parameter = new ParameterNew(Iconnect, nameParama, param);
     if (parameter.SignalParams == null) return false;
     _dParameters.AddOrUpdate(nameParama, parameter, (_, _) => parameter);
     return true;
@@ -124,25 +125,27 @@ public static class LCDan
   #region ___ Logger ___
   public static bool AddLogger(string nameDir, string nameDirDan, string[] signal, string[] task )
   {
-    LoggerLabCar logger = new LoggerLabCar() {Name=nameDir, PathDirDan=nameDirDan };
+    var logger = new LoggerLabCar() {Name=nameDir, PathDirDan=nameDirDan };
     try
     {
-      IDataLoggerCollection _idlcol = (IDataLoggerCollection)_iconnect.Experiment.DataLoggers;
-      _idlcol.ClearConfiguration();
+      // ReSharper disable once RedundantCast
+      var idlcol = (IDataLoggerCollection)Iconnect.Experiment.DataLoggers;
+      idlcol.ClearConfiguration();
     }
     catch (Exception)
     {
+      // ignored
     }
 
-    logger.Datalogger = _iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
+    logger.Datalogger = Iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
         if (logger.Datalogger == null)
-            logger.Datalogger = _iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
+            logger.Datalogger = Iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
         else
         {
             try
             {
-              _iconnect.Experiment.DataLoggers.RemoveDatalogger(logger.Datalogger);
-              logger.Datalogger = _iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
+              Iconnect.Experiment.DataLoggers.RemoveDatalogger(logger.Datalogger);
+              logger.Datalogger = Iconnect.Experiment.DataLoggers.CreateDatalogger(logger.Name);
 
               //if (logger.Datalogger.State == EDataloggerState.Recording)
               //            logger.Datalogger.Deactivate();
@@ -156,7 +159,7 @@ public static class LCDan
     if (logger.Datalogger == null) return false;
 
     logger.Datalogger.AddScalarRecordingSignals(signal, task);
-    logger.Datalogger = _iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
+    logger.Datalogger = Iconnect.Experiment.DataLoggers.GetDataloggerByName(logger.Name);
     logger.Datalogger.ConfigureRecordingFile(logger.PathDirDan, "MDF", true, 3);
     logger.Datalogger.ApplyConfiguration();
     logger.Datalogger.Activate();
@@ -166,7 +169,7 @@ public static class LCDan
   }
 
   public static LoggerLabCar? GetLogger(string nameDir) =>
-    _dLoggerLabCar.TryGetValue(nameDir, out LoggerLabCar logger) ? logger : null;
+    _dLoggerLabCar.TryGetValue(nameDir, out var logger) ? logger : null;
 
   #endregion
 

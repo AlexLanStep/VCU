@@ -1,5 +1,4 @@
 ﻿
-using ETAS.EE.Scripting;
 
 namespace ContextLabCar.Core;
 
@@ -27,7 +26,9 @@ public class ConnectLabCar: IConnectLabCar
   private string _pathWorkspace;
   private string _pathExperimentEnvironment;
 
+#pragma warning disable CS8618
   public ConnectLabCar()
+#pragma warning restore CS8618
   {
     _pathWorkspace="";
     _pathExperimentEnvironment="";
@@ -70,6 +71,7 @@ public void Initialization(string pathWorkspace, string pathExperimentEnvironmen
     }
     catch (Exception)
     {
+      // ignored
     }
   }
   public void StopSimulation() 
@@ -80,8 +82,8 @@ public void Initialization(string pathWorkspace, string pathExperimentEnvironmen
     }
     catch (Exception)
     {
+      // ignored
     }
-
   }
   public void DisConnect()
   {

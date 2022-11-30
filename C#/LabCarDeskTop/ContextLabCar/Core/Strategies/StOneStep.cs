@@ -49,8 +49,8 @@ public class StOneStep : IStOneStepNew
 
   private IConnectLabCar inicialCont()
   {
-    ContainerManager _container = ContainerManager.GetInstance();
-    return _container.LabCar.Resolve<IConnectLabCar>();
+    var container = ContainerManager.GetInstance();
+    return container.LabCar.Resolve<IConnectLabCar>();
   
   }
   private void restartStrategy()
@@ -154,7 +154,7 @@ public class StOneStep : IStOneStepNew
     while ((!bResult) && (i < ls.Count))
     {
 
-      var x01 = (double) LCDan.GetTask(ls[i].Item1);
+      var x01 = (double) LcDan.GetTask(ls[i].Item1);
       double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
       var f0 = (Dftest)ls[i].Item3;
       bResult = bResult || f0(x01, x1);
@@ -179,7 +179,7 @@ public class StOneStep : IStOneStepNew
           break;
         case "Dftest":
         {
-          var x0 = (double) LCDan.GetTask(lsIf[i].Item1);
+          var x0 = (double) LcDan.GetTask(lsIf[i].Item1);
           double x1;
           double.TryParse(((string)lsIf[i].Item2).Replace('.', ','), out x1);
           bResult = bResult && ((Dftest)lsIf[i].Item3)(x0, x1);
@@ -204,7 +204,7 @@ public class StOneStep : IStOneStepNew
   {
     if (GetPoints.Count == 0) return;
     Console.WriteLine(" _ Вывод переменных _");
-    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LCDan.GetTask(x)}"));
+    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LcDan.GetTask(x)}"));
   }
   private void _setDanLabCar()
   {
@@ -212,7 +212,7 @@ public class StOneStep : IStOneStepNew
     Console.WriteLine(" _ Устанавливаем переменные _");
 
     foreach (var (keySet, valSet) in SetPoints)
-      LCDan.SetParam(keySet, valSet);
+      LcDan.SetParam(keySet, valSet);
   }
   private bool _ifDanLabCar()
   {
@@ -238,7 +238,7 @@ public class StOneStep : IStOneStepNew
     List<string> lsTask = new List<string>();
     foreach (var item in LoggerNamePole)
     {
-      var task = LCDan.GetTaskInfo(item);
+      var task = LcDan.GetTaskInfo(item);
       if (task!=null)
       {
         lsPath.Add(task.PathTask);
@@ -246,7 +246,7 @@ public class StOneStep : IStOneStepNew
       }
       else 
       {
-        var param = LCDan.GetParamInfo(item);
+        var param = LcDan.GetParamInfo(item);
         if (param != null)
         {
           lsPath.Add(param.Signal);
@@ -255,7 +255,7 @@ public class StOneStep : IStOneStepNew
       }
     }
     if (lsPath.Count > 0)
-        LCDan.AddLogger(_dConfig["NameDir"], _dConfig["FileLogger"], lsPath.ToArray(), lsTask.ToArray());
+        LcDan.AddLogger(_dConfig["NameDir"], _dConfig["FileLogger"], lsPath.ToArray(), lsTask.ToArray());
   }
 
 
@@ -286,7 +286,7 @@ public class StOneStep : IStOneStepNew
     _setPathInLogger();
 
     if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "start"))
-      LCDan.GetLogger(dConfig["NameDir"])?.Start();
+      LcDan.GetLogger(dConfig["NameDir"])?.Start();
 
     var isIf = _ifDanLabCar();
     if (!isIf)
@@ -296,12 +296,12 @@ public class StOneStep : IStOneStepNew
     }
 
     if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "end"))
-      LCDan.GetLogger(dConfig["NameDir"])?.Stop();
+      LcDan.GetLogger(dConfig["NameDir"])?.Stop();
     if(!isRezulta)
     {
         try
         {
-            LCDan.GetLogger(dConfig["NameDir"])?.Stop();
+            LcDan.GetLogger(dConfig["NameDir"])?.Stop();
         }
         catch (Exception)
         {

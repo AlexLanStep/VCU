@@ -1,7 +1,7 @@
 ﻿#define TestDanLabCar
 #define DataEmulation
 
-using ContextLabCar.Core;
+using ContextLabCar.Core.Arif;
 using ContextLabCar.Static;
 using DryIoc;
 using DryIoc.ImTools;
@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace TestDelegate // Note: actual namespace depends on the project name.
 {
 
-  internal class Program
+    internal class Program
   {
     private static ContainerManager _container = null!;
 
@@ -56,8 +56,8 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
 
 
       _container = ContainerManager.GetInstance();
-      IArifmetic _arifmetic = _container.LabCar.Resolve<IArifmetic>();
-      _arifmetic.LoadStr("ee =(5+ ss11)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee + (10+8)/7");
+      //IArifmetic _arifmetic = _container.LabCar.Resolve<IArifmetic>();
+      //_arifmetic.LoadStr("ee =(5+ ss11)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee + (10+8)/7");
 
       string s00 = "000";
 
