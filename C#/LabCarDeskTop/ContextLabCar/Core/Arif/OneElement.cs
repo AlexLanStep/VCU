@@ -1,8 +1,6 @@
-﻿namespace ContextLabCar.Core.Arif;
-
+﻿
 public interface IOneElement
 {
-  string Name { get; set; }
 }
 public class OneElement : IOneElement
 {
@@ -10,14 +8,13 @@ public class OneElement : IOneElement
   public string? NameValue { get; set; }
   public string? CommandAri { get; set; }
   private readonly CalcElement? _calcElement;
+  public CVariable CVariable { get; set; }
 
-#pragma warning disable CS8618
-  public OneElement(string commandAri, string name = "")
-#pragma warning restore CS8618
+  public OneElement(string commandAri, string name="")
   {
     var strBasa = commandAri.Replace(" ", "");
 
-    if (strBasa.IndexOf("=", StringComparison.Ordinal) < 0 && name == null)
+    if (strBasa.IndexOf("=", StringComparison.Ordinal) < 0 && name == "")
       return;
 
     if (strBasa.IndexOf("=", StringComparison.Ordinal) > 0)
@@ -36,10 +33,17 @@ public class OneElement : IOneElement
     _calcElement = new(Name);
   }
 
-  public void ConvertScobki(string commandScobki)
+  public CVariable FuncCalc()
   {
-    _calcElement?.CaclScobki(commandScobki);
-    _calcElement?.ReplaseSimvolDan();
+    if (_calcElement == null) return new CVariable("");
+
+    _calcElement.CaclScobki(CommandAri);
+    _calcElement.BasaCommanda = _calcElement.ReplaseSimvolDan(_calcElement.BasaCommanda);
+    _calcElement.BasaCommanda = _calcElement.ReplaseMultiDiv(_calcElement.BasaCommanda);
+    _calcElement.BasaCommanda = _calcElement.FindNonNumbers(_calcElement.BasaCommanda, NameValue);
+
+    CVariable = StArithmetic.DVarCommand[NameValue];
+    return CVariable;
   }
 
 }

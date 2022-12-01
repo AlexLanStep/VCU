@@ -48,8 +48,8 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //      ss11; ds1; sas; ss11; ee1
       Console.WriteLine(" ----  ---");
       StArithmetic.TestIniciallDan();
-      OneElement oneElement = new OneElement("ee =(5+ ss11 - ds1 - 21.2)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8)/7.3");
-      oneElement.ConvertScobki(oneElement.CommandAri);
+//      OneElement oneElement = new OneElement("ee =(5+ ss11 - ds1 - 21.2)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8)/7.3");
+      var _x = new OneElement("ee =(5+ ss11 - ds1 - 21.2)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8)/7.3").FuncCalc();
 
 //            var _arDeistv = new ArDeistv("ee =(5+ ss11)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee + (10+8)/7");
 //      _arDeistv.SetStr(_arDeistv.CommandRoot);

@@ -6,16 +6,18 @@ public class CVariable
   public string Name { get; set; }
   public string StValue { get; set; }
   public dynamic? Value { get; set; }
+  public string SValue { get; set; }
   public bool IsValue { get; set; } 
   public CVariable(string stcomand)
   {
-    stcomand = stcomand.Replace(" ", "");
+    stcomand = stcomand.Replace(" ", "").Replace(",", ".");
     var ss = stcomand.Split('=');
     if (ss.Length != 2)
       throw new MyException($"Не правильный формат переменных в разборе арефметической строки -> {stcomand}", -5);
     Name = ss[0];
     StValue = ss[1];
     Value = null;
+    SValue = "";
     IsValue = CalcCommand(StValue);
   }
 
@@ -24,7 +26,8 @@ public class CVariable
     Name = name;
     Value = dan;
     StValue = "";
-    IsValue = true; 
+    IsValue = true;
+    SValue = Convert.ToString(Value);
   }
 
   

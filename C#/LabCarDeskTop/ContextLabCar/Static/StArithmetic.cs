@@ -33,10 +33,19 @@ public static class StArithmetic
     => Regex.Split(str, _patternPlusMin, RegexOptions.IgnoreCase).ToList();
 
   public static (bool, int) IsUmnDiv(string str) => _f00(str, _patternUmnDiv);
+  public static List<string> SplitMultiDiv(string str)
+    => Regex.Split(str, _patternUmnDiv, RegexOptions.IgnoreCase).ToList();
+  public static List<string> ArrayMultiDiv(string str)
+      => Regex.Matches(str, _patternUmnDiv, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
+
+  public static List<string> SplitDigital(string str)
+    => Regex.Split(str, _patternDestv, RegexOptions.IgnoreCase).ToList();
+
   public static (bool, int) IsNoPlusMin(string str) => _f00(str, _patternNoPlusMin);
 
   public static bool IsDigitString(string str)
   {
+    str = str.Replace(",", ".");
     var s0 = str.IndexOf('.') > 0 ? str.Replace(".", "") : str;
     return s0.Aggregate(true, (current, x) => current & char.IsDigit(x));
   }
@@ -74,7 +83,6 @@ public static class StArithmetic
 
     return null;
   }
-
 
   public static List<(int, int)> ScobkiX(string str0)
   {
@@ -120,7 +128,6 @@ public static class StArithmetic
     }; 
   }
 
-
   public static void TestIniciallDan()
   {
     //ss11; ds1; sas; ss11; ee1
@@ -132,6 +139,18 @@ public static class StArithmetic
     DVarCommand.AddOrUpdate(cv2.Name, cv2, (_, _) => cv2);
     var cv3 = new CVariable("ss11", 777.111);
     DVarCommand.AddOrUpdate(cv3.Name, cv3, (_, _) => cv3);
+    var cv4 = new CVariable("ee1", 22.333);
+    DVarCommand.AddOrUpdate(cv4.Name, cv4, (_, _) => cv4);
+  }
+
+  public static dynamic? MultiDiv(string str)
+  {
+    str = str.Replace(",", ".");
+    var lsVal = SplitMultiDiv(str);
+    var lsZnak = ArrayMultiDiv(str);
+    if (lsVal.Count == 2 && lsZnak.Count == 1)
+      return CalcElemrnt(StringToDynamic(lsVal[0]), StringToDynamic(lsVal[1]), lsZnak[0]);
+    return null;
   }
 
 }
