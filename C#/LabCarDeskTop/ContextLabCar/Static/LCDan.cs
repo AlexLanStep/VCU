@@ -60,16 +60,6 @@ public static class LcDan
     if (parameter.SignalParams == null) return false;
     _dParameters.AddOrUpdate(nameParama, parameter, (_, _) => parameter);
     return true;
-    //    else
-    //      return false;
-
-    //if (_task.Measurement != null)
-    //{
-    //  _dTaskLabCar.AddOrUpdate(nameTask, _task, (_, _) => _task);
-    //  return true;
-    //}
-    //else
-    //  return false;
   }
 
   public static bool SetParam(string nameParama, dynamic param)
@@ -86,17 +76,6 @@ public static class LcDan
   public static ParameterNew? GetParamInfo(string nameParama) =>
     _dParameters.ContainsKey(nameParama) ? _dParameters[nameParama] : null;
   
-
-  //public static List<string> AddParamsRange(Dictionary<string, ParameterJson> paramsLabCar)
-  //{
-  //  var result = new List<string>();
-  //  foreach (var (key, value) in paramsLabCar)
-  //  {
-  //    if (!AddParams(key, value))
-  //      result.Add(key);
-  //  }
-  //  return result;
-  //}
   #endregion
 
   #region ____  Calibration ____
