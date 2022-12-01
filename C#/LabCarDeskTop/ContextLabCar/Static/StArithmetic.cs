@@ -93,11 +93,6 @@ public static class StArithmetic
     var xl = Regex.Matches(str0, _patternLifet, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
     var xr = Regex.Matches(str0, _patternRite, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
 
-//    List<int> xl = new List<int>() { 2, 15, 27, 55 };
-//    List<int> xr = new List<int>() { 29, 35, 47, 65 };
-//    List<(int, int)> yr = new List<(int, int)>();
-    //      int k=xl.Count-1;
-
     while (xl.Count > 0)
     {
       var valL = xl[xl.Count - 1];
@@ -106,34 +101,6 @@ public static class StArithmetic
       xl.RemoveAt(xl.Count - 1);
       xr.Remove(valR);
     }
-
-
-
-
-
-//    while (xr.Count > 0)
-//    {
-//      var valR = xr.ElementAt(0);
-//      var @is = true;
-//      var kL = 0;
-//      var kLMax = xl.Count();
-//      while (@is & xl.Count > 0)
-//      {
-////        var valL = xl.ElementAt(Math.Min(kL, xl.Count - 1));
-//        var valL = xl.ElementAt(kL);
-
-//        if ((valR > valL) & (valR < xl.ElementAt(Math.Min(kL + 1, kLMax - 1))) || (xl.Count == 1 && xr.Count == 1))
-//        {
-//          xScop.Add((valL, valR));
-//          @is = false;
-//          xl.RemoveAt(kL);
-//          xr.RemoveAt(0);
-//          continue;
-//        }
-//        kL++;
-//      }
-//    }
-
     return xScop;
   }
 
