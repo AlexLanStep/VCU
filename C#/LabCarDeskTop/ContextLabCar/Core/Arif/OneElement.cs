@@ -1,14 +1,13 @@
-﻿using DryIoc.ImTools;
-using Newtonsoft.Json.Linq;
-
+﻿// ReSharper disable once CheckNamespace
 public interface IOneElement
 {
 }
 public class OneElement : IOneElement
 {
+  // ReSharper disable once UnusedAutoPropertyAccessor.Local
   private string Name { get; set; }
-  private string? NameValue { get; set; }
-  private string? CommandAri { get; set; }
+  private string NameValue { get; set; }
+  private string CommandAri { get; set; }
   
   public CVariable CVariable { get; set; }
 
@@ -18,7 +17,9 @@ public class OneElement : IOneElement
   private int _indexCom;
   private string strBasa;
 
+#pragma warning disable CS8618
   public OneElement(string commandAri, string name="")
+#pragma warning restore CS8618
   {
     strBasa = commandAri.Replace(" ", "").Replace(',', '.');
 
@@ -114,7 +115,7 @@ public class OneElement : IOneElement
                .Where(it => str.Contains(it.Key) && it.Key.Contains(_nameTree)))
     {
       str = str.Replace(it.Key, it.Value);
-      _ = StArithmetic.DVarCommand.TryRemove(it.Key, out var xx);
+      _ = StArithmetic.DVarCommand.TryRemove(it.Key, out _);
     }
     return str;
   }
@@ -126,7 +127,6 @@ public class OneElement : IOneElement
 
     var dls = StArithmetic.SplitPlusMin(str).Where(x => x.Contains("*") || x.Contains("/")).ToList();
 
-    Dictionary<string, dynamic?> dyn0 = new();
     foreach (var d in dls)
     {
       var xxx = StArithmetic.MultiDiv(d);
@@ -149,7 +149,7 @@ public class OneElement : IOneElement
       {
         if (!dan.IsValue)
         {
-          var s0 = FindNonNumbers(dan.StValue, it);
+          FindNonNumbers(dan.StValue, it);
           if (StArithmetic.DVarCommand[it].IsValue)
             str = str.Replace(it, StArithmetic.DVarCommand[it].SValue);
         }
@@ -160,6 +160,7 @@ public class OneElement : IOneElement
     }
     str = (nameX == "" ? "root" : nameX) + "=" + ReplaseMultiDiv(str);
 
+    // ReSharper disable once UnusedVariable
     var cv = new CVariable(str);
     return str;
 

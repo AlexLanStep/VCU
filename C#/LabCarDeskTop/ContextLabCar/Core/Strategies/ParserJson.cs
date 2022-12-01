@@ -121,7 +121,11 @@ public class ParserJson
 
     // ReSharper disable free UnusedVariable
     foreach (var w in lsName.Select(it => ((JToken)jinfo)[it]?.ToString()))
+#pragma warning disable CS8604
+#pragma warning disable CS8603
       lsName.ForEach(item => basaParams.AddOrUpdate(item, jinfo[item], (_, _) => jinfo[item]));
+#pragma warning restore CS8603
+#pragma warning restore CS8604
 
     #region ------ Load ->  Stls  --------------
     if (basaParams.TryGetValue(Stls, out var valueStls))
@@ -186,7 +190,6 @@ public class ParserJson
           stOneNew.StCommand.Add("sim", (string)valuesim);
       }
 
-
       if (vv2.TryGetValue("loggerset", out dynamic valuelogset))
         stOneNew.LoggerNamePole = JsonLsString(valuelogset.ToString() ?? string.Empty);
 
@@ -203,6 +206,10 @@ public class ParserJson
 
       if (vv2.TryGetValue("activfile", out dynamic valueactivfile))
         stOneNew.CalibrationsActiv = JsonLsString(valueactivfile.ToString() ?? string.Empty);
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      if (vv2.TryGetValue("let", out dynamic valueLet))
+        stOneNew.LoadArifmetic(JsonLsString(valueLet.ToString() ?? string.Empty));
+
 
       _lsStOneStep.Add(stOneNew);
 
@@ -234,7 +241,11 @@ public class ParserJson
 
     // ReSharper disable for UnusedVariable
     foreach (var w in lsName.Select(it => ((JToken)val)[it]?.ToString()))
+#pragma warning disable CS8604
+#pragma warning disable CS8603
       lsName.ForEach(item => basaParams.AddOrUpdate(item, ((JToken)val)[item], (_, _) => ((JToken)val)[item]));
+#pragma warning restore CS8603
+#pragma warning restore CS8604
     return basaParams;
   }
   #endregion

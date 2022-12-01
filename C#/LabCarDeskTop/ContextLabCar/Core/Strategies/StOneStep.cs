@@ -167,7 +167,7 @@ public class StOneStep : IStOneStepNew
     _isLogger = (bool)ParamsStrategy["Logger"];
     var bResult = true;
 
-    int i = 0;
+    var i = 0;
     while (bResult && (i < lsIf.Count)) //  && result.TryGetValue(lsIf[i].Item1, out var x0)
     {
       //      double x01 = x0;
@@ -179,6 +179,7 @@ public class StOneStep : IStOneStepNew
           break;
         case "Dftest":
         {
+!!!!!!!!!!!!!!!!
           var x0 = (double) LcDan.GetTask(lsIf[i].Item1);
           double x1;
           double.TryParse(((string)lsIf[i].Item2).Replace('.', ','), out x1);

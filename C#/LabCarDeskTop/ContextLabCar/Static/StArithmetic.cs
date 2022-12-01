@@ -95,8 +95,8 @@ public static class StArithmetic
 
     while (xl.Count > 0)
     {
-      var valL = xl[xl.Count - 1];
-      int valR = xr.Where(x => x > valL).Min();
+      var valL = xl[^1];
+      var valR = xr.Where(x => x > valL).Min();
       xScop.Add((valL, valR));
       xl.RemoveAt(xl.Count - 1);
       xr.Remove(valR);
