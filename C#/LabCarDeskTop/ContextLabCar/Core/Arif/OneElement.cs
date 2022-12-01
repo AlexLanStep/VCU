@@ -1,4 +1,5 @@
 ﻿using DryIoc.ImTools;
+using Newtonsoft.Json.Linq;
 
 public interface IOneElement
 {
@@ -15,10 +16,11 @@ public class OneElement : IOneElement
 
   private readonly string _nameTree = "__#";
   private int _indexCom;
+  private string strBasa;
 
   public OneElement(string commandAri, string name="")
   {
-    var strBasa = commandAri.Replace(" ", "");
+    strBasa = commandAri.Replace(" ", "").Replace(',', '.');
 
     if (strBasa.IndexOf("=", StringComparison.Ordinal) < 0 && name == "")
       return;
@@ -43,6 +45,27 @@ public class OneElement : IOneElement
 
   public CVariable FuncCalc()
   {
+    var testStr = StArithmetic.IsAllSin(CommandAri);
+    if(!testStr.Item1 && (CommandAri.Length > 0) && StArithmetic.IsDigitString(CommandAri))
+    {
+      var x = StArithmetic.StringToDynamic(CommandAri);
+      if(x != null)
+      {
+        CVariable = new CVariable(NameValue, x);
+        StArithmetic.DVarCommand.AddOrUpdate(CVariable.Name, CVariable, (_, _) => CVariable);
+
+        return CVariable;
+      }
+    }
+
+    if ((!StArithmetic.IsUmnDiv(CommandAri).Item1) && (!StArithmetic.IsScobki(CommandAri).Item1) && (StArithmetic.IsPlusMin(CommandAri).Item1))
+    {
+      CVariable = new CVariable(strBasa);
+//      StArithmetic.DVarCommand.AddOrUpdate(CVariable.Name, CVariable, (_, _) => CVariable);
+      return CVariable;
+    }
+
+
     CaclScobki(CommandAri);
     BasaCommanda = ReplaseSimvolDan(BasaCommanda);
     BasaCommanda = ReplaseMultiDiv(BasaCommanda);

@@ -11,6 +11,7 @@ public static class StArithmetic
   private static string _patternRite = @"\)";
   private static string _patternScobki = @"[\(\)]";
   private static string _patternNoPlusMin = @"[\*\/\(\)]";
+  private static string _patternAllSim = @"[\+\-\*\/\(\)]";
 
   #endregion
 
@@ -23,15 +24,16 @@ public static class StArithmetic
   };
 
   public static (bool, int) IsScobki(string str) => _f00(str, _patternScobki);
-  public static (bool, int) IsDestv(string str) => _f00(str, _patternDestv);
-  public static (bool, int) IsPlusMin(string str) => _f00(str, _patternPlusMin);
 
+  public static (bool, int) IsDestv(string str) => _f00(str, _patternDestv);
+
+  public static (bool, int) IsAllSin(string str) => _f00(str, _patternAllSim);
+  public static (bool, int) IsPlusMin(string str) => _f00(str, _patternPlusMin);
   public static List<string> ArrayPlusMin(string str)
       => Regex.Matches(str, _patternPlusMin, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
 
   public static List<string> SplitPlusMin(string str)
     => Regex.Split(str, _patternPlusMin, RegexOptions.IgnoreCase).ToList();
-
   public static (bool, int) IsUmnDiv(string str) => _f00(str, _patternUmnDiv);
   public static List<string> SplitMultiDiv(string str)
     => Regex.Split(str, _patternUmnDiv, RegexOptions.IgnoreCase).ToList();
@@ -91,27 +93,46 @@ public static class StArithmetic
     var xl = Regex.Matches(str0, _patternLifet, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
     var xr = Regex.Matches(str0, _patternRite, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
 
-    while (xr.Count > 0)
-    {
-      var valR = xr.ElementAt(0);
-      var @is = true;
-      var kL = 0;
-      var kLMax = xl.Count();
-      while (@is & xl.Count > 0)
-      {
-        var valL = xl.ElementAt(kL);
+//    List<int> xl = new List<int>() { 2, 15, 27, 55 };
+//    List<int> xr = new List<int>() { 29, 35, 47, 65 };
+//    List<(int, int)> yr = new List<(int, int)>();
+    //      int k=xl.Count-1;
 
-        if ((valR > valL) & (valR < xl.ElementAt(Math.Min(kL + 1, kLMax - 1))) || (xl.Count == 1 && xr.Count == 1))
-        {
-          xScop.Add((valL, valR));
-          @is = false;
-          xl.RemoveAt(kL);
-          xr.RemoveAt(0);
-          continue;
-        }
-        kL++;
-      }
+    while (xl.Count > 0)
+    {
+      var valL = xl[xl.Count - 1];
+      int valR = xr.Where(x => x > valL).Min();
+      xScop.Add((valL, valR));
+      xl.RemoveAt(xl.Count - 1);
+      xr.Remove(valR);
     }
+
+
+
+
+
+//    while (xr.Count > 0)
+//    {
+//      var valR = xr.ElementAt(0);
+//      var @is = true;
+//      var kL = 0;
+//      var kLMax = xl.Count();
+//      while (@is & xl.Count > 0)
+//      {
+////        var valL = xl.ElementAt(Math.Min(kL, xl.Count - 1));
+//        var valL = xl.ElementAt(kL);
+
+//        if ((valR > valL) & (valR < xl.ElementAt(Math.Min(kL + 1, kLMax - 1))) || (xl.Count == 1 && xr.Count == 1))
+//        {
+//          xScop.Add((valL, valR));
+//          @is = false;
+//          xl.RemoveAt(kL);
+//          xr.RemoveAt(0);
+//          continue;
+//        }
+//        kL++;
+//      }
+//    }
 
     return xScop;
   }
