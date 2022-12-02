@@ -15,6 +15,19 @@ public static class StArithmetic
 
   #endregion
 
+  public static CVariable? GetArifCVariable(string name) => DVarCommand.ContainsKey(name) ? DVarCommand[name] : null;
+
+  public static T? GetArif<T>(string name)
+  {
+    var x = GetArifCVariable(name);
+
+    if (x != null)
+      return (T)Convert.ChangeType(x.Value, typeof(T));
+
+    return (T)Convert.ChangeType(null, typeof(T));
+  }
+
+
   public static ConcurrentDictionary<string, CVariable> DVarCommand = new();
 
   private static Func<string, string, (bool, int)> _f00 = (s0, s1) =>

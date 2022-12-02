@@ -206,9 +206,9 @@ public class ParserJson
 
       if (vv2.TryGetValue("activfile", out dynamic valueactivfile))
         stOneNew.CalibrationsActiv = JsonLsString(valueactivfile.ToString() ?? string.Empty);
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
       if (vv2.TryGetValue("let", out dynamic valueLet))
-        stOneNew.LoadArifmetic(JsonLsString(valueLet.ToString() ?? string.Empty));
+        stOneNew.LetArifmet = JsonLsString(valueLet.ToString() ?? string.Empty);
 
 
       _lsStOneStep.Add(stOneNew);

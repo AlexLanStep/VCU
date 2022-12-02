@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestContextLabCar", "TestCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContextLabCar", "ContextLabCar\ContextLabCar.csproj", "{4D6582BD-F5BB-46F0-8FB0-546AD86ED632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDelegate", "TestDelegate\TestDelegate.csproj", "{1F37443A-C6BC-42E5-962F-C54DC33C0C1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDelegate", "TestDelegate\TestDelegate.csproj", "{1F37443A-C6BC-42E5-962F-C54DC33C0C1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPerem", "TestPerem\TestPerem.csproj", "{C4CA9B8C-ADC8-4634-985A-93FB0553C69B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1F37443A-C6BC-42E5-962F-C54DC33C0C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F37443A-C6BC-42E5-962F-C54DC33C0C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F37443A-C6BC-42E5-962F-C54DC33C0C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4CA9B8C-ADC8-4634-985A-93FB0553C69B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4CA9B8C-ADC8-4634-985A-93FB0553C69B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4CA9B8C-ADC8-4634-985A-93FB0553C69B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CA9B8C-ADC8-4634-985A-93FB0553C69B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
