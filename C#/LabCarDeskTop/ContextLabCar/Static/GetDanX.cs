@@ -5,7 +5,7 @@ public static class GetDanX
 {
   public static dynamic? Get(string name)
   {
-    var dLabCar = LcDan.GetTaskOld(name);
+    var dLabCar = LcDan.GetTask(name);
     if (dLabCar != null)
       return dLabCar;
 

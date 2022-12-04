@@ -46,7 +46,7 @@ public static class LcDan
   public static List<string> AddTaskRange(Dictionary<string, TaskJsonLoad> taskLabCar)
     => (from it in taskLabCar where !AddTask(it.Key, it.Value) select it.Key).ToList();
 
-  public static dynamic? GetTaskOld(string name) => _dTaskLabCar.TryGetValue(name, out var dan) ? dan.Valume : null;
+  public static dynamic? GetTask(string name) => _dTaskLabCar.TryGetValue(name, out var dan) ? dan.Valume : null;
   public static TaskLabCar? GetTaskInfo(string name) => _dTaskLabCar.TryGetValue(name, out var dan) ? dan : null;
 
   public static Dictionary<string, dynamic?> GetTaskRange(string[] names) =>

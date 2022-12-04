@@ -202,7 +202,7 @@ public class StOneStep : IStOneStepNew
         {
 
 //          var x0 = (double) LcDan.GetTask(lsIf[i].Item1);
-            var x0 = f0ConvertDouble(ls[i].Item1);
+            var x0 = f0ConvertDouble(lsIf[i].Item1);
 
             double x1;
           double.TryParse(((string)lsIf[i].Item2).Replace('.', ','), out x1);
@@ -227,7 +227,9 @@ public class StOneStep : IStOneStepNew
   {
     if (GetPoints.Count == 0) return;
     Console.WriteLine(" _ Вывод переменных _");
-    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LcDan.GetTask(x)}"));
+//    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LcDan.GetTask(x)}"));
+    GetPoints.ForEach(x => Console.WriteLine($" {x} = {f0ConvertDouble(x)}"));
+
   }
   private void _setDanLabCar()
   {
@@ -280,9 +282,15 @@ public class StOneStep : IStOneStepNew
     if (lsPath.Count > 0)
         LcDan.AddLogger(_dConfig["NameDir"], _dConfig["FileLogger"], lsPath.ToArray(), lsTask.ToArray());
   }
-  private void _arifmet()
+  private void _setLet()
   {
-
+    foreach (var s in LetArifmet)
+    {
+      Console.WriteLine($"{s}");
+      var x = new OneElement(s).FuncCalc();
+//      Console.WriteLine($"{StArithmetic.DVarCommand[x.Name].SValue}");
+      Console.WriteLine($"{GetDanX.Get(name:s)}");
+    }
   }
 
   public bool Run(Dictionary<string, string> dConfig, bool islog)
@@ -310,6 +318,7 @@ public class StOneStep : IStOneStepNew
     _getDanLabCar();
     _setDanLabCar();
     _setPathInLogger();
+    _setLet();
 
     if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "start"))
       LcDan.GetLogger(dConfig["NameDir"])?.Start();

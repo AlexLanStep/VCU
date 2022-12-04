@@ -81,23 +81,24 @@ public static class StArithmetic
     }
   }
 
-  public static dynamic? ReadDanExperiment(string str)
-  {
-    var xd0 = StringToDynamic(str);
-    if (xd0 == null)
-    {
-      if (DVarCommand.TryGetValue(str, out var x00))
-        return x00.Value;
+  public static dynamic? ReadDanExperiment(string str) => GetDanX.Get(str);
+  //{
+     
+  //  var xd0 = StringToDynamic(str);
+  //  if (xd0 == null)
+  //  {
+  //    if (DVarCommand.TryGetValue(str, out var x00))
+  //      return x00.Value;
 
-      var y = LcDan.GetTask(str);
-      if (y != null)
-        return y;
-    }
-    else 
-      return xd0;
+  //    var y = LcDan.GetTask(str);
+  //    if (y != null)
+  //      return y;
+  //  }
+  //  else 
+  //    return xd0;
 
-    return null;
-  }
+  //  return null;
+  //}
 
   public static List<(int, int)> ScobkiX(string str0)
   {
