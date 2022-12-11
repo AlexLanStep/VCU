@@ -28,8 +28,13 @@ namespace SLMTest
       double[] wts = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
       //вызов нашей функции из библиотеки
+      Console.WriteLine(" 0 --------");
+
       LSMLib.LSMLib test = new LSMLib.LSMLib();
+      Console.WriteLine(" 1 --------");
+
       MWArray res = test.solve_lsm((MWArray)n, (MWNumericArray)x, (MWNumericArray)y, (MWNumericArray)wts);
+      Console.WriteLine(" 2 --------");
 
       //обработка возвращаемых коэффициентов и перевод их в обычный список
       var array = (MWNumericArray)res;
@@ -40,6 +45,7 @@ namespace SLMTest
       {
         koeffs.Add(dd[i, 0]);
       }
+      Console.WriteLine("--------");
       Console.ReadKey();
 
     }

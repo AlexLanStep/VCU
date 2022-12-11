@@ -3,7 +3,7 @@ using DryIoc.ImTools;
 
 namespace LabCarContext20.Core;
 public delegate Task AsyncEventHandler(string str);
-public class DataOutputToDisplay: IDataOutputToDisplay
+public class LoggerDisplay: ILoggerDisplay
 {
   public bool Is { get; set; } = true;
   public event AsyncEventHandler? AsyncEvent = null;

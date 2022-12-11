@@ -8,9 +8,9 @@ public interface ITWriteWin
 }
 public class TWriteWin: ITWriteWin
 {
-  private IDataOutputToDisplay _ioutputToDisplay;
+  private ILoggerDisplay _ioutputToDisplay;
   private bool isWrite;
-  public TWriteWin(IDataOutputToDisplay ioutputToDisplay)
+  public TWriteWin(ILoggerDisplay ioutputToDisplay)
   {
     isWrite = false;
     _ioutputToDisplay = ioutputToDisplay;

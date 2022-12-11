@@ -1,6 +1,6 @@
 ﻿namespace LabCarContext20.Core.Interface;
 
-public interface IDataOutputToDisplay
+public interface ILoggerDisplay
 {
     void InitializationConsole();
     void InitializationWindows();

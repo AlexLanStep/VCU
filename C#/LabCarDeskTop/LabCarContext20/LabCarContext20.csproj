@@ -16,7 +16,6 @@
     <Folder Include="Core\Arif\Interface\" />
     <Folder Include="Core\Config\Interface\" />
     <Folder Include="Core\Strategies\Interface\" />
-    <Folder Include="Data\Interface\" />
   </ItemGroup>
 
   <ItemGroup>

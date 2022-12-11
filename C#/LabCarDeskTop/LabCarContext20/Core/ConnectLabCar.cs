@@ -3,13 +3,20 @@ namespace LabCarContext20.Core;
 
 public class ConnectLabCar: IConnectLabCar
 {
+  #region === Data ===
+     #region ===- public -===
   public IExperimentEnvironment ExperimentEnvironment { get; set; }
   public IWorkspace Workspace { get; set; }
   public IExperiment Experiment { get; set; }
   public ISignalSourceCollection SignalSources { get; set; }
+  #endregion
 
+     #region ===- local -==
   private string _pathWorkspace;
   private string _pathExperimentEnvironment;
+  #endregion
+  #endregion
+
 
 #pragma warning disable CS8618
   public ConnectLabCar()
@@ -19,7 +26,7 @@ public class ConnectLabCar: IConnectLabCar
     _pathExperimentEnvironment="";
   }
 
-public void Initialization(string pathWorkspace, string pathExperimentEnvironment)
+  public void Initialization(string pathWorkspace, string pathExperimentEnvironment)
   {
     _pathWorkspace = pathWorkspace;
     _pathExperimentEnvironment = pathExperimentEnvironment;
@@ -45,9 +52,7 @@ public void Initialization(string pathWorkspace, string pathExperimentEnvironmen
     SignalSources.Download();           // download the model to the target
     SignalSources.StartSimulation();    // start simulation on the target
     SignalSources.StartMeasurement();   // start measurement
-
   }
-
   public void StartSimulation() 
   {
     try
