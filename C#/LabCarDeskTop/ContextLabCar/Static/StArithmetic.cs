@@ -11,8 +11,22 @@ public static class StArithmetic
   private static string _patternRite = @"\)";
   private static string _patternScobki = @"[\(\)]";
   private static string _patternNoPlusMin = @"[\*\/\(\)]";
+  private static string _patternAllSim = @"[\+\-\*\/\(\)]";
 
   #endregion
+
+  public static CVariable? GetArifCVariable(string name) => DVarCommand.ContainsKey(name) ? DVarCommand[name] : null;
+
+  public static T? GetArif<T>(string name)
+  {
+    var x = GetArifCVariable(name);
+
+    if (x != null)
+      return (T)Convert.ChangeType(x.Value, typeof(T));
+
+    return (T)Convert.ChangeType(null, typeof(T));
+  }
+
 
   public static ConcurrentDictionary<string, CVariable> DVarCommand = new();
 
@@ -23,15 +37,16 @@ public static class StArithmetic
   };
 
   public static (bool, int) IsScobki(string str) => _f00(str, _patternScobki);
-  public static (bool, int) IsDestv(string str) => _f00(str, _patternDestv);
-  public static (bool, int) IsPlusMin(string str) => _f00(str, _patternPlusMin);
 
+  public static (bool, int) IsDestv(string str) => _f00(str, _patternDestv);
+
+  public static (bool, int) IsAllSin(string str) => _f00(str, _patternAllSim);
+  public static (bool, int) IsPlusMin(string str) => _f00(str, _patternPlusMin);
   public static List<string> ArrayPlusMin(string str)
       => Regex.Matches(str, _patternPlusMin, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
 
   public static List<string> SplitPlusMin(string str)
     => Regex.Split(str, _patternPlusMin, RegexOptions.IgnoreCase).ToList();
-
   public static (bool, int) IsUmnDiv(string str) => _f00(str, _patternUmnDiv);
   public static List<string> SplitMultiDiv(string str)
     => Regex.Split(str, _patternUmnDiv, RegexOptions.IgnoreCase).ToList();
@@ -66,23 +81,24 @@ public static class StArithmetic
     }
   }
 
-  public static dynamic? ReadDanExperiment(string str)
-  {
-    var xd0 = StringToDynamic(str);
-    if (xd0 == null)
-    {
-      if (DVarCommand.TryGetValue(str, out var x00))
-        return x00.Value;
+  public static dynamic? ReadDanExperiment(string str) => GetDanX.Get(str);
+  //{
+     
+  //  var xd0 = StringToDynamic(str);
+  //  if (xd0 == null)
+  //  {
+  //    if (DVarCommand.TryGetValue(str, out var x00))
+  //      return x00.Value;
 
-      var y = LcDan.GetTask(str);
-      if (y != null)
-        return y;
-    }
-    else 
-      return xd0;
+  //    var y = LcDan.GetTask(str);
+  //    if (y != null)
+  //      return y;
+  //  }
+  //  else 
+  //    return xd0;
 
-    return null;
-  }
+  //  return null;
+  //}
 
   public static List<(int, int)> ScobkiX(string str0)
   {
@@ -91,28 +107,14 @@ public static class StArithmetic
     var xl = Regex.Matches(str0, _patternLifet, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
     var xr = Regex.Matches(str0, _patternRite, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
 
-    while (xr.Count > 0)
+    while (xl.Count > 0)
     {
-      var valR = xr.ElementAt(0);
-      var @is = true;
-      var kL = 0;
-      var kLMax = xl.Count();
-      while (@is & xl.Count > 0)
-      {
-        var valL = xl.ElementAt(kL);
-
-        if ((valR > valL) & (valR < xl.ElementAt(Math.Min(kL + 1, kLMax - 1))) || (xl.Count == 1 && xr.Count == 1))
-        {
-          xScop.Add((valL, valR));
-          @is = false;
-          xl.RemoveAt(kL);
-          xr.RemoveAt(0);
-          continue;
-        }
-        kL++;
-      }
+      var valL = xl[^1];
+      var valR = xr.Where(x => x > valL).Min();
+      xScop.Add((valL, valR));
+      xl.RemoveAt(xl.Count - 1);
+      xr.Remove(valR);
     }
-
     return xScop;
   }
 

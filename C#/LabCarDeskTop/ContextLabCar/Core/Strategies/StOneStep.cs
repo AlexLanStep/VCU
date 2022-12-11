@@ -1,6 +1,7 @@
 ﻿
 #nullable enable
 using ContextLabCar.Static;
+using System.Xml.Linq;
 
 namespace ContextLabCar.Core.Strategies;
 
@@ -14,9 +15,11 @@ public interface IStOneStepNew
   List<string> LResult { get; set; }
   Dictionary<string, dynamic> SetPoints { get; set; }
   List<string> LoggerNamePole { get; set; }
+  List<string> LetArifmet { get; set; }
   int TimeWait { get; set; }
   bool Run(Dictionary<string, string> dConfig, bool islog);
   void LoadInitializationPosition(object d);
+  void LoadArifmetic();
   void LoadInitializationIf(List<string> list);
   Dictionary<string, dynamic> StCommand { get; set; }
 }
@@ -37,6 +40,8 @@ public class StOneStep : IStOneStepNew
   private List<(string, dynamic, object)> lsIf = new();
   private Dictionary<string, List<(string, dynamic, object)>> lsOr = new();
   public List<string> LoggerNamePole { get; set; } = new();
+  public List<string> LetArifmet { get; set; } = new();
+
   public Dictionary<string, dynamic> StCommand { get; set; } = new();
   public List<string> CalibrationsLoad { get; set; } = new();
   public List<string> CalibrationsActiv { get; set; } = new();
@@ -62,6 +67,13 @@ public class StOneStep : IStOneStepNew
   private void simstart()=>  inicialCont().StartSimulation();
   private void simstop()=> inicialCont().StopSimulation();
 
+  private double f0ConvertDouble(string name)
+  {
+    var xx0 = GetDanX.Get(name);
+    if (xx0 == null)
+      throw new MyException($" - в GetDanX.Get( {name} ) - нет такой переменной ", -10);
+    return (double)xx0;
+  }
 
   public void LoadInitializationPosition(object d)
   {
@@ -83,6 +95,11 @@ public class StOneStep : IStOneStepNew
     foreach (var it in (Dictionary<string, dynamic>)d)
       SetPoints.Add(it.Key, it.Value);
   }
+  public void LoadArifmetic()
+  {
+
+  }
+
   public void LoadInitializationIf(List<string> list)
   {
     lsIf.Clear();
@@ -154,7 +171,9 @@ public class StOneStep : IStOneStepNew
     while ((!bResult) && (i < ls.Count))
     {
 
-      var x01 = (double) LcDan.GetTask(ls[i].Item1);
+      //      var x01 = (double)LcDan.GetTask(ls[i].Item1);
+      var x01 = f0ConvertDouble(ls[i].Item1);
+
       double.TryParse(((string)(ls[i].Item2)).Replace('.', ','), out double x1);
       var f0 = (Dftest)ls[i].Item3;
       bResult = bResult || f0(x01, x1);
@@ -162,12 +181,14 @@ public class StOneStep : IStOneStepNew
     }
     return bResult;
   }
+
+
   public virtual bool TestDan()
   {
     _isLogger = (bool)ParamsStrategy["Logger"];
     var bResult = true;
 
-    int i = 0;
+    var i = 0;
     while (bResult && (i < lsIf.Count)) //  && result.TryGetValue(lsIf[i].Item1, out var x0)
     {
       //      double x01 = x0;
@@ -179,8 +200,11 @@ public class StOneStep : IStOneStepNew
           break;
         case "Dftest":
         {
-          var x0 = (double) LcDan.GetTask(lsIf[i].Item1);
-          double x1;
+
+//          var x0 = (double) LcDan.GetTask(lsIf[i].Item1);
+            var x0 = f0ConvertDouble(lsIf[i].Item1);
+
+            double x1;
           double.TryParse(((string)lsIf[i].Item2).Replace('.', ','), out x1);
           bResult = bResult && ((Dftest)lsIf[i].Item3)(x0, x1);
           break;
@@ -191,7 +215,6 @@ public class StOneStep : IStOneStepNew
     }
     return bResult;
   }
-
   public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.0001;  // ==
   public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.0001;  // !=
   public virtual bool ResultGe(dynamic x0, dynamic x1) => x0 >= x1; // >= 
@@ -204,7 +227,9 @@ public class StOneStep : IStOneStepNew
   {
     if (GetPoints.Count == 0) return;
     Console.WriteLine(" _ Вывод переменных _");
-    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LcDan.GetTask(x)}"));
+//    GetPoints.ForEach(x => Console.WriteLine($" {x} = {LcDan.GetTask(x)}"));
+    GetPoints.ForEach(x => Console.WriteLine($" {x} = {f0ConvertDouble(x)}"));
+
   }
   private void _setDanLabCar()
   {
@@ -257,7 +282,16 @@ public class StOneStep : IStOneStepNew
     if (lsPath.Count > 0)
         LcDan.AddLogger(_dConfig["NameDir"], _dConfig["FileLogger"], lsPath.ToArray(), lsTask.ToArray());
   }
-
+  private void _setLet()
+  {
+    foreach (var s in LetArifmet)
+    {
+      Console.WriteLine($"{s}");
+      var x = new OneElement(s).FuncCalc();
+//      Console.WriteLine($"{StArithmetic.DVarCommand[x.Name].SValue}");
+      Console.WriteLine($"{GetDanX.Get(name:s)}");
+    }
+  }
 
   public bool Run(Dictionary<string, string> dConfig, bool islog)
   {
@@ -284,6 +318,7 @@ public class StOneStep : IStOneStepNew
     _getDanLabCar();
     _setDanLabCar();
     _setPathInLogger();
+    _setLet();
 
     if (_isLogger && StCommand.ContainsKey("logger") && (StCommand["logger"] == "start"))
       LcDan.GetLogger(dConfig["NameDir"])?.Start();

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="GACInstaller">
+      <HintPath>D:\Program Files\MatLab\R2021a\toolbox\dotnetbuilder\bin\win64\v4.0\GACInstaller.exe</HintPath>
+    </Reference>
+    <Reference Include="LSMLib">
+      <HintPath>..\LSMLib\for_redistribution_files_only\LSMLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MWArray">
+      <HintPath>D:\Program Files\MatLab\R2021a\toolbox\dotnetbuilder\bin\win64\v4.0\MWArray.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -45,10 +45,25 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //      string[] resultarr = str.Where(x => int.TryParse(x, out _tmp)).ToArray();
 
 
+
       //      ss11; ds1; sas; ss11; ee1
       Console.WriteLine(" ----  ---");
       StArithmetic.TestIniciallDan();
-      var _x = new OneElement("ee =(5+ ss11 - ds1 - 21.2)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8)/7.3").FuncCalc();
+      //      var _x = new OneElement("ee =(5+ ss11 - ds1 - 21.2)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8)/7.3").FuncCalc();
+
+      List<string> listCommand = new List<string>()
+      { "sas = 3.145", "kx=22.99", "ss11=99.22 + 44.5", "ee=454.22", "sas = ss11 + 3.4",
+        "ee = kx + (4* (sas + ss11) + sas) / ee" };
+
+      Dictionary<string, dynamic?> dCalc = new();
+
+      foreach (string s in listCommand)
+      {
+        Console.WriteLine($"{s}");
+        var x = new OneElement(s).FuncCalc();
+        Console.WriteLine($"{StArithmetic.DVarCommand[x.Name].SValue}");
+
+      }
 
       _container = ContainerManager.GetInstance();
       //IArifmetic _arifmetic = _container.LabCar.Resolve<IArifmetic>();

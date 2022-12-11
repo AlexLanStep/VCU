@@ -27,10 +27,10 @@ public class CVariable
     Value = dan;
     StValue = "";
     IsValue = true;
-    SValue = Convert.ToString(Value);
+    SValue =  Convert.ToString(Value);
   }
 
-  
+
   public bool CalcCommand(string stcomand)
   {
     if (Value != null)

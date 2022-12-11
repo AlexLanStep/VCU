@@ -1,0 +1,15 @@
+﻿namespace LabCarContext20.Core.Interface;
+
+public interface IConnectLabCar
+{
+    IExperimentEnvironment ExperimentEnvironment { get; set; }
+    IWorkspace Workspace { get; set; }
+    IExperiment Experiment { get; set; }
+    ISignalSourceCollection SignalSources { get; set; }
+
+    void Initialization(string pathWorkspace, string pathExperimentEnvironment);
+    void Connect();
+    void DisConnect();
+    void StartSimulation();
+    public void StopSimulation();
+}

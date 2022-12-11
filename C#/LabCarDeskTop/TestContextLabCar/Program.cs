@@ -83,14 +83,13 @@ internal class Program
               ? testLab.DConfig["Excellent"] 
               : testLab.DConfig["Badly"];
 
-        if (!isRezulta)
-        {
-          string ss = $" Error в стратегии {i + 1} на {j + 1} повторении ";
-          Console.WriteLine(ss);
-          txtReport += txtReportLoc + $"\n\r  {ss}  \n\r";
-          File.WriteAllText(dirRepost+"\\error_"+DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".txt", txtReport);
-          Environment.Exit(-10);
-        }
+        if (isRezulta) continue;
+
+        var ss = $" Error в стратегии {i + 1} на {j + 1} повторении ";
+        Console.WriteLine(ss);
+        txtReport += txtReportLoc + $"\n\r  {ss}  \n\r";
+        File.WriteAllText(dirRepost+"\\error_"+DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".txt", txtReport);
+        Environment.Exit(-10);
       }
       txtReport += txtReportLoc;
       i += 1;
