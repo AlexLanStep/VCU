@@ -11,19 +11,24 @@ public class ConnectLabCar: IConnectLabCar
   public ISignalSourceCollection SignalSources { get; set; }
   #endregion
 
-     #region ===- local -==
+  #region ===- local -==
+  private ILoggerDisplay _iloggerDisplay;
+
   private string _pathWorkspace;
   private string _pathExperimentEnvironment;
-  #endregion
-  #endregion
+
+    public event AsyncEventHandler? AsyncEvent;
+    #endregion
+    #endregion
 
 
 #pragma warning disable CS8618
-  public ConnectLabCar()
+    public ConnectLabCar(ILoggerDisplay loggerDisplay)
 #pragma warning restore CS8618
   {
     _pathWorkspace="";
     _pathExperimentEnvironment="";
+    _iloggerDisplay=loggerDisplay;
   }
 
   public void Initialization(string pathWorkspace, string pathExperimentEnvironment)
@@ -82,7 +87,9 @@ public class ConnectLabCar: IConnectLabCar
     ExperimentEnvironment.ShutDown();   // shut down the application
   }
 
-
+    public void InitializationConsole()=>_iloggerDisplay.InitializationConsole();
+    public void InitializationWindows()=>_iloggerDisplay.InitializationWindows();
+    public void Write(string str)=>_iloggerDisplay.Write(str);
 }
 
 

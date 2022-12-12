@@ -5,31 +5,48 @@ namespace LabCarContext20.Core.Config;
 
 public interface ICWriteLcBase
 {
-  string Signal { get; }
-  string Comment { get; }
+  string Signal { get; set; }
+  string Comment { get; set; }
+  void Inicialisation(string signal, string comment = "");
+
 }
 
 public class CWriteLcBase : ICWriteLcBase
 {
-  public string Signal { get;}
-  public string Comment { get;}
+  public string Signal { get; set; }
+  public string Comment { get; set;}
 
   public CWriteLcBase(string nameModel, string name, string comment="")
   {
     Comment = comment;
     Signal = $"{nameModel}/{name}/Value";
   }
+  public CWriteLcBase()  {  }
+
+  public void Inicialisation(string signal, string comment = "")
+  {
+    Signal = signal;
+    Comment = comment;
+  }
 }
 
 public class CWriteLcJson : ICWriteLcBase
 {
   [JsonPropertyName("Signal")]
-  public string Signal { get; }
+  public string Signal { get; set; }
   [JsonPropertyName("Comment")]
-  public string Comment { get; }
+  public string Comment { get; set; }
 
   [Newtonsoft.Json.JsonConstructor]
   public CWriteLcJson(string signal, string comment = "")
+  {
+    Signal = signal;
+    Comment = comment;
+  }
+  public CWriteLcJson()
+  {
+  }
+  public void Inicialisation(string signal, string comment = "")
   {
     Signal = signal;
     Comment = comment;
@@ -41,32 +58,55 @@ public class CWriteLc : CWriteLcJson
 {
   public string Name { get; set; }
   public ISignal? SignalParams { get; set; }
-  public CWriteLc(IConnectLabCar iConLabCar, string nameField, string signal, string comment = "") : base(signal, comment)
+  private IConnectLabCar _iConLabCar;
+  //public CWriteLc(IConnectLabCar iConLabCar, string nameField, string signal, string comment = "") : base(signal, comment)
+  //{
+  //  Name = nameField;
+  //  try
+  //  {
+  //    SignalParams = iConLabCar.SignalSources.CreateParameter(Signal);
+  //  }
+  //  catch (Exception e)
+  //  {
+  //    Console.WriteLine(e);
+  //    throw new MyException($" Error in {nameField} -> {Signal}", -2);
+  //  }
+  //}
+
+  public CWriteLc(IConnectLabCar iConLabCar) : base()
   {
+    _iConLabCar = iConLabCar;
+  }
+  public void Inicialization(string nameField, string signal, string comment = "")
+  {
+    base.Inicialisation(signal, comment);
     Name = nameField;
     try
     {
-      SignalParams = iConLabCar.SignalSources.CreateParameter(Signal);
+      SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);
     }
     catch (Exception e)
     {
-      Console.WriteLine(e);
+      _iConLabCar.Write(e.ToString());
       throw new MyException($" Error in {nameField} -> {Signal}", -2);
     }
   }
-  public CWriteLc(IConnectLabCar iConLabCar, string nameField, CWriteLcJson sourse) : base(sourse.Signal, sourse.Comment)
+
+  public void Inicialization(string nameField, CWriteLcJson sourse)
   {
+    base.Inicialisation(sourse.Signal, sourse.Comment);
     Name = nameField;
     try
     {
-        SignalParams = iConLabCar.SignalSources.CreateParameter(Signal);
+      SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
-        throw new MyException($" Error in {nameField} -> {Signal}", -2);
+      _iConLabCar.Write(e.ToString());
+      throw new MyException($" Error in {nameField} -> {Signal}", -2);
     }
   }
+
 
   public bool SetValue(dynamic value)
   {
@@ -83,8 +123,8 @@ public class CWriteLc : CWriteLcJson
     }
     catch (Exception e)
     {
-      Console.WriteLine($"- Error в SetValue установка переменных key-> {Name}  val-> {value}");
-      Console.WriteLine(e);
+      _iConLabCar.Write($"- Error в SetValue установка переменных key-> {Name}  val-> {value}");
+      _iConLabCar.Write(e.ToString());
       return false;
     }
   }

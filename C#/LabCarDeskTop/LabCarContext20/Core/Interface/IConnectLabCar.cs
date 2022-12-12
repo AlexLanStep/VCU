@@ -1,6 +1,6 @@
 ﻿namespace LabCarContext20.Core.Interface;
 
-public interface IConnectLabCar
+public interface IConnectLabCar: ILoggerDisplay
 {
     IExperimentEnvironment ExperimentEnvironment { get; set; }
     IWorkspace Workspace { get; set; }

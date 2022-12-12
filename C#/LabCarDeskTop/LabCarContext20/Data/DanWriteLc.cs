@@ -7,7 +7,7 @@ public interface IDanWriteLc
 
 }
 
-public class DanWriteLc : DanBase<>, IDanWriteLc
+public class DanWriteLc : DanBase<CWriteLc>, IDanWriteLc
 {
 }
 

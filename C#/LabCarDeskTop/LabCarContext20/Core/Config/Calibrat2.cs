@@ -42,22 +42,39 @@ public interface ICalibrations2
 {
   void LoadingCalibrations();
   void ActionCalibrations();
+  void Inicialisation(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat);
 }
 public class Calibrations2 : ICalibrations2
 {
   private IConnectLabCar _iConLabCar;
-  private ILoggerDisplay _iDisplay;
-  private string PathDirCalibration { get; }
+  private string PathDirCalibration; 
 
-  public Calibrations2(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  //public Calibrations2(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  //{
+  //  var container = ContainerManager.GetInstance();
+  //  _iConLabCar = container.LabCar.Resolve<IConnectLabCar>();
+  //  _iDisplay = container.LabCar.Resolve<ILoggerDisplay>();
+
+  //  var text = "";
+    
+  //  PathDirCalibration = pathDirCalibr + "\\"+nameCalibr+".dcm";
+
+  //  foreach (var (_, value) in dCalibrat)
+  //    text += value.Text;
+
+  //  File.WriteAllText(PathDirCalibration, text);
+  //}
+  public Calibrations2(IConnectLabCar iConLabCar)
   {
-    var container = ContainerManager.GetInstance();
-    _iConLabCar = container.LabCar.Resolve<IConnectLabCar>();
-    _iDisplay = container.LabCar.Resolve<ILoggerDisplay>();
+    _iConLabCar = iConLabCar;
+  }
+
+  public void Inicialisation(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  {
 
     var text = "";
-    
-    PathDirCalibration = pathDirCalibr + "\\"+nameCalibr+".dcm";
+
+    PathDirCalibration = pathDirCalibr + "\\" + nameCalibr + ".dcm";
 
     foreach (var (_, value) in dCalibrat)
       text += value.Text;
@@ -65,16 +82,16 @@ public class Calibrations2 : ICalibrations2
     File.WriteAllText(PathDirCalibration, text);
   }
 
+
   public void LoadingCalibrations()
   {
-
     try
     {
       _iConLabCar.Experiment.CalibrationController.LoadParameters(PathDirCalibration);
     }
     catch (Exception)
     {
-      _iDisplay.Write($" - Calibration c сылка {PathDirCalibration} загружена. -3 ");
+      _iConLabCar.Write($" - Calibration c сылка {PathDirCalibration} загружена. -3 ");
     }
 
     try
@@ -83,7 +100,7 @@ public class Calibrations2 : ICalibrations2
     }
     catch (Exception)
     {
-      _iDisplay.Write($" - Calibration c сылка {PathDirCalibration} загружена.. -3");
+      _iConLabCar.Write($" - Calibration c сылка {PathDirCalibration} загружена.. -3");
     }
 
   }
@@ -96,7 +113,7 @@ public class Calibrations2 : ICalibrations2
     }
     catch (Exception)
     {
-      _iDisplay.Write($" Problem with activating options {PathDirCalibration}");
+      _iConLabCar.Write($" Problem with activating options {PathDirCalibration}");
     }
   }
 

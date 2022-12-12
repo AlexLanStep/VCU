@@ -1,5 +1,4 @@
-﻿using LabCarContext20.Data;
-
+﻿
 namespace LabCarContext20.Core.Config;
 
 public interface ICReadLc
@@ -12,7 +11,7 @@ public class CReadLc : ReadLcJsonLoad
   public string NameField { get; set; }
   public ISignal? Measurement { get; set; }
   // ReSharper disable once InconsistentNaming
-  private IConnectLabCar IConLabCar { get; set; }
+  private IConnectLabCar _iConLabCar { get; set; }
   public dynamic? Valume
   {
     get
@@ -24,17 +23,18 @@ public class CReadLc : ReadLcJsonLoad
     }
   }
 
-  public CReadLc(IConnectLabCar iConLabCar, string nameField, ReadLcJsonLoad sourсe)
+  public CReadLc(IConnectLabCar iConLabCar)=> _iConLabCar = iConLabCar;
+
+  public void Inicialisaci(string nameField, ReadLcJsonLoad sourсe)
   {
     NameField = nameField;
     PathTask = sourсe.PathTask;
     TimeLabCar = sourсe.TimeLabCar;
     Comment = sourсe.Comment;
-    IConLabCar = iConLabCar;
 
     try
     {
-      Measurement = IConLabCar.SignalSources.CreateMeasurement(PathTask, TimeLabCar);
+      Measurement = _iConLabCar.SignalSources.CreateMeasurement(PathTask, TimeLabCar);
     }
     catch
     {
@@ -42,16 +42,14 @@ public class CReadLc : ReadLcJsonLoad
     }
 
   }
-  public CReadLc(IConnectLabCar iConLabCar, string nameField, string pathTask, string timeLabCar, string comment = "")
+  public void Inicialisaci(string nameField, string pathTask, string timeLabCar, string comment = "")
   {
-
     NameField = nameField;
     PathTask = pathTask;
     TimeLabCar = timeLabCar;
     Comment = comment;
-    IConLabCar = iConLabCar;
 
-    try { Measurement = IConLabCar.SignalSources.CreateMeasurement(PathTask, TimeLabCar); }
+    try { Measurement = _iConLabCar.SignalSources.CreateMeasurement(PathTask, TimeLabCar); }
     catch
     {
       Measurement = null;
