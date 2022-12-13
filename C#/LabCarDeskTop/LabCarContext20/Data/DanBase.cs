@@ -25,7 +25,7 @@ public class DanBase<T> : IDanBase<T> where T : class
   public dynamic? Get(string name)
     => cDan.TryGetValue(name, out var val) ? val : null;
 
-
+   
   public virtual void Run()
   {
   }

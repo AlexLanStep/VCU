@@ -20,11 +20,14 @@ public class ContainerManager
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
 
 
-//    LabCar.Register<IDanBase<CReadLC>, ReadLC>();
-    LabCar.Register<DanDanReadLc>(Reuse.Singleton);
-    LabCar.Register<DanValue>(Reuse.Singleton);
+    //    LabCar.Register<IDanBase<CReadLC>, ReadLC>();
     LabCar.Register<CReadLc>();
     LabCar.Register<CWriteLc>();
+
+    LabCar.Register<DanDanReadLc>(Reuse.Singleton);
+    LabCar.Register<DanValue>(Reuse.Singleton);
+    LabCar.Register<DanWriteLc>(Reuse.Singleton);
+
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);

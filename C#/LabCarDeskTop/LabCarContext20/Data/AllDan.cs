@@ -4,6 +4,8 @@ using LabCarContext20.Data.Interface;
 namespace LabCarContext20.Data;
 public delegate dynamic? GetInfo(string name);
 public delegate object GetTInfo(string name);
+public delegate bool SetTInfo(string name, dynamic data);
+
 //public delegate CReadLc? GetTInfo(string name);
 
 //public dynamic? Get(string name)
@@ -14,12 +16,15 @@ public class AllDan : IAllDan
 {
   private ConcurrentDictionary<string, GetInfo> _dGet = new();
   private ConcurrentDictionary<string, GetTInfo> _dGetT = new();
+  private ConcurrentDictionary<string, SetTInfo> _dSet = new();
   private DanDanReadLc _danReadLc; 
   private DanValue danValue;
-  public AllDan(DanDanReadLc danReadLc, DanValue danValue)
+  private DanWriteLc danWriteLc;
+  public AllDan(DanDanReadLc danReadLc, DanValue danValue, DanWriteLc danWriteLc)
   {
     this._danReadLc = danReadLc;
     this.danValue = danValue;
+    this.danWriteLc = danWriteLc;
   }
 
   public void Add<T>(string name, T dan)
@@ -42,6 +47,14 @@ public class AllDan : IAllDan
         _dGetT.AddOrUpdate(name, danValue.GetT, (s, o) => danValue.GetT);
         break;
       }
+      case "cwritelc":
+        {
+          danWriteLc.Add(name,  dan as CWriteLc);
+          _dSet.AddOrUpdate(name, danWriteLc.Set, (s, o) => danWriteLc.Set);
+//          var _zz = _dGet[name].Invoke(name);
+//          _dGetT.AddOrUpdate(name, danValue.GetT, (s, o) => danValue.GetT);
+          break;
+        }
 
     }
   }

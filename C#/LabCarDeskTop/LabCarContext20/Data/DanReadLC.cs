@@ -14,8 +14,11 @@ public interface IDanReadLc : IGetDan //: IDanBase<T> where T : class
 
 public class DanDanReadLc :  DanBase<CReadLc>, IDanReadLc
 {
+  private ContainerManager? _container = null;
+
   public DanDanReadLc(IConnectLabCar iconnectlc):base(iconnectlc)
   {
+    _container = ContainerManager.GetInstance();
   }
   public override void Run()
   {
@@ -26,10 +29,10 @@ public class DanDanReadLc :  DanBase<CReadLc>, IDanReadLc
 
   public  bool Add(string nameTask, string pathTask, string timeLabCar, string comment = "")
   {
-    var task = new CReadLc(iConnectLC, pathTask, timeLabCar, comment);
-    if (task.Measurement != null)
+    CReadLc _readLc = _container.LabCar.Resolve<CReadLc>().Inicialisaci(pathTask, timeLabCar, comment);
+    if (_readLc.Measurement != null)
     {
-      Add(nameTask, task);
+      Add(nameTask, _readLc);
       return true;
     }
     else

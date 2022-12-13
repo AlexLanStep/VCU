@@ -12,6 +12,7 @@ using LabCarContext20.Static;
 using LabCarContext20.Core.Config;
 using LabCarContext20.Data;
 using LabCarContext20.Data.Interface;
+using System.Xml.Linq;
 
 namespace LabCar20;
 
@@ -35,9 +36,9 @@ public class Program
     IAllDan _iAllDan = _container.LabCar.Resolve<IAllDan>();
 
     //danReadLc.Run();
-//    danReadLc.Add("11", "222", "2222", "222");
+    //    danReadLc.Add("11", "222", "2222", "222");
 
-    _iAllDan.Add<CReadLc>("axds", new CReadLc(_connectLabCar, "11", "222", "333", "44444"));
+    _iAllDan.Add<CReadLc>("axds", _container.LabCar.Resolve<CReadLc>().Inicialisaci("11", "222", "333", "44444"));
     dynamic? _xxx = _iAllDan.Get("axds");
 
     CReadLc _cReadLc = (CReadLc) _iAllDan.GetT<CReadLc>("axds");

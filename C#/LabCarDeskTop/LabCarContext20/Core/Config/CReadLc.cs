@@ -25,7 +25,7 @@ public class CReadLc : ReadLcJsonLoad
 
   public CReadLc(IConnectLabCar iConLabCar)=> _iConLabCar = iConLabCar;
 
-  public void Inicialisaci(string nameField, ReadLcJsonLoad sourсe)
+  public CReadLc Inicialisaci(string nameField, ReadLcJsonLoad sourсe)
   {
     NameField = nameField;
     PathTask = sourсe.PathTask;
@@ -40,9 +40,9 @@ public class CReadLc : ReadLcJsonLoad
     {
       Measurement = null;
     }
-
+    return this;
   }
-  public void Inicialisaci(string nameField, string pathTask, string timeLabCar, string comment = "")
+  public CReadLc Inicialisaci(string nameField, string pathTask, string timeLabCar, string comment = "")
   {
     NameField = nameField;
     PathTask = pathTask;
@@ -54,7 +54,7 @@ public class CReadLc : ReadLcJsonLoad
     {
       Measurement = null;
     }
-
+    return this;
   }
 }
 

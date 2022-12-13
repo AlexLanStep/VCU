@@ -77,7 +77,7 @@ public class CWriteLc : CWriteLcJson
   {
     _iConLabCar = iConLabCar;
   }
-  public void Inicialization(string nameField, string signal, string comment = "")
+  public CWriteLc Inicialization(string nameField, string signal, string comment="")
   {
     base.Inicialisation(signal, comment);
     Name = nameField;
@@ -90,9 +90,10 @@ public class CWriteLc : CWriteLcJson
       _iConLabCar.Write(e.ToString());
       throw new MyException($" Error in {nameField} -> {Signal}", -2);
     }
+    return this;
   }
 
-  public void Inicialization(string nameField, CWriteLcJson sourse)
+  public CWriteLc Inicialization(string nameField, CWriteLcJson sourse)
   {
     base.Inicialisation(sourse.Signal, sourse.Comment);
     Name = nameField;
@@ -105,6 +106,7 @@ public class CWriteLc : CWriteLcJson
       _iConLabCar.Write(e.ToString());
       throw new MyException($" Error in {nameField} -> {Signal}", -2);
     }
+    return this;
   }
 
 
