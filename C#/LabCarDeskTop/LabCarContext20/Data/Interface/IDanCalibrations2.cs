@@ -1,5 +1,4 @@
-﻿using LabCarContext20.Core.Config;
-
+﻿
 namespace LabCarContext20.Data.Interface;
 
 public interface IDanCalibrations2 : IGetDan //: IDanBase<T> where T : class

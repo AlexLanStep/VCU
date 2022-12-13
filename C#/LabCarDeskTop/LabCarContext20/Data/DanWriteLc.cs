@@ -24,7 +24,7 @@ public class DanWriteLc : DanBase<CWriteLc>, IDanWriteLc
     return true;
   }
 
-  public bool Add(string nameParama, CWriteLc param)
+  public bool Add(string nameParama, CWriteLc? param)
   { 
     base.Add(nameParama, param);
     return true;

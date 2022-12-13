@@ -1,7 +1,4 @@
 ﻿
-using LabCarContext20.Core.Config;
-using LabCarContext20.Data.Interface;
-
 namespace LabCarContext20.Data;
 
 public class DanCalibrations2: DanBase<Calibrations2>, IDanCalibrations2

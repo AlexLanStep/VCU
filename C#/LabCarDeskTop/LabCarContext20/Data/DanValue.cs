@@ -1,9 +1,5 @@
 ﻿
-using LabCarContext20.Core.Config;
-using LabCarContext20.Data.Interface;
-
 namespace LabCarContext20.Data;
-
 
 public interface IDanValue : IGetDan 
 {
@@ -14,6 +10,8 @@ public interface IDanValue : IGetDan
 
 public class DanValue : DanBase<dynamic>, IDanValue
 {
+  // ReSharper disable once EmptyConstructor
+  // ReSharper disable once RedundantBaseConstructorCall
   public DanValue() : base()
   {
   }

@@ -1,15 +1,8 @@
 ﻿
 using System.Text.Json.Serialization;
+using LabCarContext20.Core.Config.Interface;
 
 namespace LabCarContext20.Core.Config;
-
-public interface ICalibrationsJson
-{
-  string Signal { get; }
-  dynamic Val { get;}
-  string Comment { get; }
-  string Text { get; }
-}
 
 public class Calibrations2Json : ICalibrationsJson
 {
@@ -42,14 +35,71 @@ public interface ICalibrations2
 {
   void LoadingCalibrations();
   void ActionCalibrations();
-  void Inicialisation(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat);
+  Calibrations2 Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat);
 }
 public class Calibrations2 : ICalibrations2
 {
   private IConnectLabCar _iConLabCar;
-  private string PathDirCalibration; 
+  private string _pathDirCalibration; 
 
-  //public Calibrations2(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  public Calibrations2(IConnectLabCar iConLabCar)
+  {
+    _pathDirCalibration = "";
+    _iConLabCar = iConLabCar;
+  }
+
+  public Calibrations2 Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  {
+    var text = "";
+
+    _pathDirCalibration = pathDirCalibr + "\\" + nameCalibr + ".dcm";
+
+    foreach (var (_, value) in dCalibrat)
+      text += value.Text;
+
+    File.WriteAllText(_pathDirCalibration, text);
+    return this;
+  }
+
+
+  public void LoadingCalibrations()
+  {
+    try
+    {
+      _iConLabCar.Experiment.CalibrationController.LoadParameters(_pathDirCalibration);
+    }
+    catch (Exception)
+    {
+      _iConLabCar.Write($" - Calibration c сылка {_pathDirCalibration} загружена. -3 ");
+    }
+
+    try
+    {
+      _iConLabCar.Experiment.AddFile(_pathDirCalibration);
+    }
+    catch (Exception)
+    {
+      _iConLabCar.Write($" - Calibration c сылка {_pathDirCalibration} загружена.. -3");
+    }
+
+  }
+
+  public void ActionCalibrations()
+  {
+    try
+    {
+      _iConLabCar.Experiment.ActivateFile(_pathDirCalibration, true);
+    }
+    catch (Exception)
+    {
+      _iConLabCar.Write($" Problem with activating options {_pathDirCalibration}");
+    }
+  }
+}
+
+
+/*
+   //public Calibrations2(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
   //{
   //  var container = ContainerManager.GetInstance();
   //  _iConLabCar = container.LabCar.Resolve<IConnectLabCar>();
@@ -64,60 +114,6 @@ public class Calibrations2 : ICalibrations2
 
   //  File.WriteAllText(PathDirCalibration, text);
   //}
-  public Calibrations2(IConnectLabCar iConLabCar)
-  {
-    _iConLabCar = iConLabCar;
-  }
 
-  public void Inicialisation(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
-  {
-
-    var text = "";
-
-    PathDirCalibration = pathDirCalibr + "\\" + nameCalibr + ".dcm";
-
-    foreach (var (_, value) in dCalibrat)
-      text += value.Text;
-
-    File.WriteAllText(PathDirCalibration, text);
-  }
-
-
-  public void LoadingCalibrations()
-  {
-    try
-    {
-      _iConLabCar.Experiment.CalibrationController.LoadParameters(PathDirCalibration);
-    }
-    catch (Exception)
-    {
-      _iConLabCar.Write($" - Calibration c сылка {PathDirCalibration} загружена. -3 ");
-    }
-
-    try
-    {
-      _iConLabCar.Experiment.AddFile(PathDirCalibration);
-    }
-    catch (Exception)
-    {
-      _iConLabCar.Write($" - Calibration c сылка {PathDirCalibration} загружена.. -3");
-    }
-
-  }
-
-  public void ActionCalibrations()
-  {
-    try
-    {
-      _iConLabCar.Experiment.ActivateFile(PathDirCalibration, true);
-    }
-    catch (Exception)
-    {
-      _iConLabCar.Write($" Problem with activating options {PathDirCalibration}");
-    }
-  }
-
-
-}
-
-
+ 
+ */

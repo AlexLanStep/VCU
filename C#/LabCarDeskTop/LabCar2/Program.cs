@@ -38,7 +38,7 @@ public class Program
     //danReadLc.Run();
     //    danReadLc.Add("11", "222", "2222", "222");
 
-    _iAllDan.Add<CReadLc>("axds", _container.LabCar.Resolve<CReadLc>().Inicialisaci("11", "222", "333", "44444"));
+    _iAllDan.Add<CReadLc>("axds", _container.LabCar.Resolve<CReadLc>().Initialization("11", "222", "333", "44444"));
     dynamic? _xxx = _iAllDan.Get("axds");
 
     CReadLc _cReadLc = (CReadLc) _iAllDan.GetT<CReadLc>("axds");
