@@ -13,6 +13,7 @@ using LabCarContext20.Core.Config;
 using LabCarContext20.Data;
 using LabCarContext20.Data.Interface;
 using System.Xml.Linq;
+using LabCarContext20.Core.Ari;
 
 namespace LabCar20;
 
@@ -28,6 +29,14 @@ public class Program
 
     iDisplay.InitializationConsole();
     iDisplay.Write("__ Start program LabCar ver - 2.0 ");
+
+    IArithmetic _iaPattern = _container.LabCar.Resolve<IArithmetic>();
+
+    //      string s00x = "(((ww > 33.4) & (ee < (44,3+eee))) | (3>e)) & (r~=t)";
+    string s00x = "(r~=t))";
+
+    _iaPattern.Initialization(s00x);
+
 
     IConnectLabCar _connectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
     //    _connectLabCar.Initialization(path1, path2);

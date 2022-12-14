@@ -12,6 +12,7 @@ public class ContainerManager
 
     LabCar.Register<ILoggerDisplay, LoggerDisplay>(Reuse.Singleton);
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
+    LabCar.Register<IArithmetic, Arithmetic>();
 
     LabCar.Register<CReadLc>();
     LabCar.Register<CWriteLc>();
