@@ -7,14 +7,20 @@ using DryIoc;
 using DryIoc.ImTools;
 using System;
 
+using System.Text;
 using System.Text.RegularExpressions;
 
 
 namespace TestDelegate // Note: actual namespace depends on the project name.
 {
 
-    internal class Program
+  internal class Program
   {
+    private static string _ptAllSim0 = @"[\+\-\*\/\(\)]";
+    private static string _ptAllSim1 = @"[\+\-\*\/]";
+    private static string _ptAllif = @"([\>\<])|([~=]=)";
+    private static string _ptEq = @"[~=]=";
+
     private static ContainerManager _container = null!;
 
     static void TestType<T>(T signal)
@@ -37,6 +43,13 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //}
 
     }
+
+    private static Func<string, string, (bool, int)> _f00 = (s0, s1) =>
+    {
+      var count = Regex.Matches(s0, s1, RegexOptions.IgnoreCase).Count;
+      return (count > 0, count);
+    };
+
     static void Main(string[] args)
     {
       //      var str = "В строке есть числа 24 222256 21 243";
@@ -45,8 +58,22 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //      string[] resultarr = str.Where(x => int.TryParse(x, out _tmp)).ToArray();
 
 
-
       //      ss11; ds1; sas; ss11; ee1
+
+//      string s00x = "(((ww > 33.4) & (ee < (44,3+eee))) | (3>e)) & (r~=t)";
+      string s00x = "(r~=t)";
+      string s01x = "www = (5+ ss11 - ds1 - 21.2)*2.0 ";
+      s00x = s00x.ToLower().Trim().Replace(" ", "");
+      s01x = s01x.ToLower().Trim().Replace(" ", "");
+      var p0s = _f00(s00x, _ptAllSim1);
+      var p0if0 = _f00(s00x, _ptEq);
+      var p0if1 = _f00(s00x, _ptAllif);
+      var p10 = _f00(s01x, _ptAllif);
+
+      //      var p110 = _f00(s00x, _ptAllif0);
+      //      var p111 = _f00(s00x, _ptAllif1);
+
+
       Console.WriteLine(" ----  ---");
       StArithmetic.TestIniciallDan();
       //      var _x = new OneElement("ee =(5+ ss11 - ds1 - 21.2)*2.0 - 66 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8)/7.3").FuncCalc();
