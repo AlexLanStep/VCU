@@ -1,4 +1,6 @@
 ﻿
+using System.Reactive.Joins;
+
 namespace LabCarContext20.Core.Ari;
 
 public class AriPattern
@@ -9,11 +11,11 @@ public class AriPattern
   private string _ptEq = @"=";
 
   private string _ptPlusMin = @"[\+\-]";
-  private string _ptUmnDiv = @"[\*\/]";
+  private string _ptMultiDiv = @"[\*\/]";
   private string _ptDestv = @"[\+\-\*\/]";
   private string _ptLifet = @"\(";
   private string _ptRite = @"\)";
-  private string _ptScobki = @"[\(\)]";
+  private string _ptBrakets = @"[\(\)]";
   private string _ptNoPlusMin = @"[\*\/\(\)]";
   private string _ptAllSim = @"[\+\-\*\/\(\)]";
 
@@ -26,38 +28,49 @@ public class AriPattern
     return (count > 0, count);
   };
 
-  public (bool, int) IsScobki(string str) => _f00(str, _ptScobki);
+  public (bool, int) IsBrakets(string str) => _f00(str, _ptBrakets);
+
+  public (bool, int) IsEq(string str) => _f00(str, _ptEq);
 
   public (bool, int) IsDestv(string str) => _f00(str, _ptDestv);
 
   public (bool, int) IsAllSin(string str) => _f00(str, _ptAllSim);
   public (bool, int) IsPlusMin(string str) => _f00(str, _ptPlusMin);
+  public (bool, int) IsMultiDiv(string str) => _f00(str, _ptMultiDiv);
   public List<string> ArrayPlusMin(string str)
     => Regex.Matches(str, _ptPlusMin, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
 
   public List<string> SplitPlusMin(string str)
     => Regex.Split(str, _ptPlusMin, RegexOptions.IgnoreCase).ToList();
-  public (bool, int) IsUmnDiv(string str) => _f00(str, _ptUmnDiv);
+  public (bool, int) IsUmnDiv(string str) => _f00(str, _ptMultiDiv);
   public List<string> SplitMultiDiv(string str)
-    => Regex.Split(str, _ptUmnDiv, RegexOptions.IgnoreCase).ToList();
+    => Regex.Split(str, _ptMultiDiv, RegexOptions.IgnoreCase).ToList();
   public List<string> ArrayMultiDiv(string str)
-    => Regex.Matches(str, _ptUmnDiv, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
+    => Regex.Matches(str, _ptMultiDiv, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
 
   public List<string> SplitDigital(string str)
     => Regex.Split(str, _ptDestv, RegexOptions.IgnoreCase).ToList();
 
   public (bool, int) IsNoPlusMin(string str) => _f00(str, _ptNoPlusMin);
 
+  public List<int> BraketsX(string str, string pattern)=>
+      Regex.Matches(str, pattern, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
+  public List<int> BraketsLeftCount(string str) => BraketsX(str, _ptLifet);
+  public List<int> BraketsRiteCount(string str) => BraketsX(str, _ptRite);
+  public bool IsErrorLogicAndMulti(string str)=>
+      _f00(str, _ptif).Item1 && IsMultiDiv(str).Item1;
+    
+  
   
 
   public bool? TestInputStr(string str)
   {
 
-    var _scop = IsScobki(str);
+    var _scop = IsBrakets(str);
     if (_scop.Item1)
     {
       if (_scop.Item2 % 2 != 0)
-        throw new MyException($" В шаге стратегии не соответствует кол-во скобок \n {str}  ", -2);
+        throw new MyException($" В стратегии не соответствует кол-во скобок \n {str}  ", -2);
     }
 
     if (_f00(str, _ptif).Item1) return false;

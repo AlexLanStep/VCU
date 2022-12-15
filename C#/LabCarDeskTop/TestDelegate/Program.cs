@@ -21,6 +21,11 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
     private static string _ptAllif = @"([\>\<])|([~=]=)";
     private static string _ptEq = @"[~=]=";
 
+    private static string _test1 = @"([\>\<])|([~=]=)";
+
+//    private static string _ptNotMult = @"([=*])|([=\/])";
+    private static string _ptNotMult = @"=*";
+
     private static ContainerManager _container = null!;
 
     static void TestType<T>(T signal)
@@ -61,14 +66,16 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //      ss11; ds1; sas; ss11; ee1
 
 //      string s00x = "(((ww > 33.4) & (ee < (44,3+eee))) | (3>e)) & (r~=t)";
-      string s00x = "(r~=t)";
-      string s01x = "www = (5+ ss11 - ds1 - 21.2)*2.0 ";
-      s00x = s00x.ToLower().Trim().Replace(" ", "");
-      s01x = s01x.ToLower().Trim().Replace(" ", "");
-      var p0s = _f00(s00x, _ptAllSim1);
-      var p0if0 = _f00(s00x, _ptEq);
-      var p0if1 = _f00(s00x, _ptAllif);
-      var p10 = _f00(s01x, _ptAllif);
+      string s00x = "(r~=*t)";
+//      string s01x = "www = (5+ ss11 - ds1 - 21.2)*2.0 ";
+//      s00x = s00x.ToLower().Trim().Replace(" ", "");
+      //s01x = s01x.ToLower().Trim().Replace(" ", "");
+      //var p0s = _f00(s00x, _ptAllSim1);
+      //var p0if0 = _f00(s00x, _ptEq);
+      //var p0if1 = _f00(s00x, _ptAllif);
+      //var p10 = _f00(s01x, _ptAllif);
+      var p10 = _f00(s00x, _ptNotMult);
+      
 
       //      var p110 = _f00(s00x, _ptAllif0);
       //      var p111 = _f00(s00x, _ptAllif1);

@@ -12,6 +12,7 @@ public class Arithmetic : IArithmetic
 {
 
   public AriPattern APattern { get; set; }
+  private CollapseBrackets collapseBrackets;
   private string _str;
   private bool? _isCase = null;
   private readonly ILoggerDisplay _iDisplay;
@@ -20,11 +21,12 @@ public class Arithmetic : IArithmetic
   {
     _iDisplay = iDisplay;
     APattern = new AriPattern();
+    collapseBrackets = new CollapseBrackets();
   }
 
   public Arithmetic Initialization(string str)
   {
-    _str = str;
+    _str = str.Replace(" ", "");
     var _isSymbol = APattern.TestInputStr(_str);
     if (_isSymbol == null)
     {
@@ -32,16 +34,51 @@ public class Arithmetic : IArithmetic
       throw new MyException(" Проблема в строке (в стратегии)! ", -10);
     }
 
-    if(_isSymbol.Value)
+    DanCollapseBrakets? _collapseBrakets;
+    if (_isSymbol.Value)
     {
       _iDisplay.Write("Строка вычислений ");
+      _collapseBrakets = collapseBrackets.CalcBrakets(TypeCollapseBrakets.Matimatic, _str);
     }
     else
     {
       _iDisplay.Write("Строка условий ");
+      _collapseBrakets = collapseBrackets.CalcBrakets(TypeCollapseBrakets.Logical, _str);
+
     }
 
     return this;
   }
 }
 
+/*
+ 
+     BasaCommanda = scobki;
+    while (StArithmetic.IsScobki(scobki).Item1)
+    {
+      var st0 = scobki;
+      var xScop = StArithmetic.ScobkiX(scobki);
+
+      if (xScop.Count <= 0)
+        continue;
+
+      var x0 = xScop.ElementAt(0);
+
+      var ssx = scobki.Substring(x0.Item1, x0.Item2 - x0.Item1 + 1);
+      var nameTreeX = _nameTree + _indexCom;
+      st0 = st0.Replace(ssx, nameTreeX);
+      ssx = ssx.Replace("(", "").Replace(")", "");
+
+      var cv = new CVariable(nameTreeX + "=" + ssx);
+      if (!cv.IsValue)
+        StArithmetic.DVarCommand.AddOrUpdate(nameTreeX, cv, (_, _) => cv);
+
+      xScop.RemoveAt(0);
+      scobki = st0;
+      _indexCom++;
+    }
+    BasaCommanda = scobki;
+
+ 
+ 
+ */
