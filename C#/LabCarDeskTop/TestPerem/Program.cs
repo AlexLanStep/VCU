@@ -1,4 +1,5 @@
 ﻿
+using LabCarContext20.Core.Ari;
 using System.Text.RegularExpressions;
 
 namespace TestDelegate // Note: actual namespace depends on the project name.
@@ -64,6 +65,18 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       string s = typeof(T).Name;
       var d = signal;
 
+      switch (typeof(T).Name)
+      {
+        case "CVariable":
+          int iii = 1;
+          break;
+        case "CVariableLogic":
+          int iii11 = 2;
+          break;
+        default:
+          break;
+      }
+
       Console.WriteLine($"  {s}  {signal} ");
       //string name = ((T)d).I
       //(string, string) s001;
@@ -84,7 +97,9 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
 
     static void Main(string[] args)
     {
-      //TestType1<dynamic>("dynamic");
+      TestType1<CVariable>("dynamic");
+      TestType1<CVariableLogic>("dynamic");
+
       //TestType1<string>("string");
       //TestType1<bool>("bool");
       //TestType1<Aa>("Aa");

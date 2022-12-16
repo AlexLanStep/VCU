@@ -24,7 +24,7 @@ public class Arithmetic : IArithmetic
     collapseBrackets = new CollapseBrackets();
   }
 
-  public Arithmetic Initialization(string str)
+  public Arithmetic? Initialization(string str)
   {
     _str = str.Replace(" ", "");
     var _isSymbol = APattern.TestInputStr(_str);
@@ -34,17 +34,17 @@ public class Arithmetic : IArithmetic
       throw new MyException(" Проблема в строке (в стратегии)! ", -10);
     }
 
-    DanCollapseBrakets? _collapseBrakets;
+//    DanCollapseBrakets? _collapseBrakets;
     if (_isSymbol.Value)
     {
       _iDisplay.Write("Строка вычислений ");
-      _collapseBrakets = collapseBrackets.CalcBrakets(TypeCollapseBrakets.Matimatic, _str);
+      var _collapseBrakets = collapseBrackets.CalcBrakets<CVariable>(_str);
     }
     else
     {
       _iDisplay.Write("Строка условий ");
-      _collapseBrakets = collapseBrackets.CalcBrakets(TypeCollapseBrakets.Logical, _str);
-
+      var _collapseBrakets = collapseBrackets.CalcBrakets<CVariableLogic>(_str);
+      if (_collapseBrakets == null) return null;
     }
 
     return this;

@@ -66,7 +66,7 @@ namespace TestDelegate // Note: actual namespace depends on the project name.
       //      ss11; ds1; sas; ss11; ee1
 
 //      string s00x = "(((ww > 33.4) & (ee < (44,3+eee))) | (3>e)) & (r~=t)";
-      string s00x = "(r~=*t)";
+      string s00x = "(r~=-t)";
 //      string s01x = "www = (5+ ss11 - ds1 - 21.2)*2.0 ";
 //      s00x = s00x.ToLower().Trim().Replace(" ", "");
       //s01x = s01x.ToLower().Trim().Replace(" ", "");

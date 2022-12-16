@@ -13,7 +13,7 @@ public class CVariable
     stcomand = stcomand.Replace(" ", "").Replace(",", ".");
     var ss = stcomand.Split('=');
     if (ss.Length != 2)
-      throw new MyException($"Не правильный формат переменных в разборе арефметической строки -> {stcomand}", -5);
+      throw new MyException($"Неправильный формат переменных в разборе арефметической строки -> {stcomand}", -5);
     Name = ss[0];
     StValue = ss[1];
     Value = null;
