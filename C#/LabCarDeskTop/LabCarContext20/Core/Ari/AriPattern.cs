@@ -12,6 +12,7 @@ public class AriPattern
 
   private string _ptPlusMin = @"[\+\-]";
   private string _ptMultiDiv = @"[\*\/]";
+  private string _ptMultiDivZnak = @"[\*\/]-";
   private string _ptDestv = @"[\+\-\*\/]";
   private string _ptLifet = @"\(";
   private string _ptRite = @"\)";
@@ -37,12 +38,15 @@ public class AriPattern
   public (bool, int) IsAllSin(string str) => _f00(str, _ptAllSim);
   public (bool, int) IsPlusMin(string str) => _f00(str, _ptPlusMin);
   public (bool, int) IsMultiDiv(string str) => _f00(str, _ptMultiDiv);
+  public (bool, int) IsMultiDivZnak(string str) => _f00(str, _ptMultiDivZnak);
+
+
   public List<string> ArrayPlusMin(string str)
     => Regex.Matches(str, _ptPlusMin, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
 
   public List<string> SplitPlusMin(string str)
     => Regex.Split(str, _ptPlusMin, RegexOptions.IgnoreCase).ToList();
-  public (bool, int) IsUmnDiv(string str) => _f00(str, _ptMultiDiv);
+//  public (bool, int) IsUmnDiv(string str) => _f00(str, _ptMultiDiv);
   public List<string> SplitMultiDiv(string str)
     => Regex.Split(str, _ptMultiDiv, RegexOptions.IgnoreCase).ToList();
   public List<string> ArrayMultiDiv(string str)

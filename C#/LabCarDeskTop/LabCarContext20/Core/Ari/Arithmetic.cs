@@ -11,34 +11,54 @@ public interface IArithmetic
 public class Arithmetic : IArithmetic
 {
 
-  public AriPattern APattern { get; set; }
+//  public readonly AriPattern APattern  = new AriPattern();
+  public readonly AriLogicCall ALogicCall;
+
   private CollapseBrackets collapseBrackets;
   private string _str;
-  private bool? _isCase = null;
+//  private bool? _isCase = null;
   private readonly ILoggerDisplay _iDisplay;
-
-  public Arithmetic(ILoggerDisplay iDisplay)
+  private readonly IAllDan _iallDan;
+  public Arithmetic(ILoggerDisplay iDisplay, IAllDan iallDan)
   {
+    _iallDan = iallDan;
     _iDisplay = iDisplay;
-    APattern = new AriPattern();
+//    APattern = new AriPattern();
     collapseBrackets = new CollapseBrackets();
+    ALogicCall = new AriLogicCall(iallDan);
   }
+
 
   public Arithmetic? Initialization(string str)
   {
     _str = str.Replace(" ", "");
-    var _isSymbol = APattern.TestInputStr(_str);
+    var _isSymbol = ALogicCall.TestInputStr(_str);
     if (_isSymbol == null)
     {
 //      _iDisplay.Write(s);
       throw new MyException(" Проблема в строке (в стратегии)! ", -10);
     }
 
-//    DanCollapseBrakets? _collapseBrakets;
     if (_isSymbol.Value)
     {
       _iDisplay.Write("Строка вычислений ");
       var _collapseBrakets = collapseBrackets.CalcBrakets<CVariable>(_str);
+      foreach (var it in _collapseBrakets.LBrakets)
+      {
+        string _key = it;
+        string sval = _collapseBrakets.DBrakets[it].StrCommand;
+        dynamic? d = ALogicCall.InputStrArifmet(sval, _collapseBrakets.DBrakets);
+        if (d == null)
+        {
+          throw new MyException($" Error in string, no variable {sval} ", -20);
+        }
+        else
+        {
+          var _z0 = _collapseBrakets.DBrakets[it];
+          _z0.Value = d;
+          _collapseBrakets.DBrakets[it] = _z0;
+        }
+      }
     }
     else
     {

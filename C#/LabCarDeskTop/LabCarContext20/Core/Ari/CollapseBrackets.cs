@@ -15,7 +15,7 @@ public class CollapseBrackets
 {
   private TypeCollapseBrakets _tb;
   private readonly AriPattern _aPattern = new();
-  public DanCollapseBrakets<T>? CalcBrakets<T>(string str) where T : ICVariableBasa, new()
+  public DanCollapseBrakets<T>? CalcBrakets<T>(string str) where T : ICVariableBase, new()
   {
     _tb = (typeof(T).Name) switch {
       "CVariable" => TypeCollapseBrakets.Matimatic,
@@ -33,7 +33,7 @@ public class CollapseBrackets
     if (_aPattern.IsErrorLogicAndMulti(str))
       return null;
 
-    string _nameEnd = "end";
+    string _nameEnd = "if";
     if (_tb == TypeCollapseBrakets.Matimatic)
     {
       string[] s = str.Split('=');
@@ -48,9 +48,9 @@ public class CollapseBrackets
     return dcb;
   }
 
-  private DanCollapseBrakets<T>? calcBrakets<T>(string str) where T : ICVariableBasa, new()
+  private DanCollapseBrakets<T>? calcBrakets<T>(string str) where T : ICVariableBase, new()
   {
-    string _nameEnd = "end";
+    string _nameEnd = "if";
 
     if(_tb == TypeCollapseBrakets.Matimatic)
     {
@@ -81,7 +81,7 @@ public class CollapseBrackets
       if (dcb.DBrakets.ContainsKey(nameTreeX))
       { 
         var _x0 =  dcb.DBrakets[nameTreeX]; 
-        ((ICVariableBasa) _x0).StrComand = ssx;
+        ((ICVariableBase) _x0).StrCommand = ssx;
         dcb.DBrakets[nameTreeX] = _x0;
       }
       else
@@ -90,8 +90,11 @@ public class CollapseBrackets
           return null;
 
         var _x01 = new T();
-        _x01.Instal(_nameEnd, str);
-        dcb.DBrakets.Add(_nameEnd, _x01);
+        _x01.Instal(nameTreeX, ssx);
+        if (dcb.DBrakets.ContainsKey(nameTreeX))
+          dcb.DBrakets[nameTreeX] = _x01;
+        else
+          dcb.DBrakets.Add(nameTreeX, _x01);
       }
 
       xScop.RemoveAt(0);

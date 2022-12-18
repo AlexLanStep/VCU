@@ -23,6 +23,8 @@ public class Program
 
   static void Main(string[] args)
   {
+    string ssss = "-2,4";
+    double.TryParse(ssss, out var rez);
 
     _container = ContainerManager.GetInstance();
     var iDisplay = _container.LabCar.Resolve<ILoggerDisplay>();

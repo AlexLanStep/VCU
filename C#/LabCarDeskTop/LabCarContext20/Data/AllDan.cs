@@ -60,8 +60,19 @@ public class AllDan : IAllDan
   }
 #pragma warning restore CS8600
 
-  public dynamic? Get(string name) => _dGet[name].Invoke(name);
-  
+  public dynamic? Get(string name)
+  {
+    try
+    {
+      dynamic _d = _dGet[name].Invoke(name);
+      return _d;
+    }
+    catch (Exception e)
+    {
+      return null;
+    }
+  }
+
 }
 
 
