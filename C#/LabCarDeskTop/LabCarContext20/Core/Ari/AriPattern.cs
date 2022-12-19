@@ -40,7 +40,6 @@ public class AriPattern
   public (bool, int) IsMultiDiv(string str) => _f00(str, _ptMultiDiv);
   public (bool, int) IsMultiDivZnak(string str) => _f00(str, _ptMultiDivZnak);
 
-
   public List<string> ArrayPlusMin(string str)
     => Regex.Matches(str, _ptPlusMin, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
 
@@ -63,9 +62,29 @@ public class AriPattern
   public List<int> BraketsRiteCount(string str) => BraketsX(str, _ptRite);
   public bool IsErrorLogicAndMulti(string str)=>
       _f00(str, _ptif).Item1 && IsMultiDiv(str).Item1;
-    
-  
-  
+
+  public bool IsDigitString(string str) =>
+  str.Replace(".", "")
+    .Replace(",", "")
+    .Aggregate(true, (current, x) => current & char.IsDigit(x));
+
+  public dynamic? StringToDynamic(string str)
+  {
+    if (!IsDigitString(str.Replace("-", ""))) return null;
+
+    str = str.Replace('.', ',');
+
+    if (str.IndexOf(',') > 0)
+    {
+      var isR = double.TryParse(str.Replace('.', ','), out var rez);
+      return isR ? rez : null;
+    }
+    else
+    {
+      var isR = int.TryParse(str, out var rez);
+      return isR ? rez : null;
+    }
+  }
 
   public bool? TestInputStr(string str)
   {

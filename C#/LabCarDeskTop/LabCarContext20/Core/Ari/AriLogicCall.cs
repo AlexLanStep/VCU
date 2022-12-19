@@ -18,36 +18,6 @@ public class AriLogicCall: AriPattern
   public virtual bool ResultLe(dynamic x0, dynamic x1) => x0 <= x1; // <= 
   public virtual bool ResultLt(dynamic x0, dynamic x1) => x0 < x1; // < 
 
-  public bool IsDigitString(string str)=>
-    str.Replace(".", "")
-      .Replace(",", "")
-      .Aggregate(true, (current, x) => current & char.IsDigit(x));
-  
-
-
-//  {
-//    str = str.Replace(".", "").Replace(",", "");
-////    var s0 = str.IndexOf('.') > 0 ? str.Replace(".", ",") : str;
-//    return str.Aggregate(true, (current, x) => current & char.IsDigit(x));
-//  }
-
-  public dynamic? StringToDynamic(string str)
-  {
-    if (!IsDigitString(str.Replace("-",""))) return null;
-
-    str = str.Replace('.', ',');
-
-    if (str.IndexOf(',') > 0)
-    {
-      var isR = double.TryParse(str.Replace('.', ','), out var rez);
-      return isR ? rez : null;
-    }
-    else
-    {
-      var isR = int.TryParse(str, out var rez);
-      return isR ? rez : null;
-    }
-  }
   public dynamic? CalcElemrnt(dynamic? d0, dynamic? d1, string sim)
   {
     return sim.Trim() switch
@@ -95,8 +65,15 @@ public class AriLogicCall: AriPattern
         }
         else
           str = str.Replace(it, Convert.ToString(dan.Value));
-
+        continue;
       }
+      dynamic? _d = _iallDan.Get(it);
+      if (_d != null)
+      {
+        str = str.Replace(it, Convert.ToString(_d));
+        continue;
+      }
+
     }
 
     string str0 = ReplaseMultiDiv(str);
@@ -163,9 +140,10 @@ public class AriLogicCall: AriPattern
         continue;
       }
 
-      if (dVariables.ContainsKey(_key0) != null)
+//      if (dVariables.ContainsKey(_key0) != null)
+      if (dVariables.ContainsKey(_key0))
       {
-        xd[i] = dVariables[_key0].Value;
+         xd[i] = dVariables[_key0].Value;
         i++;
         continue;
       }

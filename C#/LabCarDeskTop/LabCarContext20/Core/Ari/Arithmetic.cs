@@ -6,6 +6,8 @@ namespace LabCarContext20.Core.Ari;
 public interface IArithmetic
 {
   Arithmetic Initialization(string str);
+  dynamic? Result { get; set; }
+
 }
 
 public class Arithmetic : IArithmetic
@@ -19,6 +21,7 @@ public class Arithmetic : IArithmetic
 //  private bool? _isCase = null;
   private readonly ILoggerDisplay _iDisplay;
   private readonly IAllDan _iallDan;
+  public dynamic? Result { get; set; }
   public Arithmetic(ILoggerDisplay iDisplay, IAllDan iallDan)
   {
     _iallDan = iallDan;
@@ -26,11 +29,14 @@ public class Arithmetic : IArithmetic
 //    APattern = new AriPattern();
     collapseBrackets = new CollapseBrackets();
     ALogicCall = new AriLogicCall(iallDan);
+    Result = null;
+
   }
 
 
   public Arithmetic? Initialization(string str)
   {
+    Result = null;
     _str = str.Replace(" ", "");
     var _isSymbol = ALogicCall.TestInputStr(_str);
     if (_isSymbol == null)
@@ -47,15 +53,15 @@ public class Arithmetic : IArithmetic
       {
         string _key = it;
         string sval = _collapseBrakets.DBrakets[it].StrCommand;
-        dynamic? d = ALogicCall.InputStrArifmet(sval, _collapseBrakets.DBrakets);
-        if (d == null)
+        Result = ALogicCall.InputStrArifmet(sval, _collapseBrakets.DBrakets);
+        if (Result == null)
         {
           throw new MyException($" Error in string, no variable {sval} ", -20);
         }
         else
         {
           var _z0 = _collapseBrakets.DBrakets[it];
-          _z0.Value = d;
+          _z0.Value = Result;
           _collapseBrakets.DBrakets[it] = _z0;
         }
       }

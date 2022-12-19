@@ -16,7 +16,11 @@ public class DanValue : DanBase<dynamic>, IDanValue
   {
   }
 
-  public void Set(string name, object d) => base.Add(name, d);
+  public void Set(string name, object d) 
+  {
+   // Add<T>(string name, T dan)
+       //=> base.Add(name, d);
+  }
 
 }
 

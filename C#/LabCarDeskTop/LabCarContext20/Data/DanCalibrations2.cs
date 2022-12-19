@@ -10,9 +10,7 @@ public class DanCalibrations2: DanBase<Calibrations2>, IDanCalibrations2
   private Calibrations2 TestCalibrations2(string name, string ss)
   {
     var x = (Calibrations2)GetT(name);
-    if (x == null)
-      throw new MyException($" Error проблкма {ss} с файлам калибровки {name}", -3);
-    return x;
+    return x == null ? throw new MyException($" Error проблкма {ss} с файлам калибровки {name}", -3) : x;
   }
 
   public void Load(string name)=>TestCalibrations2(name, "звгрузкой").LoadingCalibrations();
