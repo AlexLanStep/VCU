@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace LabCarContext20.Core.Strategies;
 
-public interface IStSetDan
+public interface IStSetOneDan
 {
   void SetDan(string name, dynamic dan);
   bool? SetDan(string StrCommand);
@@ -12,19 +12,18 @@ public interface IStSetDan
 }
 
 
-public class StSetDan: IStSetDan
+public class StSetOneDan: IStSetOneDan
 {
-  private readonly DanValue _danValue;
+//  private readonly DanValue _danValue;
   private readonly IAllDan _iAllDan;
-  private readonly AriPattern _pattern;
+  private readonly AriStrDisassemble _strDisassemble;
   private readonly ILoggerDisplay _iloggerDisplay;
 
-  public StSetDan(ILoggerDisplay iloggerDisplay, DanValue danValue, IAllDan allDan, AriPattern pattern)
+  public StSetOneDan(ILoggerDisplay iloggerDisplay, IAllDan allDan, AriStrDisassemble strDisassemble)
   {
     _iloggerDisplay = iloggerDisplay;
-    _danValue = danValue;
     _iAllDan = allDan;
-    _pattern = pattern;
+    _strDisassemble = strDisassemble;
   }
 
   public void SetDan(string name, dynamic dan)=>
@@ -40,7 +39,19 @@ public class StSetDan: IStSetDan
       return false; 
     }
 
-    dynamic? d = _pattern.StringToDynamic(s[1]);
+    switch (s[1].ToLower())
+    {
+      case "true":
+        _iAllDan.Add<dynamic>(s[0], true);
+        return true;
+      case "false":
+        _iAllDan.Add<dynamic>(s[0], false);
+        return true;
+      default:
+        break;
+    }
+
+    dynamic? d = _strDisassemble.AriCalcStr(s[1]);
     if (d == null)
     {
       throw new MyException($" Проблема с конвертацией строки в xbckj {s[1]} ", -31);
@@ -48,6 +59,7 @@ public class StSetDan: IStSetDan
     }
 
 //    _danValue.Set(s[0], d);
+
     _iAllDan.Add<dynamic>(s[0], d);
 
     return true;

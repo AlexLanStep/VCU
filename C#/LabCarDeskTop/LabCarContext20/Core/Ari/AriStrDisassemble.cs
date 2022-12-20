@@ -4,31 +4,24 @@ using System.Xml.Linq;
 
 namespace LabCarContext20.Core.Ari;
 
-public class AriLogicCall: AriPattern
+public class AriStrDisassemble : AriPattern
 {
   private readonly IAllDan _iallDan;
-  public AriLogicCall(IAllDan iallDan) => _iallDan = iallDan;
+  private readonly ILoggerDisplay _iDisplay;
+  private CollapseBrackets collapseBrackets;
+  public dynamic? Result { get; set; }
+  private string _str;
+
+  public AriStrDisassemble(ILoggerDisplay iDisplay, IAllDan iallDan) {
+    _iallDan = iallDan;
+    _iDisplay = iDisplay;
+    //    APattern = new AriPattern();
+    collapseBrackets = new CollapseBrackets();
+    Result = null;
+
+  }
 
   private ConcurrentDictionary<string, CVariable> dVariables = new();
-
-  public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.0001;  // ==
-  public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.0001;  // !=
-  public virtual bool ResultGe(dynamic x0, dynamic x1) => x0 >= x1; // >= 
-  public virtual bool ResultGt(dynamic x0, dynamic x1) => x0 > x1; // >
-  public virtual bool ResultLe(dynamic x0, dynamic x1) => x0 <= x1; // <= 
-  public virtual bool ResultLt(dynamic x0, dynamic x1) => x0 < x1; // < 
-
-  public dynamic? CalcElemrnt(dynamic? d0, dynamic? d1, string sim)
-  {
-    return sim.Trim() switch
-    {
-      "+" => d0 + d1,
-      "-" => d0 - d1,
-      "*" => d0 * d1,
-      "/" => d0 / d1,
-      _ => null
-    };
-  }
 
   public dynamic? MultiDiv(string str)
   {
@@ -42,8 +35,6 @@ public class AriLogicCall: AriPattern
 
   public dynamic? FindNonNumbers(string str, string nameX = "")
   {
-//    if (string.IsNullOrEmpty(nameX))
-//      nameX = Guid.NewGuid().ToString().Replace("-", "_");
     nameX = nameX == "" 
         ? Guid.NewGuid().ToString().Replace("-", "_") 
         : nameX;
@@ -78,11 +69,6 @@ public class AriLogicCall: AriPattern
 
     string str0 = ReplaseMultiDiv(str);
     dynamic? d1 = DynamicStrPlusMin(str0);
-
-//    str = (nameX == "" ? "root" : nameX) + "=" + str1;
-
-    // ReSharper disable once UnusedVariable
-//    var cv = new CVariable(str);
     return d1;
 
   }
@@ -106,9 +92,9 @@ public class AriLogicCall: AriPattern
       var d0 = d.Trim().Replace("@","*-").Replace("#","/-");
       var xxx = MultiDiv(d0);
       if (xxx != null)
-        str = str.Replace(d, (string)Convert
-          .ToString(xxx))
-          .Replace("+-","-");
+        str = str.Replace(d, (string)Convert.ToString(xxx))
+          .Replace("+-","-")
+          .Replace("--","+");
     }
 
     return str;
@@ -170,22 +156,74 @@ public class AriLogicCall: AriPattern
     dVariables = new ConcurrentDictionary<string, CVariable>(cvx);
 
     if (IsMultiDiv(str).Item1)
-    {
       return FindNonNumbers(str);
-//      dynamic? xxxx = DynamicStrPlusMin(str11);
-
-//      dynamic? sss = xxxx;
-//      return xxxx;
-
-    }
 
     else if(IsPlusMin(str).Item1)
       return DynamicStrPlusMin(str);
 
     return null;
   }
+
+  public bool? InputStrLogic(string str, Dictionary<string, CVariable> cvx)
+  {
+    dVariables = new ConcurrentDictionary<string, CVariable>(cvx);
+
+
+    return null;
+  }
+
+  public AriStrDisassemble? AriCalcStr(string str)
+  {
+    Result = null;
+    _str = str.Replace(" ", "");
+    var _isSymbol = TestInputStr(_str);
+    if (_isSymbol == null)
+    {
+      throw new MyException($" Проблема в строке (в стратегии)! -> {_str} ", -10);
+    }
+
+    if (_isSymbol.Value)
+    {
+      _iDisplay.Write("Строка вычислений ");
+      var _collapseBrakets = collapseBrackets.CalcBrakets<CVariable>(_str);
+      foreach (var it in _collapseBrakets.LBrakets)
+      {
+        string _key = it;
+        string sval = _collapseBrakets.DBrakets[it].StrCommand;
+        Result = InputStrArifmet(sval, _collapseBrakets.DBrakets);
+        if (Result == null)
+        {
+          throw new MyException($" Error in string, no variable {sval} ", -20);
+        }
+        else
+        {
+          var _z0 = _collapseBrakets.DBrakets[it];
+          _z0.Value = Result;
+          _collapseBrakets.DBrakets[it] = _z0;
+        }
+      }
+    }
+    return this;
+  }
+
+
+
 }
 
-//var ls01 = SplitMultiDiv(str);
-//var ls02 = ArrayMultiDiv(str);
-//var la03 =  SplitPlusMin(str);
+/*
+ 
+     else
+    {
+      _iDisplay.Write("Строка условий ");
+      var _collapseBrakets = collapseBrackets.CalcBrakets<CVariableLogic>(_str);
+      if (_collapseBrakets == null)
+      {
+        throw new MyException($" Проблема в строке (в стратегии)! -> {_str} ", -10);
+      }
+
+
+
+    }
+
+ */
+

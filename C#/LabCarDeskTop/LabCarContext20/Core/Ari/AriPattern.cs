@@ -102,4 +102,25 @@ public class AriPattern
 
     return null;
   }
+
+  public virtual bool ResultEq(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) < 0.0001;  // ==
+  public virtual bool ResultNe(dynamic x0, dynamic x1) => Math.Abs((double)x0 - (double)x1) > 0.0001;  // !=
+  public virtual bool ResultGe(dynamic x0, dynamic x1) => x0 >= x1; // >= 
+  public virtual bool ResultGt(dynamic x0, dynamic x1) => x0 > x1; // >
+  public virtual bool ResultLe(dynamic x0, dynamic x1) => x0 <= x1; // <= 
+  public virtual bool ResultLt(dynamic x0, dynamic x1) => x0 < x1; // < 
+
+  public dynamic? CalcElemrnt(dynamic? d0, dynamic? d1, string sim)
+  {
+    return sim.Trim() switch
+    {
+      "+" => d0 + d1,
+      "-" => d0 - d1,
+      "*" => d0 * d1,
+      "/" => d0 / d1,
+      _ => null
+    };
+  }
+
+
 }

@@ -16,6 +16,7 @@ global using Newtonsoft.Json.Linq;
 
 global using LabCarContext20.Core;
 global using LabCarContext20.Core.Ari;
+//global using LabCarContext20.Core.Ari.Interface;
 global using LabCarContext20.Core.Config;
 global using LabCarContext20.Core.Interface;
 global using LabCarContext20.Core.Test;

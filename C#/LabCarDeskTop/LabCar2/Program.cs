@@ -24,6 +24,7 @@ public class Program
 
   static void Main(string[] args)
   {
+    dynamic t = false; 
     string ssss = "-2,4";
     double.TryParse(ssss, out var rez);
 
@@ -31,19 +32,26 @@ public class Program
     ContainerManager.Initialization();
     var iDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
 
+    var __x = iDisplay.GetType();
+
     iDisplay.InitializationConsole();
     iDisplay.Write("__ Start program LabCar ver - 2.0 ");
 
-    IArithmetic _iaPattern = _container.LabCar.Resolve<IArithmetic>();
-    IStSetDan _stSetDan = _container.LabCar.Resolve<IStSetDan>();
-    List<string> _list = new List<string>(){ "ss11=12.2", "ds1= 9.2", "sas=2.3", "ee1=-3.3" };
-    _stSetDan.SetDans(_list);
-//    string s00x = "(((ww > (33.4*e1)) & (ee < ((44,3+eee)/sss))) | (3>e)) & (r~=(-t))";
-// string s00x = "(r~=t)";
-//    string s00x = "(r~=t)";
-//    string s00x = "r=333 / t";
-    string s00x = "ee =(5+ ss11 - ds1*3.1 - 21.2/3)*2.0 - 66/2.1 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8*(-2.3))/7.3";
-    var ddd=     _iaPattern.Initialization(s00x);
+//    IArithmetic _iaPattern = _container.LabCar.Resolve<IArithmetic>();
+    IStSetOneDan _stSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
+    List<string> _list = new List<string>(){ "ss11=12.2", "ds1= 9.2", "sas=2.3", "ee1=-3.3", "ww=-43.55"
+      , "r=true", "t=false",
+      "ee =(5+ ss11 - ds1*3.1 - 21.2/3)*2.0 - 66/2.1 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8*(-2.3))/7.3"};
+    _stSetOneDan.SetDans(_list);
+    // string s00x = "(r~=t)";
+    //    string s00x = "(r~=t)";
+    //    string s00x = "r=333 / t";
+//    string s00x = "ee =(5+ ss11 - ds1*3.1 - 21.2/3)*2.0 - 66/2.1 + (4* (sas + (ss11 + 101)*2 ) + sas) / ee1 + (10.2+8*(-2.3))/7.3";
+
+//    var ddd = _iaPattern.Initialization(s00x);
+    string s01x = "(((ww > (2.4*ee1)) & (ee < ((44,3+ee1)/sas))) | (3>ee1)) & (r~=(t))";
+
+//    var ddd1 =     _iaPattern.(s01x);
 
 
     IConnectLabCar _connectLabCar = _container.LabCar.Resolve<IConnectLabCar>();

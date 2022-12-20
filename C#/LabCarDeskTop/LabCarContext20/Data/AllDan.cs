@@ -19,6 +19,15 @@ public class AllDan : IAllDan
     this._danWriteLc = danWriteLc;
   }
 
+  public void AddCalc(string name, dynamic d)
+  {
+    if (_dGet.ContainsKey(name))
+    {
+      
+    }
+    else
+      Add<dynamic>(name, d);
+  }
   public void Add<T>(string name, T dan)
   {
     string nameType = typeof(T).Name.ToLower();

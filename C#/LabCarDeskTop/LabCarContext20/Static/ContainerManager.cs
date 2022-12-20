@@ -15,11 +15,11 @@ public class ContainerManager
     LabCar.Register<ILoggerDisplay, LoggerDisplay>(Reuse.Singleton);
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
     LabCar.Register<AriPattern>();
-    LabCar.Register<IArithmetic, Arithmetic>();
+//    LabCar.Register<IAriCalcOnStr, AriCalcOnStr>();
 
     LabCar.Register<CReadLc>();
     LabCar.Register<CWriteLc>();
-
+    LabCar.Register<AriStrDisassemble>();
     LabCar.Register<DanDanReadLc>(Reuse.Singleton);
     LabCar.Register<DanValue>(Reuse.Singleton);
     LabCar.Register<DanWriteLc>(Reuse.Singleton);
@@ -27,7 +27,8 @@ public class ContainerManager
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);
-    LabCar.Register<IStSetDan, StSetDan>();
+    LabCar.Register<IStSetOneDan, StSetOneDan>();
+    LabCar.Register<IStIfOne, StIfOne>();
   }
 
   public static void Initialization()
@@ -36,7 +37,8 @@ public class ContainerManager
     ILoggerDisplay _iloggerDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
     IConnectLabCar _iconnect = _container.LabCar.Resolve<IConnectLabCar>();
     AriPattern _pattern = _container.LabCar.Resolve<AriPattern>();
-    IArithmetic _iArithmetic = _container.LabCar.Resolve<IArithmetic>();
+    //    IAriCalcOnStr _IAriCalcOnStr = _container.LabCar.Resolve<IAriCalcOnStr>();
+    AriStrDisassemble _ariStrDisassemble = _container.LabCar.Resolve<AriStrDisassemble>();
     CReadLc _creadLc = _container.LabCar.Resolve<CReadLc>();
     CWriteLc _cwriteLc = _container.LabCar.Resolve<CWriteLc>();
     DanDanReadLc _danDanReadLc = _container.LabCar.Resolve<DanDanReadLc>();
@@ -46,7 +48,8 @@ public class ContainerManager
     ICalibrations2 _iCalibrations2 = _container.LabCar.Resolve<ICalibrations2>();
     IDanCalibrations2 _iDanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
     IAllDan _iAllDan = _container.LabCar.Resolve<IAllDan>();
-    IStSetDan _iStSetDan = _container.LabCar.Resolve<IStSetDan>();
+    IStSetOneDan _iStSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
+    IStIfOne _iStIfOne = _container.LabCar.Resolve<IStIfOne>();
   }
   public static ContainerManager GetInstance() => Lazy.Value;
 
