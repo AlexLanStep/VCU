@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LabCar2": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\TestSystem\\Moto\\TStrateg0.json"
+    }
+  }
+}

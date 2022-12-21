@@ -15,8 +15,22 @@ using LabCarContext20.Data.Interface;
 using System.Xml.Linq;
 using LabCarContext20.Core.Ari;
 using LabCarContext20.Core.Strategies;
+using Newtonsoft.Json;
+
+using System.IO;
 
 namespace LabCar20;
+
+public class MyArg
+{
+#pragma warning disable CS8618
+  public string Path { get; set; }
+  public int Repeat { get; set; }
+  public string LabCarLog { get; set; }
+  public string ReStart { get; set; }
+#pragma warning restore CS8618
+
+}
 
 public class Program
 {
@@ -27,17 +41,54 @@ public class Program
     dynamic t = false; 
     string ssss = "-2,4";
     double.TryParse(ssss, out var rez);
+    string path = @"D:\TestSystem\Moto\TStrateg0.json";
+    var s = Path.GetDirectoryName(path);
 
-    _container = ContainerManager.GetInstance();
+   _container = ContainerManager.GetInstance();
     ContainerManager.Initialization();
     var iDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
-
     var __x = iDisplay.GetType();
-
     iDisplay.InitializationConsole();
     iDisplay.Write("__ Start program LabCar ver - 2.0 ");
 
-//    IArithmetic _iaPattern = _container.LabCar.Resolve<IArithmetic>();
+    if ((args.Length == 0) || (!File.Exists(args[0])))
+    {
+      iDisplay.Write("--   ERROR  -- нет json файла");
+      return;
+    }
+    List<MyArg>? myArgs;
+
+    try
+    {
+      myArgs = JsonConvert.DeserializeObject<List<MyArg>>(File.ReadAllText(args[0]));
+    }
+    catch (Exception)
+    {
+      iDisplay.Write("--   ERROR  -- проблема с заргузкой файла jason ");
+      return;
+    }
+
+    ///////////////////////////////////////////////////////
+    ///    0. Запускаем - IConnectLabCar
+    ///    1. Загрузить конфигурацию системы
+    ///      1.0 Грузим сонтейнер с LoadConfig  
+    ///      1.1. Грузим Config.json
+    ///        1.1.1 Tast      (ReadLC)
+    ///        1.1.2 Parametrs (WriteLC)
+    ///        1.1.3 Calibrov  (Calibrov2) 
+    ///      1.2. 
+    ///  
+    //////////////////////
+
+    if (myArgs == null)
+      throw new MyException("Нет входных данных ", -6);
+
+    LoadGlobalConfig loadGlobalConfig = new LoadGlobalConfig();
+    loadGlobalConfig.LoadConfig(args[0]);
+
+
+
+    //    IArithmetic _iaPattern = _container.LabCar.Resolve<IArithmetic>();
     IStSetOneDan _stSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
     List<string> _list = new List<string>(){ "ss11=12.2", "ds1= 9.2", "sas=2.3", "ee1=-3.3", "ww=-43.55"
       , "r=true", "t=false",
