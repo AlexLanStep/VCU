@@ -9,10 +9,10 @@ public class AllDan : IAllDan
   private readonly ConcurrentDictionary<string, GetInfo> _dGet = new();
   private readonly ConcurrentDictionary<string, GetTInfo> _dGetT = new();
   private readonly ConcurrentDictionary<string, SetTInfo> _dSet = new();
-  private readonly DanDanReadLc _danReadLc; 
+  private readonly DanReadLc _danReadLc; 
   private readonly DanValue _danValue;
   private readonly DanWriteLc _danWriteLc;
-  public AllDan(DanDanReadLc danReadLc, DanValue danValue, DanWriteLc danWriteLc)
+  public AllDan(DanReadLc danReadLc, DanValue danValue, DanWriteLc danWriteLc)
   {
     this._danReadLc = danReadLc;
     this._danValue = danValue;
@@ -35,7 +35,9 @@ public class AllDan : IAllDan
     {
       case "creadlc":
       {
-        _danReadLc.Add(name, dan as CReadLc); //CReadLc
+        if (!_danReadLc.Add(name, dan as CReadLc)) //CReadLc
+          throw new MyException($" Проблема в Task {name} {dan.ToString()}",-33);
+
         _dGet.AddOrUpdate(name, _danReadLc.Get, (_, _) => _danReadLc.Get);
         _dGetT.AddOrUpdate(name, _danReadLc.GetT, (_, _) => _danReadLc.GetT);
         break;

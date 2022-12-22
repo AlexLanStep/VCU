@@ -22,16 +22,19 @@ public class CReadLc : ReadLcJsonLoad
   }
 
   public CReadLc(IConnectLabCar iConLabCar)=> _iConLabCar = iConLabCar;
-
   public CReadLc Initialization(string nameField, ReadLcJsonLoad sourсe)=>
           Initialization(nameField, sourсe.PathTask, sourсe.TimeLabCar, sourсe.Comment = "");
-  
   public CReadLc Initialization(string nameField, string pathTask, string timeLabCar, string comment = "")
   {
     NameField = nameField;
     PathTask = pathTask;
     TimeLabCar = timeLabCar;
     Comment = comment;
+
+#if MODEL
+    return this;
+#endif
+
 
     try { Measurement = _iConLabCar.SignalSources.CreateMeasurement(PathTask, TimeLabCar); }
     catch
@@ -40,6 +43,9 @@ public class CReadLc : ReadLcJsonLoad
     }
     return this;
   }
+
+  public override string ToString()=> NameField;
+  
 }
 
 /*

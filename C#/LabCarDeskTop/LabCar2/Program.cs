@@ -83,8 +83,13 @@ public class Program
     if (myArgs == null)
       throw new MyException("Нет входных данных ", -6);
 
-    LoadGlobalConfig loadGlobalConfig = new LoadGlobalConfig();
-    loadGlobalConfig.LoadConfig(args[0]);
+    ILoadConfig _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
+
+    var iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
+    string _pathGlobDir = @"D:\TestSystem\Moto";
+    iloadConfig.ConfigLoad(_pathGlobDir);
+    
+//    loadGlobalConfig.ConfigLoad(args[0]);
 
 
 
@@ -108,7 +113,7 @@ public class Program
     IConnectLabCar _connectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
     //    _connectLabCar.Initialization(path1, path2);
 //    IDanBase<CReadLC> danReadLc = _container.LabCar.Resolve<IDanBase<CReadLC>>();
-    IDanReadLc danReadLc =(IDanReadLc) _container.LabCar.Resolve<DanDanReadLc>();
+    IDanReadLc danReadLc =(IDanReadLc) _container.LabCar.Resolve<DanReadLc>();
     IAllDan _iAllDan = _container.LabCar.Resolve<IAllDan>();
 
     //danReadLc.Run();

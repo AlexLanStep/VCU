@@ -13,6 +13,7 @@ public class ContainerManager
     LabCar = new DryIoc.Container();              // new DryIoc.Container();
 
     LabCar.Register<ILoggerDisplay, LoggerDisplay>(Reuse.Singleton);
+    LabCar.Register<ICPathLc, CPathLc>(Reuse.Singleton);
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
     LabCar.Register<AriPattern>();
 //    LabCar.Register<IAriCalcOnStr, AriCalcOnStr>();
@@ -20,13 +21,14 @@ public class ContainerManager
     LabCar.Register<CReadLc>();
     LabCar.Register<CWriteLc>();
     LabCar.Register<AriStrDisassemble>();
-    LabCar.Register<DanDanReadLc>(Reuse.Singleton);
+    LabCar.Register<DanReadLc>(Reuse.Singleton);
     LabCar.Register<DanValue>(Reuse.Singleton);
     LabCar.Register<DanWriteLc>(Reuse.Singleton);
     LabCar.Register<DanLoggerLc>(Reuse.Singleton);
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);
+    LabCar.Register<ILoadConfig, LoadConfig>(); 
     LabCar.Register<IStSetOneDan, StSetOneDan>();
     LabCar.Register<IStIfOne, StIfOne>();
   }
@@ -41,13 +43,14 @@ public class ContainerManager
     AriStrDisassemble _ariStrDisassemble = _container.LabCar.Resolve<AriStrDisassemble>();
     CReadLc _creadLc = _container.LabCar.Resolve<CReadLc>();
     CWriteLc _cwriteLc = _container.LabCar.Resolve<CWriteLc>();
-    DanDanReadLc _danDanReadLc = _container.LabCar.Resolve<DanDanReadLc>();
+    DanReadLc _DanReadLc = _container.LabCar.Resolve<DanReadLc>();
     DanValue _danValue = _container.LabCar.Resolve<DanValue>();
     DanWriteLc _danWriteLc = _container.LabCar.Resolve<DanWriteLc>();
     DanLoggerLc _idanLoggerLc = _container.LabCar.Resolve<DanLoggerLc>();
     ICalibrations2 _iCalibrations2 = _container.LabCar.Resolve<ICalibrations2>();
     IDanCalibrations2 _iDanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
     IAllDan _iAllDan = _container.LabCar.Resolve<IAllDan>();
+    ILoadConfig _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
     IStSetOneDan _iStSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
     IStIfOne _iStIfOne = _container.LabCar.Resolve<IStIfOne>();
   }

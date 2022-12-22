@@ -12,7 +12,8 @@ public class ConnectLabCar: IConnectLabCar
   #endregion
 
   #region ===- local -==
-  private ILoggerDisplay _iloggerDisplay;
+  private readonly ILoggerDisplay _iloggerDisplay;
+  private readonly ICPathLc _icPathLc;
 
   private string _pathWorkspace;
   private string _pathExperimentEnvironment;
@@ -23,18 +24,28 @@ public class ConnectLabCar: IConnectLabCar
 
 
 #pragma warning disable CS8618
-    public ConnectLabCar(ILoggerDisplay loggerDisplay)
+    public ConnectLabCar(ILoggerDisplay loggerDisplay, ICPathLc icpathlc)
 #pragma warning restore CS8618
   {
     _pathWorkspace="";
     _pathExperimentEnvironment="";
     _iloggerDisplay=loggerDisplay;
+    _icPathLc=icpathlc;
+    _pathWorkspace = _icPathLc.Workspace;
+    _pathExperimentEnvironment = _icPathLc.Experiment;
+
   }
 
   public void Initialization(string pathWorkspace, string pathExperimentEnvironment)
   {
     _pathWorkspace = pathWorkspace;
     _pathExperimentEnvironment = pathExperimentEnvironment;
+    Initialization();
+  }
+  public void Initialization()
+  {
+//    _pathWorkspace = pathWorkspace;
+//    _pathExperimentEnvironment = pathExperimentEnvironment;
 
     try
     {
@@ -48,10 +59,11 @@ public class ConnectLabCar: IConnectLabCar
     Workspace = ExperimentEnvironment.HasOpenWorkspace ? ExperimentEnvironment.Workspace : ExperimentEnvironment.OpenWorkspace(_pathWorkspace);
 
     Experiment = Workspace.HasOpenExperiment ? Workspace.Experiment : Workspace.OpenExperiment(_pathExperimentEnvironment);
-        
-    SignalSources = Experiment.SignalSources;
 
+    SignalSources = Experiment.SignalSources;
   }
+
+
   public void Connect()
   {
     SignalSources.Download();           // download the model to the target

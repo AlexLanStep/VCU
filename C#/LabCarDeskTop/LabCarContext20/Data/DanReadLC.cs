@@ -4,24 +4,42 @@ public interface IDanReadLc : IGetDan //: IDanBase<T> where T : class
   void Run();
   bool Add(string nameTask, string pathTask, string timeLabCar, string comment = "");
 }
-public class DanDanReadLc :  DanBase<CReadLc>, IDanReadLc
+public class DanReadLc :  DanBase<CReadLc>, IDanReadLc
 {
   private readonly ContainerManager? _container;
-  public DanDanReadLc(IConnectLabCar iconnectlc):base(iconnectlc) =>
+  public DanReadLc(IConnectLabCar iconnectlc):base(iconnectlc) =>
     _container = ContainerManager.GetInstance();
   public override void Run()
   {
   }
 
   // ReSharper disable once RedundantOverriddenMember
-  public override void Add(string name, CReadLc? tDan)
+  public bool  Add(string name, CReadLc? tDan)
   {
-    if (tDan != null) base.Add(name, tDan);
+    bool result = false;
+
+#if MODEL
+    if (tDan != null)
+    {
+      base.Add(name, tDan);
+      result = true;
+    }
+    return result;
+#endif
+
+    if (tDan.Measurement == null)  return false;
+
+    base.Add(name, tDan); 
+    return true;
   }
 
   public  bool Add(string nameTask, string pathTask, string timeLabCar, string comment = "")
   {
     var readLc = _container?.LabCar.Resolve<CReadLc>().Initialization(pathTask, timeLabCar, comment);
+#if MODEL
+    Add(nameTask, readLc);
+    return true;
+#endif
 
     if (readLc?.Measurement == null)
       return false;

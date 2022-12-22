@@ -8,6 +8,7 @@ public interface IConnectLabCar: ILoggerDisplay
     ISignalSourceCollection SignalSources { get; set; }
 
     void Initialization(string pathWorkspace, string pathExperimentEnvironment);
+    void Initialization();
     void Connect();
     void DisConnect();
     void StartSimulation();
