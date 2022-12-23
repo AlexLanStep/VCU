@@ -1,0 +1,65 @@
+{
+
+  "STls": [
+    {
+      "start": {
+//	"restart":"",
+//	"sim":"on",
+        "t": 1,
+        "loggerset": [ "Butt_Drive_State", "BatteryIsOn", "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State", "Ignition" ],
+        "logger": "start",
+        "loadfile": [ "Params0" ],
+        "activfile": [ "Params0" ],
+      }
+    },
+    {
+      "dt0": {
+        "t": 500,
+//        "get": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State" ],
+        "set": { "Butt_Drive_State": 10.0, "BatteryIsOn": 9.0, "Ignition": 8.0 }
+      }
+    },
+    {
+      "dtSwet1": {
+        "t": 500,
+        "set": {
+          "Butt_Drive_State": 0.0,
+          "BatteryIsOn": 0.0,
+          "Ignition": 0.0
+        }
+      }
+    },
+    {
+      "dtSwet2": {
+        "t": "Wait0",
+        "set": {
+          "Butt_Drive_State": 1.0,
+          "BatteryIsOn": 1.0,
+          "Ignition": 1.0
+        }
+      }
+    },
+    {
+      "dtPodnozhka1": {
+        "t": "Wait1",
+//	"get": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State"],
+        "if": [ "(VCU_DesInvMode==1.0, Low_Beam_Req==2.0)", "Low_Beam_State==1.0" ]
+      }
+    },
+    {
+      "dtPodnozka2": {
+        "t": "Wait1",
+        "if": [ "(VCU_DesInvMode==1.0,  Low_Beam_State==1.0)", "Low_Beam_State==1.0" ]
+      }
+    },
+    {
+      "dtPotok1": {
+        "t": "Wait1",
+        "get": [ "VCU_DesInvMode", "Low_Beam_Req", "Low_Beam_State" ],
+        "if": [ "VCU_DesInvMode==1.0", "(Low_Beam_Req==1.0, Low_Beam_State==6.0)", "Low_Beam_Req==1.0", "Low_Beam_State==1.0" ],
+        "logger": "end"
+// 	"sim":"off",
+      }
+    }
+  ]
+}

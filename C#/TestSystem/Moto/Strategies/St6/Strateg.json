@@ -1,0 +1,45 @@
+{
+
+  "STParams": {
+    "Name": "PowerDelivery",
+    "Wait0": 1000,
+    "Wait1": 1500,
+    "maxwait": 10
+  },
+
+
+
+
+  "STls": [
+    {
+      "PowerDelivery_0": {
+        "t": "Wait1",
+        "set": {"ScriptControl_Charge": 6.0
+        },
+      }
+    },
+    {
+      "PowerDelivery_1": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_V2G_Core_MsgStatus", "VCVCCU_V2G_Appl_SccFuncModeReq", "VCVCCU_V2G_Appl_SccChargeModeReq",
+		"VCVCCU_V2G_EVSEPresentVoltage_Value", "VCVCCU_V2G_EVErrorCode" ],   
+        "if": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==18.0", "VCVCCU_V2G_Core_MsgStatus==33.0","VCVCCU_V2G_Appl_SccFuncModeReq==1.0",
+		"VCVCCU_V2G_Appl_SccChargeModeReq==2.0", "VCVCCU_V2G_EVSEPresentVoltage_Value== 254", "VCVCCU_V2G_EVErrorCode==0.0" ]		
+      }
+    },
+    {
+      "PowerDelivery_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_V2G_Appl_SccChargeModeReq" ],
+        "if":  [ "VCVCCU_V2G_Appl_SccChargeModeReq==3.0" ]
+      }
+    },
+    {
+      "PowerDelivery_3": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_ControlPilot_DutyCycle", "VCVCCU_Inlet_MotorStatus", "VCVCCU_ChargeUnit_State", "VCVCCU_Vehicle_ChargePermission" ],
+        "rez": [ "VCVCCU_ControlPilot_DutyCycle>3.0", "VCVCCU_ControlPilot_DutyCycle<7.0", "VCVCCU_Inlet_MotorStatus==1.0", "VCVCCU_ChargeUnit_State==3.0", "VCVCCU_Vehicle_ChargePermission==1.0" ]
+      }
+    }
+  ]
+}

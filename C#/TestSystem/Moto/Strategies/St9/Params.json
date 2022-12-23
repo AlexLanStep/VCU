@@ -1,0 +1,54 @@
+{
+  "ParamsStrategy": {
+    "CableCheck": "Welding_Detect",
+    "TimeWait": 1000,
+    "Variable0": 10.2
+  },
+  "Parameters": {
+	  "ScriptControl_Charge": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU/ScriptControl_Charge/Value",
+      "Comment": "ScriptControl"
+    } 
+    }, 
+  "Output": {
+    "VCVCCU_V2G_StateM_StateMachineStatusatus": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_StateM_StateMachineStatusatus",
+      "Comment": "StateMachineStatus"
+    },
+	"VCVCCU_ChargeUnit_State": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_ChargeUnit_State",
+      "Comment": "ChargeState"
+    },
+	"VCVCCU_ControlPilot_Voltage": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_ControlPilot_Voltage",
+      "Comment": "ControlPPilot"
+    },
+	"VCVCCU_V2G_Core_MsgStatus": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_Core_MsgStatus",
+      "Comment": "MsgStatus"
+    },
+	"VCVCCU_V2G_EVSEPresentVoltage_Multiplier": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_EVSEPresentVoltage_Multiplier",
+      "Comment": "EVSEPresVoltage Mult"
+    },
+	"VCVCCU_V2G_EVSEPresentVoltage_Value": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_EVSEPresentVoltage_Value",
+      "Comment": "EVSEPresVoltage Value"
+    },
+	"VCVCCU_V2G_EVSEMaximumCurrentLimitFlagit_Value": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_EVSEMaximumCurrentLimitFlagit_Value",
+      "Comment": "EVSEMaxCurrentLim Value"
+    },
+	"VCVCCU_Vehicle_ContactorVoltage": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_Vehicle_ContactorVoltage",
+      "Comment": "ContactorVoltage"
+    },
+	"VCVCCU_V2G_EVErrorCode": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_EVErrorCode",
+      "Comment": "EVErrorCode"
+    }
+  },
+  "Calbration": {  
+  },
+  
+}

@@ -1,0 +1,38 @@
+{
+  "ParamsStrategy": {
+    "CableCheck": "Welding_Detect",
+    "TimeWait": 1000,
+    "Variable0": 10.2
+  },
+  "Parameters": {
+	  "VCVCCU_DigitalInput_Status_C": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_DigitalInput_Status_C/Value",
+      "Comment": "Input/Output DigitalInput"
+    },
+	  "ScriptControl_Charge": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU/ScriptControl_Charge/Value",
+      "Comment": "ScriptControl"
+    } 
+    }, 
+  "Output": {
+    "VCVCCU_V2G_EVSEIsolationStatusFlag": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_EVSEIsolationStatusFlag",
+      "Comment": "EVSEISOFlag"
+    },
+	"VCVCCU_V2G_EVSEIsolationStatus": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_EVSEIsolationStatus",
+      "Comment": "ChargeState"
+    },
+	"VCVCCU_Inlet_MotorStatus": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_Inlet_MotorStatus",
+      "Comment": "MotorStatus"
+    },
+	"VCVCCU_POSFeedback_Voltage": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_POSFeedback_Voltage",
+      "Comment": "POS_Voltage"
+    }
+  },
+  "Calbration": {  
+  },
+  
+}

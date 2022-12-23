@@ -1,0 +1,11 @@
+[
+	{
+		"Path": "D:\\TestSystem\\Moto\\Strategies\\St1",
+		"Repeat": 2,
+	},
+	{
+		"Path": "D:\\TestSystem\\Moto\\Strategies\\St2",
+		"Repeat": 2,
+		"LabCarLog": "log"
+	}
+]

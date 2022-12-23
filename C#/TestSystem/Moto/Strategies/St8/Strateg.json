@@ -1,0 +1,61 @@
+{
+
+  "STParams": {
+    "Name": "ChargeStop",
+    "Wait0": 1000,
+    "Wait1": 1500,
+    "maxwait": 10
+  },
+
+"STsetStart": {
+    "loadfile": [ "Params0"],
+    "activfile": [ "Params0" ]
+  },
+
+
+
+
+  "STls": [
+     {
+      "ChargeStop_0": {
+        "t": "Wait0",    
+        "set": {     
+          "VCVCCU_DigitalInput_Status_C": 1.0,
+		  "ScriptControl_Charge": 8.0
+        }
+      }
+    },
+    {
+      "ChargeStop_3": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_ControlPilot_DutyCycle", "VCVCCU_Inlet_MotorStatus", "VCVCCU_ChargeUnit_State", "VCVCCU_PTC1_Temperature", "VCVCCU_Vehicle_ChargePermission" ],   
+        "ifor": [ "VCVCCU_ControlPilot_DutyCycle>3.0", "VCVCCU_ControlPilot_DutyCycle<7.0", "VCVCCU_Inlet_MotorStatus!=1.0","VCVCCU_ChargeUnit_State!=3.0", "VCVCCU_PTC1_Temperature>90.0",
+        "VCVCCU_Vehicle_ChargePermission!=1.0" ]		
+      }
+    },
+    {
+      "ChargeStop_4": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_Core_SAPSchemaID" ],   
+        "if": [ "VCVCCU_V2G_Core_SAPSchemaID!=0.0", "VCVCCU_V2G_Core_SAPSchemaID!=2.0" ]		
+      }
+    },
+    {
+      "PowerDelivery_Off_1": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_Vehicle_ContactorRequest", "VCVCCU_V2G_EVSEStatusCode", "VCVCCU_V2G_Core_MsgStatus", "VCVCCU_V2G_Appl_SccChargeModeReq", "VCVCCU_V2G_EVSEPresentVoltage_Multiplier", "VCVCCU_V2G_EVSEPresentCurrent_Multiplier",
+        "VCVCCU_V2G_EVSEPresentVoltage_Value", "VCVCCU_V2G_EVSEPresentCurrent_Value", "VCVCCU_V2G_EVErrorCode" ],   
+        "if": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==18.0", "VCVCCU_Vehicle_ContactorRequest==0.0", "VCVCCU_V2G_EVSEStatusCode==2.0","VCVCCU_V2G_Core_MsgStatus==33.0", "VCVCCU_V2G_Appl_SccChargeModeReq==4.0",
+        "VCVCCU_V2G_EVSEPresentVoltage_Multiplier==127.0", "VCVCCU_V2G_EVSEPresentCurrent_Multiplier==127.0", "VCVCCU_V2G_EVSEPresentCurrent_Value==0.0", "VCVCCU_V2G_EVSEPresentVoltage_Value==0.0", "VCVCCU_V2G_EVErrorCode==0.0" ]		
+      }
+    },
+    {
+      "PowerDelivery_Off_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_ContactorStatus" ],   
+        "rez": [ "VCVCCU_Vehicle_ContactorStatus==0.0" ]	
+      
+      }
+    }
+  ]
+}

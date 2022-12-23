@@ -1,0 +1,63 @@
+{
+
+  "STParams": {
+    "Name": "FromSLACtoEVSE",
+    "Wait0": 1000,
+    "Wait1": 1500,
+    "maxwait": 10
+  },
+
+
+
+
+  "STls": [
+    {
+      "FromSLACtoEVSE_0": {
+        "t": "Wait1",
+        "set": {"ScriptControl_Charge": 3.0
+        },
+      }
+    },
+    {
+      "FromSLACtoEVSE_1": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_V2G_Appl_SccFuncModeReq", "VCVCCU_V2G_Core_MsgStatus", "VCVCCU_Vehicle_ContactorRequest",
+		"VCVCCU_V2G_Core_SAPSchemaID", "VCVCCU_V2G_EVErrorCode" ],   
+        "if": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==14.0", "VCVCCU_V2G_Appl_SccFuncModeReq==1.0", "VCVCCU_V2G_Core_MsgStatus==29.0","VCVCCU_Vehicle_ContactorRequest==0.0",
+		"VCVCCU_V2G_Core_SAPSchemaID==2.0", "VCVCCU_V2G_EVErrorCode==0.0" ]		
+      }
+    },
+    {
+      "FromSLACtoEVSE_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_V2G_EVSEIsolationStatusFlag", "VCVCCU_V2G_EVSEIsolationStatus", "VCVCCU_V2G_Core_MsgStatus",
+		"VCVCCU_V2G_Appl_SccChargeModeReq", "VCVCCU_V2G_EVSEMaximumPowerLimit_Value", "VCVCCU_V2G_EVErrorCode" ],
+        "if": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==15.0", "VCVCCU_V2G_EVSEIsolationStatusFlag==1.0", "VCVCCU_V2G_EVSEIsolationStatus==1.0","VCVCCU_V2G_Core_MsgStatus==31.0",
+		"VCVCCU_V2G_Appl_SccChargeModeReq==1.0", "VCVCCU_V2G_EVSEMaximumPowerLimit_Value==-25536.0", "VCVCCU_V2G_EVErrorCode==0.0" ]
+		
+      }
+    },
+    {
+      "FromSLACtoEVSE_3": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_V2G_EVReady", "VCVCCU_V2G_EVErrorCode" ],
+        "if": [ "VCVCCU_V2G_EVReady==1.0", "VCVCCU_V2G_EVErrorCode==0.0" ]
+      }
+    },
+	{
+      "FromSLACtoEVSE_4": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_V2G_Core_SAPSchemaID" ],
+        "ifor": [ "VCVCCU_V2G_Core_SAPSchemaID==0.0", "VCVCCU_V2G_Core_SAPSchemaID==2.0" ]
+      }
+    },
+    {
+      "FromSLACtoEVSE_5": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_ControlPilot_DutyCycle", "VCVCCU_Inlet_MotorStatus", "VCVCCU_ChargeUnit_State", "VCVCCU_V2G_EnergyTransferMode", "VCVCCU_V2G_EVMaximumVoltageLimitFlagFlag", "VCVCCU_V2G_EVMaximumCurrentLimitFlagFlag" ],
+        "rez": [ "VCVCCU_ControlPilot_DutyCycle>3.0", "VCVCCU_ControlPilot_DutyCycle<7.0", "VCVCCU_Inlet_MotorStatus==1.0", "VCVCCU_ChargeUnit_State==2.0", "VCVCCU_V2G_EnergyTransferMode==3.0", "VCVCCU_V2G_EVMaximumVoltageLimitFlagFlag==1.0", "VCVCCU_V2G_EVMaximumCurrentLimitFlagFlag==1.0" ]
+		
+      }
+    }
+  ]
+}

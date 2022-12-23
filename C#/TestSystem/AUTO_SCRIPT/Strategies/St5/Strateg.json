@@ -1,0 +1,52 @@
+{
+  "STls": [
+    {
+      "ContactorsReady_0": {
+        "t": "Wait0",
+        "set": {"ScriptControl_Charge": 5.0
+        },
+      }
+    },
+    {
+      "ContactorsReady_1": {
+        "t": "Wait1",    
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_ChargeUnit_State", "VCVCCU_ControlPilot_Voltage", "VCVCCU_Vehicle_IsolationMeasurementStatusentRequest",
+		"VCVCCU_V2G_EVSEStatusCode", "VCVCCU_V2G_Core_MsgStatus", "VCVCCU_V2G_Appl_SccFuncModeReq", "VCVCCU_V2G_Appl_SccChargeModeReq", "VCVCCU_V2G_EVSEPresentVoltage_Multiplier",
+		"VCVCCU_V2G_EVSEPresentVoltage_Value", "VCVCCU_V2G_EVErrorCode" ],   
+        "if": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==17.0", "VCVCCU_ChargeUnit_State==3.0", "VCVCCU_ControlPilot_Voltage==6.0","VCVCCU_Vehicle_IsolationMeasurementStatusentRequest==0.0",
+		"VCVCCU_V2G_EVSEStatusCode==1.0", "VCVCCU_V2G_Core_MsgStatus==41.0", "VCVCCU_V2G_Appl_SccFuncModeReq==0.0", "VCVCCU_V2G_Appl_SccChargeModeReq==0.0","VCVCCU_V2G_EVSEPresentVoltage_Multiplier==0.0",
+		"VCVCCU_V2G_EVSEPresentVoltage_Value==200.0", "VCVCCU_V2G_EVErrorCode==0" ]		
+      }
+    },
+    {
+      "ContactorsReady_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_IsolationMeasurementStatusentStatus", "VCVCCU_ControlPilot_DutyCycle", "VCVCCU_Inlet_MotorStatus", "VCVCCU_ChargeUnit_State",
+		"VCVCCU_Vehicle_ChargePermission" ],
+        "if": [ "VCVCCU_Vehicle_IsolationMeasurementStatusentStatus==0.0", "VCVCCU_ControlPilot_DutyCycle>3.0", "VCVCCU_ControlPilot_DutyCycle<7.0","VCVCCU_Inlet_MotorStatus==1.0",
+		"VCVCCU_ChargeUnit_State==3.0", "VCVCCU_Vehicle_ChargePermission==1.0" ]
+      }
+    },
+    {
+      "ContactorsReady_3": {
+        "t": "Wait1",
+        "get": [ "DiffContVnLinkV" ],
+        "if": [ "DiffContVnLinkV<20.0" ]
+      }
+    },
+	{
+      "ContactorsReady_4": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_ContactorRequest" ],
+        "if": [ "VCVCCU_Vehicle_ContactorRequest==1.0" ]
+      }
+    },
+    {
+      "ContactorsReady_5": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_ContactorStatus" ],
+        "if": [ "VCVCCU_Vehicle_ContactorStatus==1.0" ]
+      }
+    }
+  ]
+}

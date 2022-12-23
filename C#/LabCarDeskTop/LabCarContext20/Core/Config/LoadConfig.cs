@@ -7,12 +7,13 @@ namespace LabCarContext20.Core.Config;
 public interface ILoadConfig
 {
   string DirConfig { get; set; }
-  void ConfigLoad(string pathDir);
+  void ConfigLoad();
 }
 
 public class LoadConfig: ILoadConfig
 {
   #region class config
+
   public class GlobalConfigLabCar
   {
     public class TaskJsonLoad
@@ -54,7 +55,7 @@ public class LoadConfig: ILoadConfig
       }
 
     }
-
+/*
     public class CalibrationsJson
     {
       [JsonPropertyName("Signal")]
@@ -75,58 +76,50 @@ public class LoadConfig: ILoadConfig
         Comment = comment;
       }
     }
-
+*/
     public GlobalConfigLabCar()
     {
     }
     public Dictionary<string, string> PathLabCar { get; set; } = new Dictionary<string, string>();
     public Dictionary<string, TaskJsonLoad> LabCarTask { get; set; } = new Dictionary<string, TaskJsonLoad>();
     public Dictionary<string, ParameterJson> Parameters = new Dictionary<string, ParameterJson>();
-    public Dictionary<string, Dictionary<string, CalibrationsJson>> Calibration = new Dictionary<string, Dictionary<string, CalibrationsJson>>();
+    public Dictionary<string, Dictionary<string, Calibrations2Json>> Calibration = new Dictionary<string, Dictionary<string, Calibrations2Json>>();
   }
 
   #endregion
   #region data
   public string DirConfig { get; set; } = "";
   public GlobalConfigLabCar? Config { get; set; }
-  private readonly DanValue _danValue;
-  private readonly DanWriteLc _danWriteLc;
   private readonly IDanCalibrations2 _idanCalibrations2;
   private readonly IAllDan _iallDan;
   private ICPathLc icPathLc;
-  private ContainerManager? _container = null;
+  private readonly ContainerManager? _container = null;
+  private readonly ICPaths? _icPaths = null;
 
   #endregion
-  public LoadConfig(ICPathLc icpathlc, 
-                      DanValue danValue, 
-                      DanWriteLc danWriteLc, 
+  public LoadConfig(ICPathLc icpathlc, ICPaths icPaths,
                       IDanCalibrations2 idanCalibrations2, 
                       IAllDan iallDan)
   {
     icPathLc = icpathlc;
-    _danValue = danValue;
-    _danWriteLc = danWriteLc;
+    _icPaths = icPaths;
     _idanCalibrations2 = idanCalibrations2;
     _iallDan = iallDan;
     _container = ContainerManager.GetInstance();
   }
-  public void ConfigLoad(string pathDir)
+  public void ConfigLoad()
   {
-    string _pathConfig = pathDir + "\\Config.json";
-
-    if (!File.Exists(_pathConfig))
-      throw new MyException($" Нет файлов Config.json ", -1);
 
     try
     {
-      Config = JsonConvert.DeserializeObject<GlobalConfigLabCar>(File.ReadAllText(_pathConfig));
+      Config = JsonConvert.DeserializeObject<GlobalConfigLabCar>(File.ReadAllText(_icPaths.GlConfig));
     }
     catch (Exception e)
     {
-      throw new MyException($" Проблема с файлом Config.json -> {_pathConfig} \n {e}  ", -1);
+      throw new MyException($" Проблема с файлом Config.json -> {_icPaths.GlConfig} \n {e}  ", -1);
     }
 
-    if (Config.PathLabCar.Count()>0)
+    if (Config.PathLabCar.Count > 0)
     {
       icPathLc.Workspace = Config.PathLabCar.TryGetValue("Workspace", out var outWorkspace) ? outWorkspace : "";
       icPathLc.Experiment = Config.PathLabCar.TryGetValue("Experiment", out var outExperiment) ? outExperiment : "";
@@ -137,20 +130,21 @@ public class LoadConfig: ILoadConfig
       CReadLc _cr = _container.LabCar.Resolve<CReadLc>();
       _cr.Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment);
       _iallDan.Add<CReadLc>(it.Key, _cr);
-
     }
 
-    int kkk = 1;
-    //  Загрузка class в контейнере
+    foreach (var it in Config.Parameters)
+    {
+      CWriteLc _cw = _container.LabCar.Resolve<CWriteLc>();
+      _cw.Initialization(it.Value.Signal, it.Value.Comment);
+      _iallDan.Add<CWriteLc>(it.Key, _cw);
+    }
 
-
+    IDanCalibrations2 _iDanCalibr = _container.LabCar.Resolve<IDanCalibrations2>();
+    foreach (var it in Config.Calibration)
+    {
+      Calibrations2 _ccalibr = _container.LabCar.Resolve<Calibrations2>();
+      _ccalibr.Initialization(_icPaths.GlCalibr, it.Key, it.Value);
+      _iDanCalibr.Add(it.Key, _ccalibr);
+    }
   }
 }
-
-/*
-     public Dictionary<string, TaskJsonLoad> LabCarTask { get; set; } = new Dictionary<string, TaskJsonLoad>();
-    public Dictionary<string, ParameterJson> Parameters = new Dictionary<string, ParameterJson>();
-    public Dictionary<string, Dictionary<string, CalibrationsJson>> Calibration = new Dictionary<string, Dictionary<string, CalibrationsJson>>();
-
- 
- */

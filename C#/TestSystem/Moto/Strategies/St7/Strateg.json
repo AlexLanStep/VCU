@@ -1,0 +1,33 @@
+{
+
+  "STParams": {
+    "Name": "ChargeActive",
+    "Wait0": 1000,
+    "Wait1": 1500,
+    "maxwait": 10
+  },
+
+
+
+
+  "STls": [
+    {
+      "ChargeActive_0": {
+        "t": "Wait1",
+        "set": {"ScriptControl_Charge": 7.0
+        },
+      }
+    },
+    {
+      "ChargeActive_1": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_V2G_EVSEMaximumCurrentLimitFlagit_Value",
+		"VCVCCU_V2G_Core_MsgStatus", "VCVCCU_V2G_Appl_SccFuncModeReq",
+		"VCVCCU_V2G_Appl_SccChargeModeReq", "VCVCCU_V2G_EVSEPresentCurrent_Multiplier",
+		"VCVCCU_V2G_EVSEPresentVoltage_Value", "VCVCCU_V2G_EVSEPresentCurrent_Value","VCVCCU_V2G_EVTargetCurrent_Value", "VCVCCU_V2G_EVErrorCode" ],   
+        "rez": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==20.0", "VCVCCU_V2G_EVSEMaximumCurrentLimitFlagit_Value==100.0", "VCVCCU_V2G_Core_MsgStatus==43.0", "VCVCCU_V2G_Appl_SccFuncModeReq==0.0",
+		"VCVCCU_V2G_Appl_SccChargeModeReq==0.0", "VCVCCU_V2G_EVSEPresentCurrent_Multiplier==0.0", "VCVCCU_V2G_EVSEPresentVoltage_Value==258.0", "VCVCCU_V2G_EVSEPresentCurrent_Value==96.0", "VCVCCU_V2G_EVTargetCurrent_Value==99.0", "VCVCCU_V2G_EVErrorCode==0.0" ]		
+      }
+    },
+  ]
+}

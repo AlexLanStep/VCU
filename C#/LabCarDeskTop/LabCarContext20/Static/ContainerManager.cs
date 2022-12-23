@@ -11,7 +11,9 @@ public class ContainerManager
   {
     // ReSharper disable once RedundantNameQualifier
     LabCar = new DryIoc.Container();              // new DryIoc.Container();
-
+    LabCar.Register<ICPaths, CPaths>(Reuse.Singleton);
+    LabCar.Register<ICReport, CReport>(Reuse.Singleton);
+    LabCar.Register<ICReportLocal, CReportLocal>();
     LabCar.Register<ILoggerDisplay, LoggerDisplay>(Reuse.Singleton);
     LabCar.Register<ICPathLc, CPathLc>(Reuse.Singleton);
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
@@ -25,6 +27,7 @@ public class ContainerManager
     LabCar.Register<DanValue>(Reuse.Singleton);
     LabCar.Register<DanWriteLc>(Reuse.Singleton);
     LabCar.Register<DanLoggerLc>(Reuse.Singleton);
+    LabCar.Register<Calibrations2, Calibrations2>();
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);
@@ -36,23 +39,26 @@ public class ContainerManager
   public static void Initialization()
   {
     ContainerManager? _container = ContainerManager.GetInstance();
-    ILoggerDisplay _iloggerDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
-    IConnectLabCar _iconnect = _container.LabCar.Resolve<IConnectLabCar>();
-    AriPattern _pattern = _container.LabCar.Resolve<AriPattern>();
-    //    IAriCalcOnStr _IAriCalcOnStr = _container.LabCar.Resolve<IAriCalcOnStr>();
-    AriStrDisassemble _ariStrDisassemble = _container.LabCar.Resolve<AriStrDisassemble>();
-    CReadLc _creadLc = _container.LabCar.Resolve<CReadLc>();
-    CWriteLc _cwriteLc = _container.LabCar.Resolve<CWriteLc>();
-    DanReadLc _DanReadLc = _container.LabCar.Resolve<DanReadLc>();
-    DanValue _danValue = _container.LabCar.Resolve<DanValue>();
-    DanWriteLc _danWriteLc = _container.LabCar.Resolve<DanWriteLc>();
-    DanLoggerLc _idanLoggerLc = _container.LabCar.Resolve<DanLoggerLc>();
-    ICalibrations2 _iCalibrations2 = _container.LabCar.Resolve<ICalibrations2>();
-    IDanCalibrations2 _iDanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
-    IAllDan _iAllDan = _container.LabCar.Resolve<IAllDan>();
-    ILoadConfig _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
-    IStSetOneDan _iStSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
-    IStIfOne _iStIfOne = _container.LabCar.Resolve<IStIfOne>();
+    var _ = _container.LabCar.Resolve<ICPaths>();
+    var _ = _container.LabCar.Resolve<ICReport>();
+    var _ = _container.LabCar.Resolve<ICReportLocal>();
+
+    var _ = _container.LabCar.Resolve<ILoggerDisplay>();
+    var _ = _container.LabCar.Resolve<IConnectLabCar>();
+    var _ = _container.LabCar.Resolve<AriPattern>();
+    var _ = _container.LabCar.Resolve<AriStrDisassemble>();
+    var _ = _container.LabCar.Resolve<CReadLc>();
+    var _ = _container.LabCar.Resolve<CWriteLc>();
+    var _ = _container.LabCar.Resolve<DanReadLc>();
+    var _ = _container.LabCar.Resolve<DanValue>();
+    var _ = _container.LabCar.Resolve<DanWriteLc>();
+    var _ = _container.LabCar.Resolve<DanLoggerLc>();
+    var _ = _container.LabCar.Resolve<ICalibrations2>();
+    var _ = _container.LabCar.Resolve<IDanCalibrations2>();
+    var _ = _container.LabCar.Resolve<IAllDan>();
+    var _ = _container.LabCar.Resolve<ILoadConfig>();
+    var _ = _container.LabCar.Resolve<IStSetOneDan>();
+    var _ = _container.LabCar.Resolve<IStIfOne>();
   }
   public static ContainerManager GetInstance() => Lazy.Value;
 

@@ -1,0 +1,40 @@
+{
+
+  "STParams": {
+    "Name": "Welding_Detect",
+    "Wait0": 1000,
+    "Wait1": 1500,
+    "maxwait": 10
+  },
+
+
+
+
+  "STls": [
+     {
+      "Welding_Detect_0": {
+        "t": "Wait0",    
+        "set": {     
+		  "ScriptControl_Charge": 9.0
+        }
+      }
+    },
+    {
+      "Welding_Detect_1": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_StateM_StateMachineStatusatus", "VCVCCU_ChargeUnit_State", "VCVCCU_ControlPilot_Voltage", "VCVCCU_V2G_Core_MsgStatus", "VCVCCU_V2G_EVSEPresentVoltage_Multiplier", "VCVCCU_V2G_EVSEPresentVoltage_Value", "VCVCCU_V2G_EVSEMaximumCurrentLimitFlagit_Value",
+        "VCVCCU_V2G_EVErrorCode" ],   
+        "if": [ "VCVCCU_V2G_StateM_StateMachineStatusatus==22.0", "VCVCCU_ChargeUnit_State==2.0", "VCVCCU_ControlPilot_Voltage==9.0","VCVCCU_V2G_Core_MsgStatus==45.0", "VCVCCU_V2G_EVSEPresentVoltage_Multiplier==0.0",
+        "VCVCCU_V2G_EVSEPresentVoltage_Value==361.0", "VCVCCU_V2G_EVSEMaximumCurrentLimitFlagit_Value==0.0", "VCVCCU_V2G_EVErrorCode==0.0" ]		
+      }
+    },
+    {
+      "Welding_Detect_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_ContactorVoltage" ],   
+        "rez": [ "VCVCCU_Vehicle_ContactorVoltage<60.0" ]	
+      
+      }
+    }
+  ]
+}

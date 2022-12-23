@@ -1,0 +1,65 @@
+{
+  "STls": [
+    {
+      "ChargeCable_In_0": {
+        "t": "Wait0",    
+        "set": {     
+          "ChargeCableIn_C": 1.0,
+		  "ScriptControl_Charge": 2.0
+        },
+      "loadfile": [ "Calibration2"],
+      "activfile": [ "Calibration2" ]
+      }
+    },
+    {
+      "ChargeCable_In_1": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_PlugPresent_Status", "VCVCCU_Inlet_ConnectionStatus", "VCVCCU_Inlet_MotorStatus", "VCVCCU_ChargeUnit_State",
+		"VCVCCU_ChargeUnit_Mode", "VCVCCU_ControlPilot_DutyCycle", "VCVCCU_ControlPilot_Frequency", "VCVCCU_ControlPilot_Voltage",
+		"VCVCCU_PlugPresent_Resistance", "VCVCCU_PlugPresent_Voltage", "VCVCCU_PlugLock_MotorStatus", "VCVCCU_Inlet_MaxCurrent" ],
+        "if": [ "VCVCCU_PlugPresent_Status==1.0", "VCVCCU_Inlet_ConnectionStatus==1.0", "VCVCCU_Inlet_MotorStatus==0.0","VCVCCU_ChargeUnit_State==2.0",
+		"VCVCCU_ChargeUnit_Mode==0.0", "VCVCCU_ControlPilot_DutyCycle==5.0", "VCVCCU_ControlPilot_Frequency==1000.0",
+		"VCVCCU_ControlPilot_Voltage==9000.0", "VCVCCU_PlugPresent_Resistance==3.0", "VCVCCU_PlugPresent_Voltage==2.7",
+		"VCVCCU_PlugLock_MotorStatus==1.0", "VCVCCU_Inlet_MaxCurrent==13.0" ]
+		
+      }
+    },
+    {
+      "ChargeCable_In_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_PlugLockPermission" ],
+        "if": [ "VCVCCU_Vehicle_PlugLockPermission==1.0" ]
+      }
+    },
+	{
+      "ChargeCable_In_3": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_PlugPresent_Status","VCVCCU_Inlet_MotorStatus", "VCVCCU_ControlPilot_DutyCycle" ],
+        "if": [ "VCVCCU_PlugPresent_Status==1.0", "VCVCCU_Inlet_MotorStatus==0.0", "VCVCCU_ControlPilot_DutyCycle>3.0", "VCVCCU_ControlPilot_DutyCycle<7.0" ]
+      }
+    },
+	{
+      "ChargeCable_In_4": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Inlet_MotorStatus","VCVCCU_PlugLock_MotorStatus", "VCVCCU_POSFeedback_Voltage" ],
+        "if": [ "VCVCCU_Inlet_MotorStatus==1.0", "VCVCCU_PlugLock_MotorStatus==0.0", "VCVCCU_POSFeedback_Voltage==3.0" ]
+      }
+    },
+	{
+      "ChargeCable_In_5": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_ChargeSelection","VCVCCU_HighSideOut2_Input_DebouncedStatus" ],
+        "if": [ "(VCVCCU_Vehicle_ChargeSelection==0.0, VCVCCU_Vehicle_ChargeSelection==1.0)",
+		"(VCVCCU_HighSideOut2_Input_DebouncedStatus==0.0, VCVCCU_HighSideOut2_Input_DebouncedStatus==1.0)" ]
+      }
+    },
+    {
+      "ChargeCable_In_6": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_ControlPilot_DutyCycle", "VCVCCU_PTC1_Temperature", "VCVCCU_Inlet_MotorStatus", "VCVCCU_ChargeUnit_State", "VCVCCU_DigitalInput_DebouncedStatus", "VCVCCU_Vehicle_StopCharge", "VCVCCU_PlugPresent_Status" ],
+        "if": [ "VCVCCU_ControlPilot_DutyCycle>3.0", "VCVCCU_ControlPilot_DutyCycle<7.0", "VCVCCU_PTC1_Temperature<90.0", "VCVCCU_Inlet_MotorStatus==1.0", "VCVCCU_ChargeUnit_State==2.0", "VCVCCU_DigitalInput_DebouncedStatus==0.0", "VCVCCU_Vehicle_StopCharge==0.0", "VCVCCU_PlugPresent_Status==1.0" ]
+		
+      }
+    }
+  ]
+}

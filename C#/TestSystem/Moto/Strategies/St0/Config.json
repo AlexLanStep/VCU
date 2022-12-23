@@ -1,0 +1,79 @@
+{
+  "PathLabCar": {
+    "Workspace": "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\AUTOMATION\\AUTOMATION.eew",
+    "Experiment": "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION\\Experiments\\DefaultExp\\DefaultExp.eex"
+  },
+
+  "LabCarTask": {
+    "VCU_DesInvMode": {
+      "PathTask": "TEST/Low_Beam_Test/VCU_DesInvMode",
+      "TimeLabCar": "Acquisition",
+      "Comment": "Test 001"
+    },
+    "Low_Beam_Req": {
+      "PathTask": "TEST/Low_Beam_Test/Low_Beam_Req",
+      "TimeLabCar": "Acquisition",
+      "Comment": null
+    },
+    "Low_Beam_State": {
+      "PathTask": "TEST/Low_Beam_Test/Low_Beam_State",
+      "TimeLabCar": "Acquisition",
+      "Comment": "Test 1"
+    }
+  },
+
+  "Parameters": {
+    "BatteryIsOn": {
+      "Signal": "TEST/Low_Beam_Test/BatteryIsOn/Value",
+      "Comment": "Test 001"
+    },
+    "Ignition": {
+      "Signal": "TEST/Low_Beam_Test/Ignition/Value",
+      "Comment": ""
+    },
+    "Butt_Drive_State": {
+      "Signal": "TEST/Low_Beam_Test/Butt_Drive_State/Value",
+      "Comment": "Comment 1"
+    }
+  },
+
+  "Calibration": {
+    "Calibration0": {
+      "BatteryIsOn": {
+        "Signal": "TEST/Low_Beam_Test/BatteryIsOn/Value",
+        "Val": 0.0,
+        "Comment": "Кнопка баттареи"
+      },
+      "Ignition": {
+        "Signal": "TEST/Low_Beam_Test/Ignition/Value",
+        "Val": 0.0,
+        "Comment": "Зажигание"
+      },
+      "Butt_Drive_State": {
+        "Signal": "TEST/Low_Beam_Test/Butt_Drive_State/Value",
+        "Val": 0.0,
+        "Comment": "Кнопка устройства"
+      }
+    },
+    "Calibration0_1": {
+      "BatteryIsOn_qqq": {
+        "Signal": "TEST/Low_Beam_Test/BatteryIsOn/Value",
+        "Val": 110.0,
+        "Comment": "Кнопка !!! баттареи"
+      },
+      "Ignition_qqq": {
+        "Signal": "TEST/Low_Beam_Test/Ignition/Value",
+        "Val": 220.0,
+        "Comment": "Зажигание!!! "
+      },
+      "Butt_Drive_State_qqq": {
+        "Signal": "TEST/Low_Beam_Test/Butt_Drive_State/Value",
+        "Val": 220.0,
+        "Comment": "!!! Кнопка устройства"
+      }
+    }
+  }
+}
+
+
+

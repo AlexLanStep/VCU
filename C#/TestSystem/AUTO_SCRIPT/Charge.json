@@ -1,0 +1,8 @@
+[
+	{
+	    "Path": "D:\\Projects\\LABCAR_Model_2022\\AUTOMATION\\AUTOMATION_TEST_CHARGE_MIL\\AUTO_SCRIPT\\Strategies\\StCharge",
+		"LabCarLog": "log",
+		"Repeat": 2,
+		"ReStart":""
+	}
+]

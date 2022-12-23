@@ -1,0 +1,27 @@
+{
+  "STls": [
+     {
+      "SccFuncMode_0": {
+        "t": "Wait0",    
+        "set": {     
+		  "ScriptControl_Charge": 11.0
+        }
+      }
+    },
+    {
+      "SccFuncMode_1": {
+        "t": "Wait0",    
+        "get": [ "VCVCCU_V2G_Appl_SccFuncModeReq" ],   
+        "rez": [ "(VCVCCU_V2G_Appl_SccFuncModeReq==0.0" ]		
+      }
+    },
+    {
+      "SccFuncMode_2": {
+        "t": "Wait1",
+        "get": [ "VCVCCU_Vehicle_PlugUnlockPermission", "VCVCCU_DigitalInput_Status", "VCVCCU_DigitalInput_DebouncedStatus", "VCVCCU_Vehicle_StopCharge" ],   
+        "if": [ "(VCVCCU_Vehicle_PlugUnlockPermission==1.0, VCVCCU_DigitalInput_Status==1.0, VCVCCU_DigitalInput_DebouncedStatus==1.0, VCVCCU_Vehicle_StopCharge==1.0)" ]	
+      
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "ParamsStrategy": {
+    "CableCheck": "CableCheck",
+    "TimeWait": 1000,
+    "Variable0": 10.2
+  },
+  "Parameters": {
+	  "ScriptControl_Charge": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU/ScriptControl_Charge/Value",
+      "Comment": "ScriptControl"
+    }  
+    }, 
+  "Output": {  
+	"VCVCCU_V2G_Appl_SccFuncModeReq": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_V2G_Appl_SccFuncModeReq",
+      "Comment": "Appl_SccFun"
+    },
+	"VCVCCU_Vehicle_PlugUnlockPermission": {
+      "Signal": "PLANT_HYDROGEN/VCVCCU_Vehicle_PlugUnlockPermission",
+      "Comment": "PlugUnlock"
+    },
+  },
+  "Calbration": {  
+  },
+  
+}

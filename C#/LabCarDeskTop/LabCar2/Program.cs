@@ -38,24 +38,22 @@ public class Program
 
   static void Main(string[] args)
   {
-    dynamic t = false; 
-    string ssss = "-2,4";
-    double.TryParse(ssss, out var rez);
-    string path = @"D:\TestSystem\Moto\TStrateg0.json";
-    var s = Path.GetDirectoryName(path);
-
    _container = ContainerManager.GetInstance();
     ContainerManager.Initialization();
+//    var _glPath = _container.LabCar.Resolve<ICPaths>();
     var iDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
-    var __x = iDisplay.GetType();
     iDisplay.InitializationConsole();
     iDisplay.Write("__ Start program LabCar ver - 2.0 ");
 
-    if ((args.Length == 0) || (!File.Exists(args[0])))
+    if ((args.Length == 0) 
+      || (!File.Exists(args[0])) 
+      || (!_container.LabCar.Resolve<ICPaths>().SetPath(args[0])))
     {
       iDisplay.Write("--   ERROR  -- нет json файла");
       return;
     }
+
+
     List<MyArg>? myArgs;
 
     try
@@ -64,7 +62,7 @@ public class Program
     }
     catch (Exception)
     {
-      iDisplay.Write("--   ERROR  -- проблема с заргузкой файла jason ");
+      iDisplay.Write("--   ERROR  -- проблема с заргузкой файла json ");
       return;
     }
 
@@ -72,24 +70,33 @@ public class Program
     ///    0. Запускаем - IConnectLabCar
     ///    1. Загрузить конфигурацию системы
     ///      1.0 Грузим сонтейнер с LoadConfig  
-    ///      1.1. Грузим Config.json
-    ///        1.1.1 Tast      (ReadLC)
-    ///        1.1.2 Parametrs (WriteLC)
-    ///        1.1.3 Calibrov  (Calibrov2) 
-    ///      1.2. 
     ///  
     //////////////////////
 
     if (myArgs == null)
       throw new MyException("Нет входных данных ", -6);
 
-    ILoadConfig _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
+    _container.LabCar.Resolve<ILoadConfig>().ConfigLoad();
+    var _glReport = _container.LabCar.Resolve<ICReport>();
 
-    var iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
-    string _pathGlobDir = @"D:\TestSystem\Moto";
-    iloadConfig.ConfigLoad(_pathGlobDir);
-    
-//    loadGlobalConfig.ConfigLoad(args[0]);
+    //var isRezulta = true;
+    //var txtReport = "";
+    //var dirRepost = "";
+
+
+    foreach (var it in myArgs)
+    {
+      if (!Directory.Exists(it.Path))
+        continue;
+
+      //var repeat = it.Repeat > 0 ? it.Repeat : 1;
+      //var loggerCar = it.LabCarLog != null;
+      //var txtReportLoc = "";
+      //var restart = it.ReStart != null;
+
+    }
+
+
 
 
 
@@ -145,6 +152,15 @@ public class Program
 /*
 
 ////////    Пример обработки массива
+    var __x = iDisplay.GetType();
+
+
+    //dynamic t = false; 
+    //string ssss = "-2,4";
+    //double.TryParse(ssss, out var rez);
+    //string path = @"D:\TestSystem\Moto\TStrateg0.json";
+    //var s = Path.GetDirectoryName(path);
+
 
     double[] d0 = new double[5] { 0.0, 1.0, 2.0, 3.0, 4.0 };
     double[,] d1 = new double[5, 1] { { 0.0}, { 1.0 }, { 2.0 }, { 3.0 }, { 4.0 } };
