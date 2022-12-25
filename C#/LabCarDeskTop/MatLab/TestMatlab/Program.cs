@@ -1,7 +1,7 @@
 ﻿//  https://github.com/MariaKudryashova/mathdll/blob/main/SLMTest/SLMTest/Program.cs
 //  https://habr.com/ru/post/661223/
 // https://www.youtube.com/watch?v=5qDkr4GKwAw
-
+// D:\Program Files\MatLab\R2021a\toolbox\dotnetbuilder\Examples\VS15\NET\VarArgExample\VarArgCSApp
 
 using System;
 

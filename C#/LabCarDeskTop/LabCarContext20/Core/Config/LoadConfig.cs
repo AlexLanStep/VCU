@@ -2,12 +2,14 @@
 using System.IO;
 using System.Text.Json.Serialization;
 
+
 namespace LabCarContext20.Core.Config;
 
 public interface ILoadConfig
 {
   string DirConfig { get; set; }
-  void ConfigLoad();
+  void ConfigLoad(string pathconfig="");
+
 }
 
 public class LoadConfig: ILoadConfig
@@ -55,6 +57,22 @@ public class LoadConfig: ILoadConfig
       }
 
     }
+    public class VariableDataJson
+    {
+      public VariableDataJson(string name, dynamic? value, string? path)
+      {
+//        Name = name;
+        Path = path;
+        Value = value;
+      }
+
+      //[JsonPropertyName("Name")]
+      //public string Name { get; set; }
+      [JsonPropertyName("Value")]
+      public dynamic? Value { get; set; }
+      [JsonPropertyName("Path")]
+      public string? Path { get; set; }
+    }
 /*
     public class CalibrationsJson
     {
@@ -82,8 +100,9 @@ public class LoadConfig: ILoadConfig
     }
     public Dictionary<string, string> PathLabCar { get; set; } = new Dictionary<string, string>();
     public Dictionary<string, TaskJsonLoad> LabCarTask { get; set; } = new Dictionary<string, TaskJsonLoad>();
-    public Dictionary<string, ParameterJson> Parameters = new Dictionary<string, ParameterJson>();
-    public Dictionary<string, Dictionary<string, Calibrations2Json>> Calibration = new Dictionary<string, Dictionary<string, Calibrations2Json>>();
+    public Dictionary<string, ParameterJson> Parameters { get; set; } = new Dictionary<string, ParameterJson>();
+    public Dictionary<string, Dictionary<string, Calibrations2Json>> Calibration { get; set; } = new Dictionary<string, Dictionary<string, Calibrations2Json>>();
+    public Dictionary<string, VariableDataJson> Variable { get; set; } = new Dictionary<string, VariableDataJson>();
   }
 
   #endregion
@@ -107,16 +126,20 @@ public class LoadConfig: ILoadConfig
     _iallDan = iallDan;
     _container = ContainerManager.GetInstance();
   }
-  public void ConfigLoad()
+  public void ConfigLoad(string pathconfig="")
   {
+    if (string.IsNullOrEmpty(pathconfig)) pathconfig = _icPaths.GlConfig;
+
+    if (string.IsNullOrEmpty(pathconfig))
+      return;
 
     try
     {
-      Config = JsonConvert.DeserializeObject<GlobalConfigLabCar>(File.ReadAllText(_icPaths.GlConfig));
+      Config = JsonConvert.DeserializeObject<GlobalConfigLabCar>(File.ReadAllText(pathconfig));
     }
     catch (Exception e)
     {
-      throw new MyException($" Проблема с файлом Config.json -> {_icPaths.GlConfig} \n {e}  ", -1);
+      throw new MyException($" Проблема с файлом Config.json -> {pathconfig} \n {e}  ", -1);
     }
 
     if (Config.PathLabCar.Count > 0)
@@ -146,5 +169,7 @@ public class LoadConfig: ILoadConfig
       _ccalibr.Initialization(_icPaths.GlCalibr, it.Key, it.Value);
       _iDanCalibr.Add(it.Key, _ccalibr);
     }
+
   }
+
 }

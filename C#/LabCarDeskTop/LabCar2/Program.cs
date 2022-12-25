@@ -53,7 +53,6 @@ public class Program
       return;
     }
 
-
     List<MyArg>? myArgs;
 
     try
@@ -89,10 +88,10 @@ public class Program
       if (!Directory.Exists(it.Path))
         continue;
 
-      //var repeat = it.Repeat > 0 ? it.Repeat : 1;
-      //var loggerCar = it.LabCarLog != null;
-      //var txtReportLoc = "";
-      //var restart = it.ReStart != null;
+      _container.LabCar.Resolve<ICDopConfig>()
+        .Set(it.Repeat > 0 ? it.Repeat : 1, 
+          it.LabCarLog != null, it.ReStart != null);
+      _container.LabCar.Resolve <IGeneralStrategy>().Run(it.Path);
 
     }
 
