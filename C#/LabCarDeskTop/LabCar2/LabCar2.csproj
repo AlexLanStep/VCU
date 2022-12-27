@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LabCarContext20\LabCarContext20.csproj" />
+    <ProjectReference Include="..\MatLabConvert\MatLabConvert.csproj" />
   </ItemGroup>
 
 </Project>

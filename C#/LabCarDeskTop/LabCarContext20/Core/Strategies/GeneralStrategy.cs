@@ -1,4 +1,6 @@
 ﻿
+using System.IO;
+
 namespace LabCarContext20.Core.Strategies;
 
 public interface IGeneralStrategy
@@ -7,6 +9,7 @@ public interface IGeneralStrategy
 }
 public class GeneralStrategy: IGeneralStrategy
 {
+  public Dictionary<string, dynamic>? ParamsStrategy { get; set; }=new();
   private string _pathStrategDir;
   private readonly ILoggerDisplay _iloggerdisplay;
   private readonly ICPathLc _icpathLc;
@@ -27,10 +30,37 @@ public class GeneralStrategy: IGeneralStrategy
   }
   public void Run(string pathstrategdir)
   {
-    _pathStrategDir = pathstrategdir;
+    loadParams(pathstrategdir);
+
+
+
+  }
+
+  private void loadParams(string path)
+  {
+    _pathStrategDir = path;
     var _pathConfig = _pathStrategDir + "\\Config.json";
     if (File.Exists(_pathConfig))
       _iloadConfig.ConfigLoad(_pathConfig);
+
+    var _pathParams = _pathStrategDir + "\\Params.json";
+    //    ParamsStrategy
+    try
+    {
+      ParamsStrategy = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(File.ReadAllText(_pathParams));
+    }
+    catch (Exception e)
+    {
+      _iloggerdisplay.Write($" Проблема с файлом Params.json  -> {_pathParams} ");
+      _iloggerdisplay.Write($"   -- пишем данны по умолчанию ");
+      ParamsStrategy = new() {
+        {"Name", "- ? -" }, //  Название стратегии правти
+        { "Wait0", 1000 },  // в миллисекундах задержка мнеду шагамо
+        { "Wait1", 1500 },  // в миллисекундах задержка мнеду шагамо
+        { "Maxwait", 10 },  // в секундах
+        { "CongigStrateg", "StrateyBasa" } // Не трогать служебная информация
+      };
+    }
 
   }
 }

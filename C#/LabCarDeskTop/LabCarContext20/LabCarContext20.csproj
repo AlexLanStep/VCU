@@ -27,6 +27,8 @@
     <Reference Include="EE.Scripting.interfaces">
       <HintPath>..\..\..\3.7\EE.Scripting.interfaces.dll</HintPath>
     </Reference>
+    <ProjectReference Include="..\MatLabConvert\MatLabConvert.csproj" />
+
   </ItemGroup>
 
 </Project>

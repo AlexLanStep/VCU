@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MatLab", "MatLab", "{E3A27A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMatlab", "MatLab\TestMatlab\TestMatlab.csproj", "{2750A316-2DA2-45CB-9C5B-8A44A5D2A67C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatLabConvert", "MatLabConvert\MatLabConvert.csproj", "{03836756-4441-4B92-AAAD-5A778B39C500}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,12 +78,19 @@ Global
 		{2750A316-2DA2-45CB-9C5B-8A44A5D2A67C}.Model|Any CPU.Build.0 = Model|Any CPU
 		{2750A316-2DA2-45CB-9C5B-8A44A5D2A67C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2750A316-2DA2-45CB-9C5B-8A44A5D2A67C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03836756-4441-4B92-AAAD-5A778B39C500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03836756-4441-4B92-AAAD-5A778B39C500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03836756-4441-4B92-AAAD-5A778B39C500}.Model|Any CPU.ActiveCfg = Debug|Any CPU
+		{03836756-4441-4B92-AAAD-5A778B39C500}.Model|Any CPU.Build.0 = Debug|Any CPU
+		{03836756-4441-4B92-AAAD-5A778B39C500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03836756-4441-4B92-AAAD-5A778B39C500}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2750A316-2DA2-45CB-9C5B-8A44A5D2A67C} = {E3A27AFF-D445-4784-8725-E4B211062091}
+		{03836756-4441-4B92-AAAD-5A778B39C500} = {E3A27AFF-D445-4784-8725-E4B211062091}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6957F20-CC30-476C-A3D8-48C3B3D0DC34}

@@ -19,6 +19,8 @@ using Newtonsoft.Json;
 
 using System.IO;
 
+using MatLab;
+
 namespace LabCar20;
 
 public class MyArg
@@ -38,6 +40,9 @@ public class Program
 
   static void Main(string[] args)
   {
+//    var xx = new MatLabConvert(@"D:\TestSystem\Moto\VariableData\Dan1.mat");
+//    var _x = xx.Dan;
+
    _container = ContainerManager.GetInstance();
     ContainerManager.Initialization();
 //    var _glPath = _container.LabCar.Resolve<ICPaths>();

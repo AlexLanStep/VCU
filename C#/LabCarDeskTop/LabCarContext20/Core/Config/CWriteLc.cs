@@ -47,6 +47,7 @@ public class CWriteLcJson : ICWriteLcBase
 #pragma warning restore CS8618
   {
   }
+
   public void Initialization(string signal, string comment = "")
   {
     Signal = signal;

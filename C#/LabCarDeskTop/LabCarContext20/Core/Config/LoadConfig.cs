@@ -1,8 +1,4 @@
-﻿using LabCarContext20.Data;
-using System.IO;
-using System.Text.Json.Serialization;
-
-
+﻿
 namespace LabCarContext20.Core.Config;
 
 public interface ILoadConfig
@@ -33,13 +29,13 @@ public class LoadConfig: ILoadConfig
       public string Comment { get; set; }
 #pragma warning restore CS8618
 
-      [Newtonsoft.Json.JsonConstructor]
-      public TaskJsonLoad(string pathTask, string timeLabCar, string comment)
-      {
-        PathTask = pathTask;
-        TimeLabCar = timeLabCar;
-        Comment = comment;
-      }
+      //[Newtonsoft.Json.JsonConstructor]
+      //public TaskJsonLoad(string pathTask, string timeLabCar, string comment)
+      //{
+      //  PathTask = pathTask;
+      //  TimeLabCar = timeLabCar;
+      //  Comment = comment;
+      //}
 
     }
     public class ParameterJson
@@ -49,52 +45,24 @@ public class LoadConfig: ILoadConfig
       [JsonPropertyName("Comment")]
       public string Comment { get; }
 
-      [Newtonsoft.Json.JsonConstructor]
-      public ParameterJson(string signal, string comment = "")
-      {
-        Signal = signal;
-        Comment = comment;
-      }
+      //[Newtonsoft.Json.JsonConstructor]
+      //public ParameterJson(string signal, string comment = "")
+      //{
+      //  Signal = signal;
+      //  Comment = comment;
+      //}
 
     }
     public class VariableDataJson
     {
-      public VariableDataJson(string name, dynamic? value, string? path)
-      {
-//        Name = name;
-        Path = path;
-        Value = value;
-      }
-
-      //[JsonPropertyName("Name")]
-      //public string Name { get; set; }
       [JsonPropertyName("Value")]
       public dynamic? Value { get; set; }
       [JsonPropertyName("Path")]
       public string? Path { get; set; }
-    }
-/*
-    public class CalibrationsJson
-    {
-      [JsonPropertyName("Signal")]
-      public string Signal { get; }
-      [JsonPropertyName("Val")]
-      public dynamic Val { get; }
-      [JsonPropertyName("Comment")]
-      public string Comment { get; }
+      [JsonPropertyName("Paths")]
+      public List<string>? Paths { get; set; }
 
-      [Newtonsoft.Json.JsonIgnore]
-      public string Text => $"FESTWERT {Signal} \n  WERT {((string)Val.ToString()).Replace(',', '.')} \nEND\n";
-
-      [Newtonsoft.Json.JsonConstructor]
-      public CalibrationsJson(string signal, dynamic val, string comment = "")
-      {
-        Signal = signal;
-        Val = (val is string) ? 0.0 : val;
-        Comment = comment;
-      }
     }
-*/
     public GlobalConfigLabCar()
     {
     }
@@ -149,11 +117,15 @@ public class LoadConfig: ILoadConfig
     }
 
     foreach (var it in Config.LabCarTask)
-    {
-      CReadLc _cr = _container.LabCar.Resolve<CReadLc>();
-      _cr.Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment);
-      _iallDan.Add<CReadLc>(it.Key, _cr);
-    }
+//    {
+      //CReadLc _cr = _container.LabCar.Resolve<CReadLc>();
+      //_cr.Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment);
+      //_iallDan.Add<CReadLc>(it.Key, _cr);
+
+      _iallDan.Add<CReadLc>(it.Key, _container.LabCar.Resolve<CReadLc>()
+                                      .Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment));
+
+//    }
 
     foreach (var it in Config.Parameters)
     {
@@ -164,12 +136,35 @@ public class LoadConfig: ILoadConfig
 
     IDanCalibrations2 _iDanCalibr = _container.LabCar.Resolve<IDanCalibrations2>();
     foreach (var it in Config.Calibration)
+//    {
+      //      Calibrations2 _ccalibr = _container.LabCar.Resolve<Calibrations2>();
+      //      _ccalibr.Initialization(_icPaths.GlCalibr, it.Key, it.Value);
+      //      _iDanCalibr.Add(it.Key, _ccalibr);
+      _iDanCalibr.Add(it.Key, _container.LabCar.Resolve<Calibrations2>().Initialization(_icPaths.GlCalibr, it.Key, it.Value));
+//    }
+
+    void loadPathMatdan(string pathx)
     {
-      Calibrations2 _ccalibr = _container.LabCar.Resolve<Calibrations2>();
-      _ccalibr.Initialization(_icPaths.GlCalibr, it.Key, it.Value);
-      _iDanCalibr.Add(it.Key, _ccalibr);
+      var xx = new MatLabConvert(pathx);
+      if (xx.Dan.Count <= 0)
+        return;
+
+      foreach (var it in xx.Dan)
+      _iallDan.Add<dynamic>(it.Key, it.Value);
     }
 
+    foreach (var it in Config.Variable)
+    {
+      if(it.Value.Value != null) 
+        _iallDan.Add<dynamic>(it.Key, it.Value.Value);
+
+      if(it.Value.Path != null)
+        loadPathMatdan(it.Value.Path);
+
+      if (it.Value.Paths != null)
+        foreach (var it0 in it.Value.Paths)
+          loadPathMatdan(it0);
+    }
   }
 
 }
