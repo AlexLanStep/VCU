@@ -66,9 +66,12 @@ public class ConnectLabCar: IConnectLabCar
 
   public void Connect()
   {
+#if MODEL
+#else
     SignalSources.Download();           // download the model to the target
     SignalSources.StartSimulation();    // start simulation on the target
     SignalSources.StartMeasurement();   // start measurement
+#endif
   }
   public void StartSimulation() 
   {
@@ -98,8 +101,14 @@ public class ConnectLabCar: IConnectLabCar
     Workspace.Close();                  // close the workspace
     ExperimentEnvironment.ShutDown();   // shut down the application
   }
+  public void ReStart()
+  {
+    StopSimulation();
+    StartSimulation();
+  }
 
-    public void InitializationConsole()=>_iloggerDisplay.InitializationConsole();
+
+  public void InitializationConsole()=>_iloggerDisplay.InitializationConsole();
     public void InitializationWindows()=>_iloggerDisplay.InitializationWindows();
     public void Write(string str)=>_iloggerDisplay.Write(str);
 }

@@ -12,5 +12,6 @@ public interface IConnectLabCar: ILoggerDisplay
     void Connect();
     void DisConnect();
     void StartSimulation();
-    public void StopSimulation();
+    void StopSimulation();
+    void ReStart();
 }

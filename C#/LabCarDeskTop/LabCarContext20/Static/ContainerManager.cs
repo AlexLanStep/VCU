@@ -32,7 +32,8 @@ public class ContainerManager
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);
-    LabCar.Register<ILoadConfig, LoadConfig>(); 
+    LabCar.Register<ILoadConfig, LoadConfig>();
+    LabCar.Register<StrateyBasa>();
     LabCar.Register<IStSetOneDan, StSetOneDan>();
     LabCar.Register<IStIfOne, StIfOne>();
     LabCar.Register<IGeneralStrategy, GeneralStrategy>();
