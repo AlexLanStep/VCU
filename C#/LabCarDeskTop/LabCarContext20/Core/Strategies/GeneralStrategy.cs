@@ -7,6 +7,7 @@ namespace LabCarContext20.Core.Strategies;
 public interface IGeneralStrategy
 {
   void Run(string pathstrategdir);
+
 }
 public class GeneralStrategy: IGeneralStrategy
 {
@@ -17,12 +18,13 @@ public class GeneralStrategy: IGeneralStrategy
   private readonly ILoggerDisplay _iloggerdisplay;
   private readonly ICPathLc _icpathLc;
   private readonly ICPaths _icpaths;
-  private readonly ICDopConfig _icdopConfig;
+  private ICDopConfig _icdopConfig;
   private readonly ILoadConfig _iloadConfig;
   private readonly IConnectLabCar _iconnectLabCar;
 
   #endregion
-  private string _pathStrategDir;
+  public string ParhStrategy { get; set; }
+  public string NameDir { get; set; }
 
   private const string Stls = "STls";
     
@@ -39,6 +41,7 @@ public class GeneralStrategy: IGeneralStrategy
   }
   public void Run(string pathstrategdir)
   {
+
     loadParams(pathstrategdir);
 
     List<JToken>? lsSt = null;
@@ -49,7 +52,8 @@ public class GeneralStrategy: IGeneralStrategy
     _iconnectLabCar.Connect();
 
     IStrategy _ist = _container.LabCar.Resolve<StrateyBasa>();
-  
+    _ist.SetParams(ParamsStrategy);  
+
     int _repeat = 0;
     bool _success = true;
     while (_repeat < _icdopConfig.Repeat && _success)
@@ -74,12 +78,14 @@ public class GeneralStrategy: IGeneralStrategy
 
   private void loadParams(string path)
   {
-    _pathStrategDir = path;
-    var _pathConfig = _pathStrategDir + "\\Config.json";
+
+    ParhStrategy = path;
+
+    var _pathConfig = ParhStrategy + "\\Config.json";
     if (File.Exists(_pathConfig))
       _iloadConfig.ConfigLoad(_pathConfig);
 
-    var _pathParams = _pathStrategDir + "\\Params.json";
+    var _pathParams = ParhStrategy + "\\Params.json";
     //    ParamsStrategy
     try
     {
@@ -103,12 +109,11 @@ public class GeneralStrategy: IGeneralStrategy
   private  bool LoadStrategy(out List<JToken>? ls)
   {
     ls = null;
-    var _pathStrategy = _pathStrategDir + "\\Strateg.json";
+    var _pathStrategy = ParhStrategy + "\\Strateg.json";
 
     string? stStrategy = (File.Exists(_pathStrategy) 
       ? File.ReadAllText(_pathStrategy) : null) 
       ?? throw new MyException(" Error проблема в файле -> Strateg.json", -1);
-
 
     JObject jinfo;
     try
@@ -126,19 +131,17 @@ public class GeneralStrategy: IGeneralStrategy
     var lsName = jinfo.Children().ToList().Select(item => ((JProperty)item).Name).ToList();
 
     // ReSharper disable free UnusedVariable
-#pragma warning disable CS8604, CS8603
+    #pragma warning disable CS8604, CS8603
     foreach (var w in lsName.Select(it => ((JToken)jinfo)[it]?.ToString()))
       lsName.ForEach(item => basaParams.AddOrUpdate(item, jinfo[item], (_, _) => jinfo[item]));
-#pragma warning restore CS8603, CS8604
+    #pragma warning restore CS8603, CS8604
 
     #region ------ Load ->  Stls  --------------
     if (basaParams.TryGetValue(Stls, out var valueStls))
     { 
-//      var sss111 = valueStls;
        ls = ((JToken)valueStls).Children().ToList();
       return true;
     }
-    //      CalcStls(valueStls);
     else
       _iloggerdisplay.Write($" Error - {Stls} ");
 

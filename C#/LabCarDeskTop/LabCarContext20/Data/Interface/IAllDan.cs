@@ -2,8 +2,8 @@
 
 public interface IAllDan
 {
-  void Add<T>(string name, T dan);
+//  void Add<T>(string name, T dan);
   object? GetT<T>(string name);
   dynamic? Get(string name);
-  void AddCalc(string name, dynamic d);
+//  void AddCalc(string name, dynamic d);
 }

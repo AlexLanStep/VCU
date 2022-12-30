@@ -16,6 +16,7 @@ public class CDopConfig: ICDopConfig
   public bool LoggerCar { get; set; }=false;
   public bool Restart { get; set; } = false;
 
+
   public void Set(int repeat, bool loggerCar, bool restart)
   {
     Repeat = repeat;

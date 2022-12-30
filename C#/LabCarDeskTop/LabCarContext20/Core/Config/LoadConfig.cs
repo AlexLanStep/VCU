@@ -1,4 +1,6 @@
 ﻿
+using LabCarContext20.Data.Interface;
+
 namespace LabCarContext20.Core.Config;
 
 public interface ILoadConfig
@@ -75,26 +77,81 @@ public class LoadConfig: ILoadConfig
 
   #endregion
   #region data
-  public string DirConfig { get; set; } = "";
-  public GlobalConfigLabCar? Config { get; set; }
+  #region Container
+  private ContainerManager? _container = null;
+  private readonly ILoggerDisplay _iloggerdisplay;
+  private readonly ICPathLc _icpathLc;
+  private readonly ICPaths _icpaths;
+  private readonly ICDopConfig _icdopConfig;
+  private readonly ILoadConfig _iloadConfig;
+  private readonly IConnectLabCar _iconnectLabCar;
   private readonly IDanCalibrations2 _idanCalibrations2;
   private readonly IAllDan _iallDan;
-  private ICPathLc icPathLc;
-  private readonly ContainerManager? _container = null;
+  private readonly ICPathLc icPathLc;
   private readonly ICPaths? _icPaths = null;
+  private readonly DanReadLc _danReadLc;
+  private readonly DanValue _danValue;
+  private readonly DanWriteLc _danWriteLc;
+  #endregion
+
+
+  public string DirConfig { get; set; } = "";
+  public GlobalConfigLabCar? Config { get; set; }
+
+  /*
+    #region Container
+    private ContainerManager? _container = null;
+    private readonly ILoggerDisplay _iloggerdisplay;
+    private readonly ICPathLc _icpathLc;
+    private readonly ICPaths _icpaths;
+    private ICDopConfig _icdopConfig;
+    private readonly ILoadConfig _iloadConfig;
+    private readonly IConnectLabCar _iconnectLabCar;
+
+    #endregion
+    public string ParhStrategy { get; set; }
+    public string NameDir { get; set; }
+
+    private const string Stls = "STls";
+
+    public GeneralStrategy()
+    {
+      _container = ContainerManager.GetInstance();
+
+      _iconnectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
+      _iloggerdisplay = _container.LabCar.Resolve<ILoggerDisplay>();
+      _icpathLc = _container.LabCar.Resolve<ICPathLc>();
+      _icpaths = _container.LabCar.Resolve<ICPaths>();
+      _icdopConfig = _container.LabCar.Resolve<ICDopConfig>();
+      _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
+    }
+
+
+   */
+
+
 
   #endregion
-  public LoadConfig(ICPathLc icpathlc, ICPaths icPaths,
-                      IDanCalibrations2 idanCalibrations2, 
-                      IAllDan iallDan)
+//  public LoadConfig(ICPathLc icpathlc, ICPaths icPaths, IDanCalibrations2 idanCalibrations2, IAllDan iallDan)
+  public LoadConfig()
   {
-    icPathLc = icpathlc;
-    _icPaths = icPaths;
-    _idanCalibrations2 = idanCalibrations2;
-    _iallDan = iallDan;
     _container = ContainerManager.GetInstance();
-  }
-  public void ConfigLoad(string pathconfig="")
+
+    _iconnectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
+    _iloggerdisplay = _container.LabCar.Resolve<ILoggerDisplay>();
+    _icpathLc = _container.LabCar.Resolve<ICPathLc>();
+    _icpaths = _container.LabCar.Resolve<ICPaths>();
+    _idanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
+    _iallDan = _container.LabCar.Resolve<IAllDan>();
+    _danReadLc = _container.LabCar.Resolve<DanReadLc>();
+    _danValue = _container.LabCar.Resolve<DanValue>();
+    _danWriteLc = _container.LabCar.Resolve<DanWriteLc>();
+
+
+  //    _icdopConfig = _container.LabCar.Resolve<ICDopConfig>();
+  //    _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
+}
+public void ConfigLoad(string pathconfig="")
   {
     if (string.IsNullOrEmpty(pathconfig)) pathconfig = _icPaths.GlConfig;
 
@@ -121,17 +178,15 @@ public class LoadConfig: ILoadConfig
       //CReadLc _cr = _container.LabCar.Resolve<CReadLc>();
       //_cr.Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment);
       //_iallDan.Add<CReadLc>(it.Key, _cr);
-
-      _iallDan.Add<CReadLc>(it.Key, _container.LabCar.Resolve<CReadLc>()
-                                      .Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment));
-
-//    }
-
+      
+      _danReadLc.Add(it.Key, _container.LabCar.Resolve<CReadLc>()
+        .Initialization(it.Key, it.Value.PathTask, it.Value.TimeLabCar, it.Value.Comment));
+      
     foreach (var it in Config.Parameters)
     {
       CWriteLc _cw = _container.LabCar.Resolve<CWriteLc>();
       _cw.Initialization(it.Value.Signal, it.Value.Comment);
-      _iallDan.Add<CWriteLc>(it.Key, _cw);
+      _danWriteLc.Add(it.Key, _cw);
     }
 
     IDanCalibrations2 _iDanCalibr = _container.LabCar.Resolve<IDanCalibrations2>();
@@ -150,13 +205,13 @@ public class LoadConfig: ILoadConfig
         return;
 
       foreach (var it in xx.Dan)
-      _iallDan.Add<dynamic>(it.Key, it.Value);
+      _danValue.Add(it.Key, it.Value);
     }
 
     foreach (var it in Config.Variable)
     {
       if(it.Value.Value != null) 
-        _iallDan.Add<dynamic>(it.Key, it.Value.Value);
+        _danValue.Add(it.Key, it.Value.Value);
 
       if(it.Value.Path != null)
         loadPathMatdan(it.Value.Path);

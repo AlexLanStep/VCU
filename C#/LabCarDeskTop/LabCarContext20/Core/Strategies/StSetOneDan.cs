@@ -18,17 +18,20 @@ public class StSetOneDan: IStSetOneDan
   private readonly IAllDan _iAllDan;
   private readonly AriStrDisassemble _strDisassemble;
   private readonly ILoggerDisplay _iloggerDisplay;
+  private DanValue _danValue;
 
-  public StSetOneDan(ILoggerDisplay iloggerDisplay, IAllDan allDan, AriStrDisassemble strDisassemble)
+  public StSetOneDan(ILoggerDisplay iloggerDisplay, IAllDan allDan, DanValue danValue, AriStrDisassemble strDisassemble)
   {
     _iloggerDisplay = iloggerDisplay;
+    _danValue = danValue;
     _iAllDan = allDan;
     _strDisassemble = strDisassemble;
   }
 
   public void SetDan(string name, dynamic dan)=>
     //_danValue.Set(name, dan);
-    _iAllDan.Add<dynamic>(name, dan);
+    _danValue.Add(name, dan);
+
   public bool? SetDan(string StrCommand)
   {
     StrCommand = StrCommand.Trim().Replace(" ","");
@@ -42,10 +45,10 @@ public class StSetOneDan: IStSetOneDan
     switch (s[1].ToLower())
     {
       case "true":
-        _iAllDan.Add<dynamic>(s[0], true);
+        _danValue.Add(s[0], true);
         return true;
       case "false":
-        _iAllDan.Add<dynamic>(s[0], false);
+        _danValue.Add(s[0], false);
         return true;
       default:
         break;
@@ -60,7 +63,7 @@ public class StSetOneDan: IStSetOneDan
 
 //    _danValue.Set(s[0], d);
 
-    _iAllDan.Add<dynamic>(s[0], d);
+    _danValue.Add(s[0], d);
 
     return true;
   }

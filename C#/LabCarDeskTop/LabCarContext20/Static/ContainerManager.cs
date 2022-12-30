@@ -27,16 +27,19 @@ public class ContainerManager
     LabCar.Register<DanReadLc>(Reuse.Singleton);
     LabCar.Register<DanValue>(Reuse.Singleton);
     LabCar.Register<DanWriteLc>(Reuse.Singleton);
-    LabCar.Register<DanLoggerLc>(Reuse.Singleton);
     LabCar.Register<Calibrations2, Calibrations2>();
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);
+    LabCar.Register<ILcLoggers, LcLoggers>(Reuse.Singleton);
     LabCar.Register<ILoadConfig, LoadConfig>();
     LabCar.Register<StrateyBasa>();
     LabCar.Register<IStSetOneDan, StSetOneDan>();
     LabCar.Register<IStIfOne, StIfOne>();
     LabCar.Register<IGeneralStrategy, GeneralStrategy>();
+
+    //LabCar.Register<DanLoggerLc>(Reuse.Singleton);
+
   }
 
   public static void Initialization()
@@ -56,7 +59,7 @@ public class ContainerManager
     var _p10 = _container.LabCar.Resolve<DanReadLc>();
     var _p11 = _container.LabCar.Resolve<DanValue>();
     var _p12 = _container.LabCar.Resolve<DanWriteLc>();
-    var _p13 = _container.LabCar.Resolve<DanLoggerLc>();
+    var _p13 = _container.LabCar.Resolve<ILcLoggers> ();
     var _p14 = _container.LabCar.Resolve<ICalibrations2>();
     var _p15 = _container.LabCar.Resolve<IDanCalibrations2>();
     var _p16 = _container.LabCar.Resolve<IAllDan>();

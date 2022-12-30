@@ -1,17 +1,22 @@
 ﻿
 namespace LabCarContext20.Data;
 
-public interface IDanLoggerLc
+public interface IxxDanLoggerLc
 {
 
 }
-public class DanLoggerLc : DanBase<LoggerLc>, IDanLoggerLc
+public class xxDanLoggerLc : DanBase<xxLoggerLc>, IxxDanLoggerLc
 {
-  public DanLoggerLc(IConnectLabCar iconnectlc):base(iconnectlc){}
+  public xxDanLoggerLc(IConnectLabCar iconnectlc):base(iconnectlc){}
 
   public bool Add(string nameDir, string nameDirDan, string[] signal, string[] task)
   {
-    var logger = new LoggerLc() { Name = nameDir, PathDirDan = nameDirDan };
+
+    var logger = new xxLoggerLc() { Name = nameDir, PathDirDan = nameDirDan };
+
+#if MODEL
+    return true;
+#endif
     try
     {
       // ReSharper disable once RedundantCast
@@ -51,7 +56,7 @@ public class DanLoggerLc : DanBase<LoggerLc>, IDanLoggerLc
     return true;
   }
 
-  public new LoggerLc GetT(string name) => base.GetT(name);
+  //public new LoggerLc GetT(string name) => base.GetT(name);
 
 }
 
