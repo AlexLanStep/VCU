@@ -19,6 +19,8 @@ global using ETAS.EE.Scripting;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Linq;
 
+global using LabCarContext20.Data;
+global using LabCarContext20.Data.Interface;
 global using LabCarContext20.Core;
 global using LabCarContext20.Core.Ari;
 //global using LabCarContext20.Core.Ari.Interface;
@@ -26,15 +28,11 @@ global using LabCarContext20.Core.Config;
 global using LabCarContext20.Core.Interface;
 global using LabCarContext20.Core.Test;
 
-global using LabCarContext20.Data;
-global using LabCarContext20.Data.Interface;
 global using LabCarContext20.Static;
 
 
 global using DryIoc;
 global using DryCont = DryIoc.Container;
 global using DynamicData;
-
-global using LabCarContext20.Data;
 
 global using MatLab;

@@ -1,10 +1,14 @@
 ﻿
+using LabCarContext20.Data.Interface;
 namespace LabCarContext20.Data;
 
 
-public interface IDanWriteLc
+public interface IDanWriteLc: IGetDan
 {
-
+  bool Add(string nameParama, CWriteLcJson param);
+  bool Add(string nameParama, CWriteLc? param);
+  bool Set(string name, dynamic d);
+  CWriteLc? GetT(string name);
 }
 
 public class DanWriteLc : DanBase<CWriteLc>, IDanWriteLc
@@ -32,6 +36,9 @@ public class DanWriteLc : DanBase<CWriteLc>, IDanWriteLc
 
   public bool Set(string name, dynamic d) => (d != null) && cDan.ContainsKey(name) ? cDan[name].SetValue(d) : false;
 
+//  public CWriteLc? GetT(string name) => (CWriteLc)base.GetT(name);
+  public object GetT(string name) => (CWriteLc)base.GetT(name);
+//  object IGetDan.GetT(string name){return GetT(name);}
 }
 
 

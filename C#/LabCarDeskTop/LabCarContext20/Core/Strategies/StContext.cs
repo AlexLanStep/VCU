@@ -31,6 +31,8 @@ public class StContext : IStContext
   protected ICDopConfig _icDopConfig;
   protected ILcLoggers _iLogger;
   protected DanValue _danValue;
+  protected readonly IDanCalibrations2 _idanCalibrations2;
+  protected readonly IStSetOneDan _istSetOneDan;
   #endregion
   //private string _pathStrategy;
   //private string _nameDir;
@@ -40,6 +42,7 @@ public class StContext : IStContext
   private List<JToken>? _stBasa = new();
 
   protected List<(string, List<(string, object)>)>? lsSt = new();
+  private string _nameStOne;
   public StContext()
   {
     _container = ContainerManager.GetInstance();
@@ -47,11 +50,16 @@ public class StContext : IStContext
     _ilogDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
     _iLogger = _container.LabCar.Resolve<ILcLoggers>();
     _danValue = _container.LabCar.Resolve<DanValue>();
-
+    _idanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
+    _icDopConfig = _container.LabCar.Resolve<ICDopConfig>();
+    _istSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
     #region Разбор строк _process
     _process.Add("t", timewaite);
     _process.Add("loggerset", floggerset);
-
+    _process.Add("logger", floggerCommand);
+    _process.Add("loadfile", floadfile);
+    _process.Add("activfile", factivfile);
+    _process.Add("set", fset);
     #endregion
   }
   public void SetParams(Dictionary<string, dynamic>? paramsStrategy)
@@ -71,7 +79,7 @@ public class StContext : IStContext
   {
     foreach (var it in lsSt)
     {
-      string _nameStOne = it.Item1;
+      _nameStOne = it.Item1;
 
       var _paramsStOne = it.Item2;
 
@@ -87,14 +95,12 @@ public class StContext : IStContext
         {
           _is = _is && _process[it2.Item1].Invoke(it2.Item2);
           if (!_is) 
-          { 
-            //  Сщщищение об ошибке
+          { //  Сообщение об ошибке
             return false; 
           }
         }
         else
-        {
-          // error ----
+        { // error ----
 //          return false;
         }
 
@@ -172,13 +178,44 @@ public class StContext : IStContext
   #endregion
 
   #region _  loggerset __
-  private bool floggerset(dynamic s) 
+  private bool floggerset(dynamic s)
+    => _iLogger.Add(JsonArrayString(s.ToString() ?? string.Empty));
+
+  private bool floggerCommand(dynamic s)
+    => _icDopConfig.LoggerCar? _iLogger.SetCommand((string)s) : true;
+
+  #endregion
+
+  #region _   loadFiler калибровка  _
+  private bool floadfile(dynamic s)
+    => _idanCalibrations2.Load(JsonLsString(s.ToString() ?? string.Empty));
+  
+  private bool factivfile(dynamic s)
+    => _idanCalibrations2.Action(JsonLsString(s.ToString() ?? string.Empty));
+  #endregion
+
+  #region _    set   _
+
+  private bool fset(dynamic s)
   {
-    var ss = JsonArrayString(s.ToString() ?? string.Empty);
-    
-    _iLogger.Add(ss); 
-    return true;
+    try
+    {
+      return _istSetOneDan.SetVariable(JsonToDicStDyn(s.ToString() ?? string.Empty));
+    }
+    catch (Exception e)
+    {}
+
+    try
+    {
+      return _istSetOneDan.SetVariable(JsonToDicStDyn(JsonLsString(s.ToString() ?? string.Empty)));
+    }
+    catch (Exception e)
+    {}
+
+    throw new MyException($"Проблема с Set в {_nameStOne} ", -4);
+    return false;
   }
+
 
   #endregion
 

@@ -9,7 +9,22 @@ public interface IStSetOneDan
   void SetDan(string name, dynamic dan);
   bool? SetDan(string StrCommand);
   bool? SetDans(List<string> ls);
+  bool SetVariable(Dictionary<string, dynamic> d);
+  bool SetVariable(List<string> d);
+
 }
+/*
+}
+public class StSet: IStSet
+{
+  private readonly DanReadLc _danReadLc;
+  private readonly DanValue _danValue;
+  private readonly DanWriteLc _danWriteLc;
+
+ 
+ 
+ */
+
 
 
 public class StSetOneDan: IStSetOneDan
@@ -18,14 +33,44 @@ public class StSetOneDan: IStSetOneDan
   private readonly IAllDan _iAllDan;
   private readonly AriStrDisassemble _strDisassemble;
   private readonly ILoggerDisplay _iloggerDisplay;
-  private DanValue _danValue;
+  private readonly DanValue _danValue;
+  private readonly DanReadLc _danReadLc;
+  private readonly DanWriteLc _danWriteLc;
 
-  public StSetOneDan(ILoggerDisplay iloggerDisplay, IAllDan allDan, DanValue danValue, AriStrDisassemble strDisassemble)
+
+  public StSetOneDan(ILoggerDisplay iloggerDisplay, 
+            IAllDan allDan, 
+            DanValue danValue,
+            DanReadLc danReadLc,
+            DanWriteLc danWriteLc,
+            AriStrDisassemble strDisassemble)
   {
     _iloggerDisplay = iloggerDisplay;
     _danValue = danValue;
     _iAllDan = allDan;
     _strDisassemble = strDisassemble;
+    _danReadLc = danReadLc;
+    _danWriteLc = danWriteLc;
+
+  }
+
+
+  public bool SetVariable(Dictionary<string, dynamic> d)
+  {
+    foreach (var it in from it in d 
+              let _is = _danWriteLc.Set(it.Key, it.Value) where !(bool) _is select it)
+      _danValue.Add(it.Key, it.Value);
+    return true;
+  }
+
+  public bool SetVariable(List<string> d)
+  {
+    foreach (var it in d)
+    {
+      var ss = it;
+    }
+
+    return true;
   }
 
   public void SetDan(string name, dynamic dan)=>
@@ -78,6 +123,5 @@ public class StSetOneDan: IStSetOneDan
 
     return true;
   }
-
 }
 

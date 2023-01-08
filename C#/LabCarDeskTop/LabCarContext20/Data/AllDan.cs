@@ -73,17 +73,15 @@ public class AllDan : IAllDan
 
   public dynamic? Get(string name)
   {
-    try
-    {
-      dynamic _d = _dGet[name].Invoke(name);
-      return _d;
-    }
-    catch (Exception e)
-    {
-      return null;
-    }
+    dynamic? x=null;
+    x = _danReadLc.Get(name);
+    if (x != null) return x;
+    x = _danValue.Get(name);
+    if (x != null) return x;
+    x = _danWriteLc.Get(name);
+    if (x != null) return x;
+    return x;
   }
-
 }
 
 

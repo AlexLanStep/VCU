@@ -1,7 +1,5 @@
 ﻿
-using ETAS.EE.Scripting;
-using LabCarContext20.Data.Interface;
-using System.Threading.Tasks;
+
 
 namespace LabCarContext20.Data;
 
@@ -11,7 +9,7 @@ public interface ILcLoggers
   void SetPath(string path);
   void Start();
   void Stop();
-  
+  bool SetCommand(string s);
 }
 public class LcLoggers: ILcLoggers
 {
@@ -22,16 +20,18 @@ public class LcLoggers: ILcLoggers
   #endregion
   private readonly IAllDan _iallDan;
   private IDataLogger? _iDatalogger = null;
-  private IConnectLabCar _iConnectLC; 
-
-  public LcLoggers(IConnectLabCar iConnectLc, IAllDan allDan)
+  private IConnectLabCar _iConnectLC;
+  private readonly DanReadLc _danReadLc;
+  private readonly DanWriteLc _danWriteLc;
+  public LcLoggers(IConnectLabCar iConnectLc, IAllDan allDan, DanReadLc danReadLc, DanWriteLc danWriteLc)
   {
     _iConnectLC = iConnectLc;
     _iallDan = allDan;
+    _danReadLc = danReadLc;
+    _danWriteLc = danWriteLc;
 
-
-  }
-  public void SetPath(string path)
+}
+public void SetPath(string path)
   {
 
     #region --- Logger -- 
@@ -100,21 +100,41 @@ public class LcLoggers: ILcLoggers
 
     foreach (string name in names)
     {
-      CReadLc? task = (CReadLc?)_iallDan.GetT<CReadLc>(name);  //  LcDan.GetTaskInfo(item);
-
+      var task = (CReadLc?)_danReadLc.GetT(name);
       if (task != null)
       {
         lsPath.Add(task.PathTask);
         lsTask.Add(task.TimeLabCar);
       }
+      else
+      {
+        var param = (CWriteLc?)_danWriteLc.GetT(name);
+
+        if (param == null) continue;
+
+        lsPath.Add(param.Signal);
+        lsTask.Add("");
+      }
+
     }
-
-    if (lsPath.Count > 0)
-      return Add(lsPath.ToArray(), lsTask.ToArray());
-
-    return false;
+    return lsPath.Count > 0 && Add(lsPath.ToArray(), lsTask.ToArray());
   }
-  
+
+  public bool SetCommand(string s)
+  {
+    s=s.Trim().ToLower();
+    switch (s)
+    {
+      case "start": Start();
+        return true;
+      case "stop": Stop();
+        return true;
+      default:
+        return false;
+    }
+  }
+
+
   private bool Add(string[] signal, string[] task)
   {
 

@@ -73,6 +73,10 @@ public class CWriteLc : CWriteLcJson
     Signal = signal;
     Comment = comment;
 
+#if MODEL
+    return this;
+#endif
+
     try
     {
       SignalParams = _iConLabCar.SignalSources.CreateParameter(Signal);

@@ -88,16 +88,12 @@ public class Program
     //var dirRepost = "";
 
 
-    foreach (var it in myArgs)
+    foreach (var it in myArgs.Where(it => Directory.Exists(it.Path)))
     {
-      if (!Directory.Exists(it.Path))
-        continue;
-
       _container.LabCar.Resolve<ICDopConfig>()
         .Set(it.Repeat > 0 ? it.Repeat : 1, 
           it.LabCarLog != null, it.ReStart != null);
       _container.LabCar.Resolve <IGeneralStrategy>().Run(it.Path);
-
     }
 
 
@@ -130,6 +126,7 @@ public class Program
     //danReadLc.Run();
     //    danReadLc.Add("11", "222", "2222", "222");
 
+/*
     _iAllDan.Add<CReadLc>("axds", _container.LabCar.Resolve<CReadLc>().Initialization("11", "222", "333", "44444"));
     dynamic? _xxx = _iAllDan.Get("axds");
 
@@ -145,7 +142,7 @@ public class Program
     _iAllDan.Add<dynamic>("mas1", new double[7, 2] { { 0.0, 1.1 }, { 1.0, 2.1 }, { 2.0, 2.1 },
       { 3.0, 3.1 }, { 4.0, 4.1 }, { 5.0, 5.1 }, { 6.0, 6.1 } });
     dynamic? mas1 = _iAllDan.Get("mas1");
-
+*/
     iDisplay.Write(" ==--  End program  == ");
 
 //    IAllDan, AllDan

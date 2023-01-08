@@ -35,7 +35,7 @@ public interface ICalibrations2
 {
   void LoadingCalibrations();
   void ActionCalibrations();
-  Calibrations2 Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat);
+  Calibrations2? Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat);
 }
 public class Calibrations2 : ICalibrations2
 {
@@ -48,7 +48,7 @@ public class Calibrations2 : ICalibrations2
     _iConLabCar = iConLabCar;
   }
 
-  public Calibrations2 Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  public Calibrations2? Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
   {
     var text = "";
 
@@ -64,6 +64,9 @@ public class Calibrations2 : ICalibrations2
 
   public void LoadingCalibrations()
   {
+#if MODEL
+    return;
+#endif
     try
     {
       _iConLabCar.Experiment.CalibrationController.LoadParameters(_pathDirCalibration);
@@ -86,6 +89,10 @@ public class Calibrations2 : ICalibrations2
 
   public void ActionCalibrations()
   {
+#if MODEL
+    return;
+#endif
+
     try
     {
       _iConLabCar.Experiment.ActivateFile(_pathDirCalibration, true);
