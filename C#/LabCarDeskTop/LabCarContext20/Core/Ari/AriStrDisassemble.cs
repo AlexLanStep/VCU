@@ -1,4 +1,5 @@
 ﻿
+using LabCarContext20.Data;
 using System.Runtime.Intrinsics.X86;
 using System.Xml.Linq;
 
@@ -67,12 +68,17 @@ public class AriStrDisassemble : AriPattern
           str = str.Replace(it, Convert.ToString(dan.Value));
         continue;
       }
-      dynamic? _d = _iallDan.Get(it);
-      if (_d != null)
-      {
+
+      var _d = _danReadLc.Get(it);
+      if (_d == null)
+        _d =_danValue.Get(it);
+
+
+        //      dynamic? _d = _iallDan.Get(it);
+        if (_d == null) continue;
+
         str = str.Replace(it, Convert.ToString(_d));
-        continue;
-      }
+      continue;
 
     }
 
@@ -143,7 +149,15 @@ public class AriStrDisassemble : AriPattern
         continue;
       }
 
-      xd[i] = _iallDan.Get(_key0);
+      var _d = _danReadLc.Get(_key0);
+      if (_d == null)
+        _d = _danValue.Get(_key0);
+
+//      if (_d == null)
+//        throw new MyException(" Error in AriStrDisaa not _d ", -6);
+//        throw new MyException(" Error in AriStrDisaa not _d ", -6);
+
+      xd[i] = _d;
       @is &= xd[i] != null;
       i++;
     }
@@ -170,6 +184,15 @@ public class AriStrDisassemble : AriPattern
     else if(IsPlusMin(str).Item1)
       return DynamicStrPlusMin(str);
 
+    try
+    {
+      return str.IndexOf(",") >= 0 ? Convert.ToDouble(str) : Convert.ToInt32(str);
+    }
+    catch (Exception e)
+    {
+      _iDisplay.Write(e.ToString());
+      throw new MyException($" Error in AriStrDisassemble {str}", -11);
+    }
     return null;
   }
 
@@ -209,6 +232,8 @@ public class AriStrDisassemble : AriPattern
           var _z0 = _collapseBrakets.DBrakets[it];
           _z0.Value = Result;
           _collapseBrakets.DBrakets[it] = _z0;
+          if(!_danWriteLc.Set(it, Result))
+            _danValue.Set(it, Result);
         }
       }
     }

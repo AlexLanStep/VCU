@@ -101,8 +101,10 @@ public class StSetOneDan: IStSetOneDan
     }
 
 //    dynamic? d = _strDisassemble.AriCalcStr(s[1]);
-    dynamic? d = _strDisassemble.AriCalcStr(StrCommand);
-    if (d == null)
+//    dynamic? d = _strDisassemble.AriCalcStr(StrCommand);
+    AriStrDisassemble? d = _strDisassemble.AriCalcStr(StrCommand);
+
+    if (d == null || d.Result==null)
     {
       throw new MyException($" Проблема с конвертацией строки в xbckj {s[1]} ", -31);
       return null; 
@@ -110,7 +112,7 @@ public class StSetOneDan: IStSetOneDan
 
 //    _danValue.Set(s[0], d);
 
-    _danValue.Add(s[0], d);
+//    _danValue.Add(s[0], d.Result);
 
     return true;
   }

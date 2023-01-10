@@ -19,17 +19,17 @@ public class ContainerManager
     LabCar.Register<ICPathLc, CPathLc>(Reuse.Singleton);
     LabCar.Register<IConnectLabCar, ConnectLabCar>(Reuse.Singleton);
     LabCar.Register<AriPattern>();
-//    LabCar.Register<IAriCalcOnStr, AriCalcOnStr>();
 
     LabCar.Register<CReadLc>();
     LabCar.Register<CWriteLc>();
-    LabCar.Register<AriStrDisassemble>();
     LabCar.Register<DanReadLc>(Reuse.Singleton);
     LabCar.Register<DanValue>(Reuse.Singleton);
     LabCar.Register<DanWriteLc>(Reuse.Singleton);
     LabCar.Register<Calibrations2, Calibrations2>();
     LabCar.Register<ICalibrations2, Calibrations2>();
     LabCar.Register<IDanCalibrations2, DanCalibrations2>(Reuse.Singleton);
+    LabCar.Register<AriStrDisassemble>();
+
     LabCar.Register<IAllDan, AllDan>(Reuse.Singleton);
     LabCar.Register<ILcLoggers, LcLoggers>(Reuse.Singleton);
     LabCar.Register<ILoadConfig, LoadConfig>();

@@ -16,10 +16,12 @@ public class DanValue : DanBase<dynamic>, IDanValue
   {
   }
 
-  public void Set(string name, object d) 
+  public void Set(string name, object d)
   {
-   // Add<T>(string name, T dan)
-       //=> base.Add(name, d);
+    if (!cDan.ContainsKey(name))
+      Add(name, d);
+    else
+      cDan[name] = d;
   }
 
 }

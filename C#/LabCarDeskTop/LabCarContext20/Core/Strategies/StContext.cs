@@ -207,7 +207,6 @@ public class StContext : IStContext
 
     try
     {
-      var xx = JsonLsString(s.ToString() ?? string.Empty);
       return _istSetOneDan.SetVariable(JsonLsString(s.ToString() ?? string.Empty));
     }
     catch (Exception e)

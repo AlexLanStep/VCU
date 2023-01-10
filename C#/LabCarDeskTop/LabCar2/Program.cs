@@ -40,6 +40,18 @@ public class Program
 
   static void Main(string[] args)
   {
+    //dynamic fff1;
+    //string ss = "11m3";
+    //if (ss.IndexOf(",") >= 0)
+    //{
+    //   fff1 = Convert.ToDouble(ss);
+    //}
+    //else
+    //{
+    //  fff1 = Convert.ToInt32(ss);
+    //}
+
+    //dynamic fff2 = ss.IndexOf(",") >= 0 ? Convert.ToDouble(ss) : Convert.ToInt32(ss);
 //    var xx = new MatLabConvert(@"D:\TestSystem\Moto\VariableData\Dan1.mat");
 //    var _x = xx.Dan;
 
