@@ -68,6 +68,7 @@ public class StSetOneDan: IStSetOneDan
     foreach (var it in d)
     {
       var ss = it;
+      SetDan(it);
     }
 
     return true;
@@ -99,7 +100,8 @@ public class StSetOneDan: IStSetOneDan
         break;
     }
 
-    dynamic? d = _strDisassemble.AriCalcStr(s[1]);
+//    dynamic? d = _strDisassemble.AriCalcStr(s[1]);
+    dynamic? d = _strDisassemble.AriCalcStr(StrCommand);
     if (d == null)
     {
       throw new MyException($" Проблема с конвертацией строки в xbckj {s[1]} ", -31);

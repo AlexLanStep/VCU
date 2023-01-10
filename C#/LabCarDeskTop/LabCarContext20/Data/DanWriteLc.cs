@@ -34,7 +34,10 @@ public class DanWriteLc : DanBase<CWriteLc>, IDanWriteLc
     return true;
   }
 
-  public bool Set(string name, dynamic d) => (d != null) && cDan.ContainsKey(name) ? cDan[name].SetValue(d) : false;
+  public bool Set(string name, dynamic d)
+  { 
+    return (d != null) && cDan.ContainsKey(name) ? cDan[name].SetValue(d) : false; 
+  }
 
 //  public CWriteLc? GetT(string name) => (CWriteLc)base.GetT(name);
   public object GetT(string name) => (CWriteLc)base.GetT(name);

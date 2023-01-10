@@ -6,20 +6,29 @@ namespace LabCarContext20.Core.Ari;
 
 public class AriStrDisassemble : AriPattern
 {
-  private readonly IAllDan _iallDan;
   private readonly ILoggerDisplay _iDisplay;
+  private readonly DanWriteLc _danWriteLc;
+  private readonly DanReadLc _danReadLc;
+  private readonly DanValue _danValue;
+
   private CollapseBrackets collapseBrackets;
   public dynamic? Result { get; set; }
   private string _str;
 
-  public AriStrDisassemble(ILoggerDisplay iDisplay, IAllDan iallDan) {
-    _iallDan = iallDan;
+  public AriStrDisassemble(ILoggerDisplay iDisplay, 
+                            DanWriteLc danWriteLc, 
+                            DanReadLc danReadLc, 
+                            DanValue danValue) {
     _iDisplay = iDisplay;
     //    APattern = new AriPattern();
     collapseBrackets = new CollapseBrackets();
     Result = null;
+    _danWriteLc = danWriteLc;
+    _danReadLc = danReadLc;
+    _danValue =danValue; 
 
-  }
+
+    }
 
   private ConcurrentDictionary<string, CVariable> dVariables = new();
 
@@ -175,7 +184,7 @@ public class AriStrDisassemble : AriPattern
   public AriStrDisassemble? AriCalcStr(string str)
   {
     Result = null;
-    _str = str.Replace(" ", "");
+    _str = str.Replace(" ", "").Replace('.', ',');
     var _isSymbol = TestInputStr(_str);
     if (_isSymbol == null)
     {

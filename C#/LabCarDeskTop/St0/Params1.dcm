@@ -1,9 +1,0 @@
-FESTWERT TEST/Low_Beam_Test/BatteryIsOn/Value 
-  WERT 110 
-END
-FESTWERT TEST/Low_Beam_Test/Ignition/Value 
-  WERT 220 
-END
-FESTWERT TEST/Low_Beam_Test/Butt_Drive_State/Value 
-  WERT 220 
-END

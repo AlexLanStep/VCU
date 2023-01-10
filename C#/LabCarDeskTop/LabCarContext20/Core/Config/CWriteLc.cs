@@ -94,6 +94,10 @@ public class CWriteLc : CWriteLcJson
 
   public bool SetValue(dynamic value)
   {
+#if MODEL
+    return true;
+#endif
+
     if (SignalParams == null)
       return false;
 
