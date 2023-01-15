@@ -8,8 +8,8 @@ public interface ICPathLc
 }
 public class CPathLc: ICPathLc
 {
-  public string Workspace { get; set; }
-  public string Experiment { get; set; }
+  public string Workspace { get; set; } = "";
+  public string Experiment { get; set; } = "";
 }
 
 

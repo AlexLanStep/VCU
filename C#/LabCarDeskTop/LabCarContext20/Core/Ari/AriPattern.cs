@@ -1,12 +1,12 @@
 ﻿
-using System.Reactive.Joins;
-
 namespace LabCarContext20.Core.Ari;
 
 public class AriPattern
 {
   #region Simvol
+#pragma warning disable CS0414
   private string _ptSymbol = @"[\+\-\*\/]";
+#pragma warning restore CS0414
   private string _ptif = @"([\>\<])|([~=]=)";
   private string _ptEq = @"=";
 
@@ -21,7 +21,7 @@ public class AriPattern
   private string _ptAllSim = @"[\+\-\*\/\(\)]";
 
   #endregion
-  public bool? _isSymbol = null;
+//  public bool? IsSymbol = null;
 
   private Func<string, string, (bool, int)> _f00 = (s0, s1) =>
   {
@@ -45,17 +45,13 @@ public class AriPattern
 
   public List<string> SplitPlusMin(string str)
     => Regex.Split(str, _ptPlusMin, RegexOptions.IgnoreCase).ToList();
-//  public (bool, int) IsUmnDiv(string str) => _f00(str, _ptMultiDiv);
   public List<string> SplitMultiDiv(string str)
     => Regex.Split(str, _ptMultiDiv, RegexOptions.IgnoreCase).ToList();
   public List<string> ArrayMultiDiv(string str)
     => Regex.Matches(str, _ptMultiDiv, RegexOptions.IgnoreCase).Select(x => x.Value).ToList();
-
   public List<string> SplitDigital(string str)
     => Regex.Split(str, _ptDestv, RegexOptions.IgnoreCase).ToList();
-
   public (bool, int) IsNoPlusMin(string str) => _f00(str, _ptNoPlusMin);
-
   public List<int> BraketsX(string str, string pattern)=>
       Regex.Matches(str, pattern, RegexOptions.IgnoreCase).Select(x => x.Index).ToList();
   public List<int> BraketsLeftCount(string str) => BraketsX(str, _ptLifet);
@@ -89,10 +85,10 @@ public class AriPattern
   public bool? TestInputStr(string str)
   {
 
-    var _scop = IsBrakets(str);
-    if (_scop.Item1)
+    var scop = IsBrakets(str);
+    if (scop.Item1)
     {
-      if (_scop.Item2 % 2 != 0)
+      if (scop.Item2 % 2 != 0)
         throw new MyException($" В стратегии не соответствует кол-во скобок \n {str}  ", -2);
     }
 

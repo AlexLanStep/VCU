@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace LabCarContext20.Core.Config;
+﻿namespace LabCarContext20.Core.Config;
 
 public class ReadLcJsonLoad
 {

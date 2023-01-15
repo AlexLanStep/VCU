@@ -1,41 +1,38 @@
 ﻿
-
-using Newtonsoft.Json.Linq;
+using LabCarContext20.Core.Ari.Interface;
 
 namespace LabCarContext20.Core.Ari;
 
 public class CVariableBase : ICVariableBase
 {
-  public CVariableBase(string name, string strCommand) => Instal(name, strCommand);
+  #region MyRegion
+  public string Name { get; set; } = "";
+  public string StrCommand { get; set; } = "";
+  public bool IsValue { get; set; }
 
+  #endregion
+
+  #region Constructor
+  public CVariableBase(string name, string strCommand) => Instal(name, strCommand);
   public CVariableBase()
   {
-    Name = "";
-    StrCommand = "";
   }
-
+  #endregion
   public void Instal(string name, string strCommand)
   {
     Name = name;
     StrCommand = strCommand;
   }
-
   public virtual void Run()
   {
     
   }
-
-  public string Name { get; set; }
-  public string StrCommand { get; set; }
-//  public dynamic? Value { get; set; }
-
-  public bool IsValue {get; set;}
 }
 
 public class CVariable : CVariableBase, ICVariable
 {
+  #region Data
   private dynamic? _value;
-
   public dynamic? Value
   {
     get => _value;
@@ -43,29 +40,30 @@ public class CVariable : CVariableBase, ICVariable
     {
       if (value == null)
       {
-        IsValue=false;
+        IsValue = false;
         _value = null;
       }
       else
       {
-        _value =  value;
+        _value = value;
         IsValue = true;
       }
     }
   }
-
-  public string SValue {
-    get => Value == null?"":Value.ToString();
+  public string SValue
+  {
+    get => Value == null ? "" : Value.ToString();
     set { }
   }
-  
+  #endregion
 
-  public CVariable(string name, string strCommand):base(name, strCommand) 
+  #region Constuctor
+  public CVariable(string name, string strCommand) : base(name, strCommand)
   {
     Value = null;
     SValue = "";
   }
-  public CVariable(string  strCommand)
+  public CVariable(string strCommand)
   {
     var ss = strCommand.Split('=');
     if (ss.Length != 2)
@@ -76,12 +74,12 @@ public class CVariable : CVariableBase, ICVariable
     Value = null;
     SValue = "";
   }
-
-  public CVariable() : base() 
+  public CVariable()
   {
     Value = null;
     SValue = "";
   }
+  #endregion
 
   public override void Run()
   {
@@ -90,16 +88,13 @@ public class CVariable : CVariableBase, ICVariable
 
 public class CVariableLogic : CVariable, ICVariableLogic
 {
+  #region Data
   public bool? IsLogic { get; set; }
+  #endregion
 
-  public CVariableLogic(string name, string strCommand) : base(name, strCommand)
-  {
-    IsLogic = null;
-  }
+  #region Constructur
+  public CVariableLogic(string name, string strCommand) : base(name, strCommand)=>IsLogic = null;
+  public CVariableLogic() => IsLogic = null;
 
-  public CVariableLogic():base() 
-  {
-    IsLogic = null;
-
-  }
+  #endregion
 }

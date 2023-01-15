@@ -82,12 +82,11 @@ public class LoadConfig: ILoadConfig
   #region data
   #region Container
   private readonly ContainerManager? _container;
-  private readonly ILoggerDisplay _iloggerdisplay;
-  private readonly ICDopConfig _icdopConfig;
-//  private readonly ILoadConfig _iloadConfig;
-  private readonly IDanCalibrations2 _idanCalibrations2;
-  private readonly IAllDan _iallDan; 
-  private readonly IConnectLabCar _iconnectLabCar;
+  //private readonly ILoggerDisplay _iloggerdisplay;
+  //private readonly ICDopConfig _icdopConfig;
+  //private readonly IDanCalibrations2 _idanCalibrations2;
+  //private readonly IAllDan _iallDan; 
+  //private readonly IConnectLabCar _iconnectLabCar;
   private readonly ICPathLc _icPathLc;
   private readonly ICPaths? _icPaths;
   private readonly DanReadLc _danReadLc;
@@ -105,17 +104,16 @@ public class LoadConfig: ILoadConfig
   {
     _container = ContainerManager.GetInstance();
 
-    _iconnectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
-    _iloggerdisplay = _container.LabCar.Resolve<ILoggerDisplay>();
-    _idanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
-    _iallDan = _container.LabCar.Resolve<IAllDan>();
+    //_iconnectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
+    //_iloggerdisplay = _container.LabCar.Resolve<ILoggerDisplay>();
+    //_idanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
+    //_iallDan = _container.LabCar.Resolve<IAllDan>();
     _danReadLc = _container.LabCar.Resolve<DanReadLc>();
     _danValue = _container.LabCar.Resolve<DanValue>();
     _danWriteLc = _container.LabCar.Resolve<DanWriteLc>();
     _icPaths = _container.LabCar.Resolve<ICPaths>();
     _icPathLc = _container.LabCar.Resolve<ICPathLc>();
-//    _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
-    _icdopConfig = _container.LabCar.Resolve<ICDopConfig>();
+//    _icdopConfig = _container.LabCar.Resolve<ICDopConfig>();
   }
   public void ConfigLoad(string pathconfig="")
   {

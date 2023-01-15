@@ -1,4 +1,4 @@
-﻿namespace LabCarContext20.Core.Ari;
+﻿namespace LabCarContext20.Core.Ari.Interface;
 
 public interface ICVariable : ICVariableBase
 {

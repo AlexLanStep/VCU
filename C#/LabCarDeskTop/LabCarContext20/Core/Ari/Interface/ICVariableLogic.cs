@@ -1,6 +1,6 @@
-﻿namespace LabCarContext20.Core.Ari;
+﻿namespace LabCarContext20.Core.Ari.Interface;
 
-public interface ICVariableLogic : ICVariableBase, ICVariable
+public interface ICVariableLogic : ICVariable
 {
   bool? IsLogic { get; set; }
 }

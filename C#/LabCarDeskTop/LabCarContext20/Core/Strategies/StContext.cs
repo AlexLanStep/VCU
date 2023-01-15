@@ -162,6 +162,7 @@ public class StContext : IStContext
     }
     catch (Exception)
     {
+///  !!!!!!!!!!!!!!!   Переделать Убрать   _allDan.Get
       var val = _allDan.Get(d.ToString());
       if(val != null)
       {

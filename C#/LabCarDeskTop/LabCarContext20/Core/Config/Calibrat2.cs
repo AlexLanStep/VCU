@@ -1,5 +1,4 @@
 ﻿
-using System.Text.Json.Serialization;
 using LabCarContext20.Core.Config.Interface;
 
 namespace LabCarContext20.Core.Config;
@@ -48,7 +47,7 @@ public class Calibrations2 : ICalibrations2
     _iConLabCar = iConLabCar;
   }
 
-  public Calibrations2? Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
+  public Calibrations2 Initialization(string pathDirCalibr, string nameCalibr, Dictionary<string, Calibrations2Json> dCalibrat)
   {
     var text = "";
 

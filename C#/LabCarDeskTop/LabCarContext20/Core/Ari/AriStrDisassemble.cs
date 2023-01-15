@@ -1,9 +1,4 @@
-﻿
-using LabCarContext20.Data;
-using System.Runtime.Intrinsics.X86;
-using System.Xml.Linq;
-
-namespace LabCarContext20.Core.Ari;
+﻿namespace LabCarContext20.Core.Ari;
 
 public class AriStrDisassemble : AriPattern
 {
@@ -14,7 +9,7 @@ public class AriStrDisassemble : AriPattern
 
   private CollapseBrackets collapseBrackets;
   public dynamic? Result { get; set; }
-  private string _str;
+  private string _str="";
 
   public AriStrDisassemble(ILoggerDisplay iDisplay, 
                             DanWriteLc danWriteLc, 
@@ -31,7 +26,7 @@ public class AriStrDisassemble : AriPattern
 
     }
 
-  private ConcurrentDictionary<string, CVariable> dVariables = new();
+  private ConcurrentDictionary<string, CVariable> _dVariables = new();
 
   public dynamic? MultiDiv(string str)
   {
@@ -45,6 +40,8 @@ public class AriStrDisassemble : AriPattern
 
   public dynamic? FindNonNumbers(string str, string nameX = "")
   {
+//  !!!  проверить nameX
+    // ReSharper disable once RedundantAssignment
     nameX = nameX == "" 
         ? Guid.NewGuid().ToString().Replace("-", "_") 
         : nameX;
@@ -56,34 +53,30 @@ public class AriStrDisassemble : AriPattern
     var countDigital = SplitDigital(str);
     foreach (var it in countDigital.Where(x => !IsDigitString(x)))
     {
-      if (dVariables.TryGetValue(it, out var dan))
+      if (_dVariables.TryGetValue(it, out var dan))
       {
         if (!dan.IsValue)
         {
           FindNonNumbers(dan.SValue, it);
-          if (dVariables[it].IsValue)
-            str = str.Replace(it, dVariables[it].SValue);
+          if (_dVariables[it].IsValue)
+            str = str.Replace(it, _dVariables[it].SValue);
         }
         else
           str = str.Replace(it, Convert.ToString(dan.Value));
         continue;
       }
 
-      var _d = _danReadLc.Get(it);
-      if (_d == null)
-        _d =_danValue.Get(it);
+      var d = _danReadLc.Get(it);
+      if (d == null)
+        d =_danValue.Get(it);
 
+      if (d == null) continue;
 
-        //      dynamic? _d = _iallDan.Get(it);
-        if (_d == null) continue;
-
-        str = str.Replace(it, Convert.ToString(_d));
-      continue;
-
+      str = str.Replace(it, Convert.ToString(d));
     }
 
-    string str0 = ReplaseMultiDiv(str);
-    dynamic? d1 = DynamicStrPlusMin(str0);
+    var str0 = ReplaseMultiDiv(str);
+    var d1 = DynamicStrPlusMin(str0);
     return d1;
 
   }
@@ -126,14 +119,14 @@ public class AriStrDisassemble : AriPattern
     var i = 0;
     while (@is && (i < arrSp.Count))
     {
-      var _key0 = arrSp[i];
+      var key0 = arrSp[i];
       if (arrSp[i].Length == 0)
       {
         xd[i] = 0;
         i++;
         continue;
       }
-      var dx = StringToDynamic(_key0);
+      var dx = StringToDynamic(key0);
       if (dx != null)
       {
         xd[i] = dx;
@@ -141,23 +134,18 @@ public class AriStrDisassemble : AriPattern
         continue;
       }
 
-//      if (dVariables.ContainsKey(_key0) != null)
-      if (dVariables.ContainsKey(_key0))
+      if (_dVariables.ContainsKey(key0))
       {
-         xd[i] = dVariables[_key0].Value;
+         xd[i] = _dVariables[key0].Value;
         i++;
         continue;
       }
 
-      var _d = _danReadLc.Get(_key0);
-      if (_d == null)
-        _d = _danValue.Get(_key0);
+      var d = _danReadLc.Get(key0);
+      if (d == null)
+        d = _danValue.Get(key0);
 
-//      if (_d == null)
-//        throw new MyException(" Error in AriStrDisaa not _d ", -6);
-//        throw new MyException(" Error in AriStrDisaa not _d ", -6);
-
-      xd[i] = _d;
+      xd[i] = d;
       @is &= xd[i] != null;
       i++;
     }
@@ -168,15 +156,12 @@ public class AriStrDisassemble : AriPattern
     for (var i1 = 1; i1 < xd.Length; i1++)
       z = CalcElemrnt(z, xd[i1], arr[i1 - 1]);
 
-    if (z == null) return null;
-
-    int i111 = 1;
-    return z;
+    return z == null ? null : z;
   }
 
   public dynamic? InputStrArifmet(string str, Dictionary<string, CVariable> cvx)
   {
-    dVariables = new ConcurrentDictionary<string, CVariable>(cvx);
+    _dVariables = new ConcurrentDictionary<string, CVariable>(cvx);
 
     if (IsMultiDiv(str).Item1)
       return FindNonNumbers(str);
@@ -186,55 +171,54 @@ public class AriStrDisassemble : AriPattern
 
     try
     {
-      return str.IndexOf(",") >= 0 ? Convert.ToDouble(str) : Convert.ToInt32(str);
+      return str.IndexOf(",", StringComparison.Ordinal) >= 0 ? Convert.ToDouble(str) : Convert.ToInt32(str);
     }
     catch (Exception e)
     {
       _iDisplay.Write(e.ToString());
       throw new MyException($" Error in AriStrDisassemble {str}", -11);
     }
-    return null;
   }
 
   public bool? InputStrLogic(string str, Dictionary<string, CVariable> cvx)
   {
-    dVariables = new ConcurrentDictionary<string, CVariable>(cvx);
-
+    _dVariables = new ConcurrentDictionary<string, CVariable>(cvx);
 
     return null;
   }
 
-  public AriStrDisassemble? AriCalcStr(string str)
+  public AriStrDisassemble AriCalcStr(string str)
   {
     Result = null;
     _str = str.Replace(" ", "").Replace('.', ',');
-    var _isSymbol = TestInputStr(_str);
-    if (_isSymbol == null)
+    var isSymbol = TestInputStr(_str);
+    if (isSymbol == null)
     {
       throw new MyException($" Проблема в строке (в стратегии)! -> {_str} ", -10);
     }
 
-    if (_isSymbol.Value)
+    if (!isSymbol.Value) return this;
+
+    _iDisplay.Write("Строка вычислений ");
+    var collapseBraсkets = collapseBrackets.CalcBrakets<CVariable>(_str);
+      
+    if (collapseBraсkets?.LBrakets == null) return this;
+      
+    foreach (var it in collapseBraсkets.LBrakets)
     {
-      _iDisplay.Write("Строка вычислений ");
-      var _collapseBrakets = collapseBrackets.CalcBrakets<CVariable>(_str);
-      foreach (var it in _collapseBrakets.LBrakets)
+      var sval = collapseBraсkets.DBrakets[it].StrCommand;
+      Result = InputStrArifmet(sval, collapseBraсkets.DBrakets);
+      if (Result == null)
       {
-        string _key = it;
-        string sval = _collapseBrakets.DBrakets[it].StrCommand;
-        Result = InputStrArifmet(sval, _collapseBrakets.DBrakets);
-        if (Result == null)
-        {
-          throw new MyException($" Error in string, no variable {sval} ", -20);
-        }
-        else
-        {
-          var _z0 = _collapseBrakets.DBrakets[it];
-          _z0.Value = Result;
-          _collapseBrakets.DBrakets[it] = _z0;
-          if(!_danWriteLc.Set(it, Result))
-            _danValue.Set(it, Result);
-        }
+        throw new MyException($" Error in string, no variable {sval} ", -20);
+      }
+      else
+      {
+        var z0 = collapseBraсkets.DBrakets[it];
+        z0.Value = Result;
+        collapseBraсkets.DBrakets[it] = z0;
+        if (!_danWriteLc.Set(it, Result))
+          _danValue.Set(it, Result);
       }
     }
     return this;
