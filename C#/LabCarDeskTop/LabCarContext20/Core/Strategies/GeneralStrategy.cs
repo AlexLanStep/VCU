@@ -1,8 +1,4 @@
-﻿
-using LabCarContext20.Core.Config;
-using System.IO;
-
-namespace LabCarContext20.Core.Strategies;
+﻿namespace LabCarContext20.Core.Strategies;
 
 public interface IGeneralStrategy
 {
@@ -14,17 +10,19 @@ public class GeneralStrategy: IGeneralStrategy
   public Dictionary<string, dynamic>? ParamsStrategy { get; set; }=new();
 
   #region Container
-  private ContainerManager? _container = null;
+  private readonly ContainerManager? _container;
   private readonly ILoggerDisplay _iloggerdisplay;
-  private readonly ICPathLc _icpathLc;
-  private readonly ICPaths _icpaths;
+//  private readonly ICPathLc _icpathLc;
+  // ReSharper disable once NotAccessedField.Local
+  //private readonly ICPaths _icpaths;
   private ICDopConfig _icdopConfig;
   private readonly ILoadConfig _iloadConfig;
   private readonly IConnectLabCar _iconnectLabCar;
 
   #endregion
-  public string ParhStrategy { get; set; }
-  public string NameDir { get; set; }
+
+  public string ParhStrategy { get; set; } = "";
+//  public string NameDir { get; set; }
 
   private const string Stls = "STls";
     
@@ -34,38 +32,38 @@ public class GeneralStrategy: IGeneralStrategy
     
     _iconnectLabCar = _container.LabCar.Resolve<IConnectLabCar>();
     _iloggerdisplay = _container.LabCar.Resolve<ILoggerDisplay>();
-    _icpathLc = _container.LabCar.Resolve<ICPathLc>();
-    _icpaths = _container.LabCar.Resolve<ICPaths>();
+//    _icpathLc = _container.LabCar.Resolve<ICPathLc>();
+//    _icpaths = _container.LabCar.Resolve<ICPaths>();
     _icdopConfig = _container.LabCar.Resolve<ICDopConfig>();
     _iloadConfig = _container.LabCar.Resolve<ILoadConfig>();
   }
   public void Run(string pathstrategdir)
   {
 
-    loadParams(pathstrategdir);
+    LoadParams(pathstrategdir);
 
-    List<JToken>? lsSt = null;
+    List<JToken>? lsSt;
 
     if (!LoadStrategy(out lsSt))
       return;
 
     _iconnectLabCar.Connect();
 
-    IStrategy _ist = _container.LabCar.Resolve<StrateyBasa>();
-    _ist.SetParams(ParamsStrategy);  
+    IStrategy? ist = _container?.LabCar.Resolve<StrateyBasa>();
+    ist?.SetParams(ParamsStrategy);  
 
-    int _repeat = 0;
-    bool _success = true;
-    while (_repeat < _icdopConfig.Repeat && _success)
+    var repeat = 0;
+    var success = true;
+    while (repeat < _icdopConfig.Repeat && success)
     {
       if (_icdopConfig.Restart)
         _iconnectLabCar.ReStart();
 
-      _ist.ParserStrateg(lsSt);
+      ist?.ParserStrateg(lsSt);
 
-      _success = _ist.Execute();
+      if (ist != null) success = ist.Execute();
 
-      _repeat++;
+      repeat++;
     }
 
 
@@ -76,26 +74,27 @@ public class GeneralStrategy: IGeneralStrategy
 
   }
 
-  private void loadParams(string path)
+  private void LoadParams(string path)
   {
 
     ParhStrategy = path;
 
-    var _pathConfig = ParhStrategy + "\\Config.json";
-    if (File.Exists(_pathConfig))
-      _iloadConfig.ConfigLoad(_pathConfig);
+    var pathConfig = ParhStrategy + "\\Config.json";
+    if (File.Exists(pathConfig))
+      _iloadConfig.ConfigLoad(pathConfig);
 
-    var _pathParams = ParhStrategy + "\\Params.json";
+    var pathParams = ParhStrategy + "\\Params.json";
     //    ParamsStrategy
     try
     {
-      ParamsStrategy = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(File.ReadAllText(_pathParams));
+      ParamsStrategy = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(File.ReadAllText(pathParams));
     }
-    catch (Exception e)
+    catch (Exception)
     {
-      _iloggerdisplay.Write($" Проблема с файлом Params.json  -> {_pathParams} ");
+      _iloggerdisplay.Write($" Проблема с файлом Params.json  -> {pathParams} ");
       _iloggerdisplay.Write($"   -- пишем данны по умолчанию ");
-      ParamsStrategy = new() {
+      ParamsStrategy = new Dictionary<string, dynamic>
+      {
         {"Name", "- ? -" }, //  Название стратегии правти
         { "Wait0", 1000 },  // в миллисекундах задержка мнеду шагамо
         { "Wait1", 1500 },  // в миллисекундах задержка мнеду шагамо
@@ -109,11 +108,11 @@ public class GeneralStrategy: IGeneralStrategy
   private  bool LoadStrategy(out List<JToken>? ls)
   {
     ls = null;
-    var _pathStrategy = ParhStrategy + "\\Strateg.json";
+    var pathStrategy = ParhStrategy + "\\Strateg.json";
 
-    string? stStrategy = (File.Exists(_pathStrategy) 
-      ? File.ReadAllText(_pathStrategy) : null) 
-      ?? throw new MyException(" Error проблема в файле -> Strateg.json", -1);
+    string stStrategy = (File.Exists(pathStrategy) 
+                          ? File.ReadAllText(pathStrategy) : null) 
+                        ?? throw new MyException(" Error проблема в файле -> Strateg.json", -1);
 
     JObject jinfo;
     try

@@ -1,12 +1,4 @@
-﻿
-using DryIoc;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.IO;
-using System.Reactive.Joins;
-using System.Xml.Xsl;
-
-namespace LabCarContext20.Core.Strategies;
+﻿namespace LabCarContext20.Core.Strategies;
 
 public interface IStContext
 {
@@ -25,8 +17,8 @@ public class StContext : IStContext
   private Dictionary<string, ProcessCommand>? _process = new();
 
   #region Conteiners
-  protected ContainerManager? _container = null;
-  protected readonly IAllDan _allDan;
+  protected ContainerManager? Container;
+//  protected readonly IAllDan _allDan;
   protected readonly ILoggerDisplay _ilogDisplay;
   protected ICDopConfig _icDopConfig;
   protected ILcLoggers _iLogger;
@@ -34,9 +26,6 @@ public class StContext : IStContext
   protected readonly IDanCalibrations2 _idanCalibrations2;
   protected readonly IStSetOneDan _istSetOneDan;
   #endregion
-  //private string _pathStrategy;
-  //private string _nameDir;
-  //private string FileLogger;
   protected Dictionary<string, dynamic>? ParamsStrategy { get; set; } = new();
 
   private List<JToken>? _stBasa = new();
@@ -45,14 +34,14 @@ public class StContext : IStContext
   private string _nameStOne;
   public StContext()
   {
-    _container = ContainerManager.GetInstance();
-    _allDan = _container.LabCar.Resolve<IAllDan>();
-    _ilogDisplay = _container.LabCar.Resolve<ILoggerDisplay>();
-    _iLogger = _container.LabCar.Resolve<ILcLoggers>();
-    _danValue = _container.LabCar.Resolve<DanValue>();
-    _idanCalibrations2 = _container.LabCar.Resolve<IDanCalibrations2>();
-    _icDopConfig = _container.LabCar.Resolve<ICDopConfig>();
-    _istSetOneDan = _container.LabCar.Resolve<IStSetOneDan>();
+    Container = ContainerManager.GetInstance();
+//    _allDan = Container.LabCar.Resolve<IAllDan>();
+    _ilogDisplay = Container.LabCar.Resolve<ILoggerDisplay>();
+    _iLogger = Container.LabCar.Resolve<ILcLoggers>();
+    _danValue = Container.LabCar.Resolve<DanValue>();
+    _idanCalibrations2 = Container.LabCar.Resolve<IDanCalibrations2>();
+    _icDopConfig = Container.LabCar.Resolve<ICDopConfig>();
+    _istSetOneDan = Container.LabCar.Resolve<IStSetOneDan>();
     #region Разбор строк _process
     _process.Add("t", timewaite);
     _process.Add("loggerset", floggerset);
