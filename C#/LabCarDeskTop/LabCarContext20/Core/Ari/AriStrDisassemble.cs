@@ -67,8 +67,7 @@ public class AriStrDisassemble : AriPattern
       }
 
       var d = _danReadLc.Get(it);
-      if (d == null)
-        d =_danValue.Get(it);
+      d ??=_danValue.Get(it);
 
       if (d == null) continue;
 
@@ -227,21 +226,4 @@ public class AriStrDisassemble : AriPattern
 
 
 }
-
-/*
- 
-     else
-    {
-      _iDisplay.Write("Строка условий ");
-      var _collapseBrakets = collapseBrackets.CalcBrakets<CVariableLogic>(_str);
-      if (_collapseBrakets == null)
-      {
-        throw new MyException($" Проблема в строке (в стратегии)! -> {_str} ", -10);
-      }
-
-
-
-    }
-
- */
 
